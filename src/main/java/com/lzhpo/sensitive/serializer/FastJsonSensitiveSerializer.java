@@ -6,6 +6,7 @@ import com.alibaba.fastjson.serializer.JSONSerializer;
 import com.alibaba.fastjson.serializer.ObjectSerializer;
 import com.alibaba.fastjson.serializer.SerialContext;
 import com.alibaba.fastjson.serializer.SerializeWriter;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.lzhpo.sensitive.annocation.Sensitive;
 import com.lzhpo.sensitive.utils.SensitiveUtil;
 import java.lang.reflect.Field;
@@ -28,7 +29,7 @@ public class FastJsonSensitiveSerializer implements ObjectSerializer {
 
     SerializeWriter out = serializer.out;
     if (Objects.isNull(object)) {
-      out.writeNull();
+      out.writeNull(SerializerFeature.WriteNullStringAsEmpty);
       return;
     }
 
