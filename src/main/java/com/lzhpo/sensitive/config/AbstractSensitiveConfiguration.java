@@ -1,6 +1,8 @@
 package com.lzhpo.sensitive.config;
 
 import cn.hutool.core.annotation.AnnotationUtil;
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.date.TimeInterval;
 import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import com.lzhpo.sensitive.annocation.IgnoreSensitive;
@@ -32,6 +34,7 @@ public abstract class AbstractSensitiveConfiguration {
    * @param object object
    */
   protected void invokeSensitive(Object object) {
+    TimeInterval timer = DateUtil.timer();
     Class<?> clazz = object.getClass();
     Field[] fields = ReflectUtil.getFields(clazz);
 
@@ -52,6 +55,10 @@ public abstract class AbstractSensitiveConfiguration {
           ReflectUtil.setFieldValue(object, field, finalFieldValue);
         }
       }
+    }
+
+    if (log.isDebugEnabled()) {
+      log.debug("Completed sensitive in {} ms", timer.intervalMs());
     }
   }
 
