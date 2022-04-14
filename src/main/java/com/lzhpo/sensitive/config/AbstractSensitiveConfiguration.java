@@ -1,8 +1,6 @@
 package com.lzhpo.sensitive.config;
 
 import cn.hutool.core.annotation.AnnotationUtil;
-import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.date.TimeInterval;
 import cn.hutool.core.lang.SimpleCache;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.ReflectUtil;
@@ -38,7 +36,7 @@ public abstract class AbstractSensitiveConfiguration {
    * @param object object
    */
   protected void invokeSensitive(Object object) {
-    TimeInterval timer = DateUtil.timer();
+    long startMillis = System.currentTimeMillis();
     Class<?> clazz = object.getClass();
 
     if (!isIgnoreSensitive()) {
@@ -72,7 +70,10 @@ public abstract class AbstractSensitiveConfiguration {
     }
 
     if (log.isDebugEnabled()) {
-      log.debug("Completed invoke sensitive [{}] in {} ms", clazz, timer.intervalMs());
+      log.debug(
+          "Completed invoke sensitive [{}] in {} ms",
+          clazz,
+          System.currentTimeMillis() - startMillis);
     }
   }
 
