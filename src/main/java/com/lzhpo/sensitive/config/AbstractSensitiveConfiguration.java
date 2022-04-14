@@ -3,6 +3,8 @@ package com.lzhpo.sensitive.config;
 import cn.hutool.core.annotation.AnnotationUtil;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.date.TimeInterval;
+import cn.hutool.core.lang.SimpleCache;
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import com.lzhpo.sensitive.annocation.IgnoreSensitive;
@@ -14,7 +16,6 @@ import java.util.Objects;
 import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.util.ObjectUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.method.HandlerMethod;
@@ -28,6 +29,8 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 @Slf4j
 public abstract class AbstractSensitiveConfiguration {
 
+  private static final SimpleCache<Class<?>, Field[]> REQUIRE_FIELDS_CACHE = new SimpleCache<>();
+
   /**
    * Invoke object field sensitive
    *
@@ -36,29 +39,39 @@ public abstract class AbstractSensitiveConfiguration {
   protected void invokeSensitive(Object object) {
     TimeInterval timer = DateUtil.timer();
     Class<?> clazz = object.getClass();
-    Field[] fields = ReflectUtil.getFields(clazz);
 
-    if (!ObjectUtils.isEmpty(fields) && !isIgnoreSensitive()) {
-      for (Field field : fields) {
+    if (!isIgnoreSensitive()) {
+      Field[] requireFields =
+          REQUIRE_FIELDS_CACHE.get(
+              clazz,
+              () ->
+                  Arrays.stream(
+                          ObjectUtil.defaultIfNull(ReflectUtil.getFields(clazz), new Field[0]))
+                      .filter(
+                          field ->
+                              field.isAnnotationPresent(Sensitive.class)
+                                  && field.getType().isAssignableFrom(String.class))
+                      .toArray(Field[]::new));
+
+      for (Field field : requireFields) {
         Sensitive sensitive = field.getAnnotation(Sensitive.class);
         Object fieldValue = ReflectUtil.getFieldValue(object, field);
-        boolean isStringType = field.getType().isAssignableFrom(String.class);
 
-        if (Objects.nonNull(sensitive) && isStringType && Objects.nonNull(fieldValue)) {
+        if (Objects.nonNull(sensitive) && Objects.nonNull(fieldValue)) {
           String finalFieldValue =
               Arrays.stream(SensitiveStrategy.values())
                   .filter(x -> x == sensitive.strategy())
-                  .findFirst()
+                  .findAny()
                   .map(handler -> handler.accept((String) fieldValue, sensitive))
                   .orElseThrow(
                       () -> new IllegalArgumentException("Unknown sensitive strategy type"));
-          ReflectUtil.setFieldValue(object, field, finalFieldValue);
+          ReflectUtil.setFieldValue(object, field.getName(), finalFieldValue);
         }
       }
     }
 
     if (log.isDebugEnabled()) {
-      log.debug("Completed sensitive in {} ms", timer.intervalMs());
+      log.debug("Completed invoke sensitive [{}] in {} ms", clazz, timer.intervalMs());
     }
   }
 
