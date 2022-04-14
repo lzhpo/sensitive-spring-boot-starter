@@ -64,7 +64,21 @@ public class SensitiveApplication {
         .password("123456")
         .carLicense("粤A66666")
         .bankCard("9988002866797031")
-        .customize("ABC666")
+        .customize1("1234567891")
+        .customize2("1234567892")
+        .customize3("1234567892")
+        .customize4("12345")
+        .customize5("1234567")
+        .customizePreKeep1("ABC66651")
+        .customizePostKeep1("ABC66691")
+        .customizeIgnoreKeep1("ABC6661")
+        .customizeIgnoreKeep2("ABC6662")
+        .customizeIgnoreKeep3("ABC6663")
+        .customizeIgnoreKeep4("ABC6664")
+        .customizeOutOfRange1("1234567890")
+        .customizeOutOfRange2("1234567890")
+        .customizeOutOfRange3("123456789")
+        .customizeOutOfRange4("123456789")
         .build();
   }
 
@@ -100,7 +114,49 @@ public class SensitiveApplication {
     @Sensitive(strategy = SensitiveStrategy.BANK_CARD)
     private String bankCard;
 
-    @Sensitive(strategy = SensitiveStrategy.CUSTOMIZE, preKeep = 1, suffixKeep = 1)
-    private String customize;
+    @Sensitive(strategy = SensitiveStrategy.CUSTOMIZE, preKeep = 1, postKeep = 1)
+    private String customize1;
+
+    @Sensitive(strategy = SensitiveStrategy.CUSTOMIZE, preKeep = 1, postKeep = 2)
+    private String customize2;
+
+    @Sensitive(strategy = SensitiveStrategy.CUSTOMIZE, preKeep = 1, postKeep = 3)
+    private String customize3;
+
+    @Sensitive(strategy = SensitiveStrategy.CUSTOMIZE, preKeep = 6, postKeep = 0)
+    private String customize4;
+
+    @Sensitive(strategy = SensitiveStrategy.CUSTOMIZE, preKeep = 0, postKeep = 6)
+    private String customize5;
+
+    @Sensitive(strategy = SensitiveStrategy.CUSTOMIZE)
+    private String customizeIgnoreKeep1;
+
+    @Sensitive(strategy = SensitiveStrategy.CUSTOMIZE, preKeep = 0)
+    private String customizeIgnoreKeep2;
+
+    @Sensitive(strategy = SensitiveStrategy.CUSTOMIZE, postKeep = 0)
+    private String customizeIgnoreKeep3;
+
+    @Sensitive(strategy = SensitiveStrategy.CUSTOMIZE, preKeep = 0, postKeep = 0)
+    private String customizeIgnoreKeep4;
+
+    @Sensitive(strategy = SensitiveStrategy.CUSTOMIZE, preKeep = 1)
+    private String customizePreKeep1;
+
+    @Sensitive(strategy = SensitiveStrategy.CUSTOMIZE, postKeep = 1)
+    private String customizePostKeep1;
+
+    @Sensitive(strategy = SensitiveStrategy.CUSTOMIZE, preKeep = 10, postKeep = 0)
+    private String customizeOutOfRange1;
+
+    @Sensitive(strategy = SensitiveStrategy.CUSTOMIZE, preKeep = 0, postKeep = 10)
+    private String customizeOutOfRange2;
+
+    @Sensitive(strategy = SensitiveStrategy.CUSTOMIZE, preKeep = 9, postKeep = 0)
+    private String customizeOutOfRange3;
+
+    @Sensitive(strategy = SensitiveStrategy.CUSTOMIZE, preKeep = 10, postKeep = 9)
+    private String customizeOutOfRange4;
   }
 }

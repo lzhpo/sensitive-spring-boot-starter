@@ -3,7 +3,7 @@ package com.lzhpo.sensitive.enums;
 import cn.hutool.core.text.CharSequenceUtil;
 import cn.hutool.core.util.DesensitizedUtil;
 import com.lzhpo.sensitive.annocation.Sensitive;
-import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Supplier;
 import org.springframework.util.Assert;
 
@@ -105,12 +105,14 @@ public enum SensitiveStrategy {
    */
   private static String invoke(String value, Sensitive sensitive, Supplier<String> orElse) {
     int preKeep = sensitive.preKeep();
-    int suffixKeep = sensitive.suffixKeep();
+    int postKeep = sensitive.postKeep();
     Assert.isTrue(preKeep >= -1, "preKeep must greater than -1");
-    Assert.isTrue(suffixKeep >= -1, "suffixKeep must greater than -1");
+    Assert.isTrue(postKeep >= -1, "postKeep must greater than -1");
 
-    if (preKeep == -1 && suffixKeep == -1 && Objects.nonNull(orElse)) {
-      return orElse.get();
+    boolean ignorePreKeep = preKeep <= 0;
+    boolean ignoreSuffixKeep = postKeep <= 0;
+    if (ignorePreKeep && ignoreSuffixKeep) {
+      return Optional.ofNullable(orElse).map(Supplier::get).orElse(value);
     }
 
     if (CharSequenceUtil.isBlank(value)) {
@@ -118,7 +120,7 @@ public enum SensitiveStrategy {
     }
 
     char replacer = sensitive.replacer();
-    return CharSequenceUtil.replace(value, preKeep, value.length() - suffixKeep, replacer);
+    return CharSequenceUtil.replace(value, preKeep, value.length() - postKeep, replacer);
   }
 
   /**

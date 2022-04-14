@@ -25,12 +25,10 @@ public @interface Sensitive {
   SensitiveStrategy strategy();
 
   /**
-   * Pre-reserved digits, must be greater than -1，all types of {@link SensitiveStrategy} are
-   * supported
+   * Pre-reserved digits, all types of {@link SensitiveStrategy} are supported
    *
    * <pre>
-   * -1: default, do not process
-   *  0: not retained
+   * If less than or equal to 0, it means ignore
    * </pre>
    *
    * @return pre-reserved digits
@@ -39,18 +37,16 @@ public @interface Sensitive {
   int preKeep() default -1;
 
   /**
-   * Post reserved digits, must be greater than -1, all types of {@link SensitiveStrategy} are
-   * supported
+   * Post-reserved digits, all types of {@link SensitiveStrategy} are supported
    *
    * <pre>
-   * -1: default, do not process
-   *  0: not retained
+   * If less than or equal to 0, it means ignore
    * </pre>
    *
    * @return post-reserved digits
    * @throws IllegalArgumentException If it is less than -1, an exception will be thrown
    */
-  int suffixKeep() default -1;
+  int postKeep() default -1;
 
   /**
    * Sensitive replacer
