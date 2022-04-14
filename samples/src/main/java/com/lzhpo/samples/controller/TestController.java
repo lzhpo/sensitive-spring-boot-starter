@@ -1,5 +1,6 @@
 package com.lzhpo.samples.controller;
 
+import com.lzhpo.samples.entity.FastJsonSerializerJavaBean;
 import com.lzhpo.samples.entity.JacksonSerializerJavaBean;
 import com.lzhpo.samples.entity.SampleJavaBean;
 import com.lzhpo.sensitive.annocation.IgnoreSensitive;
@@ -21,6 +22,15 @@ public class TestController {
         .name("张小明")
         .password("123456")
         .idCard("530321199204074611")
+        .build();
+  }
+
+  @GetMapping("fastJsonSerializer")
+  public FastJsonSerializerJavaBean fastJsonSerializer() {
+    return FastJsonSerializerJavaBean.builder()
+        .name("王小明")
+        .password("1234567")
+        .idCard("530321199204074622")
         .build();
   }
 

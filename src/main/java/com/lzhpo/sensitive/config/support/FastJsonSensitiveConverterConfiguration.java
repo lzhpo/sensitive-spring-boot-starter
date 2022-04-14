@@ -9,6 +9,7 @@ import java.nio.charset.StandardCharsets;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpOutputMessage;
@@ -25,13 +26,14 @@ public class FastJsonSensitiveConverterConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
-  public HttpMessageConverters fastJsonHttpMessageConverters() {
+  public HttpMessageConverters fastJsonHttpMessageConverters(
+      ApplicationContext applicationContext) {
     FastJsonHttpMessageConverter fastJsonHttpMessageConverter =
         new FastJsonHttpMessageConverter() {
           @Override
           protected void writeInternal(Object object, HttpOutputMessage outputMessage)
               throws IOException, HttpMessageNotWritableException {
-            SensitiveUtil.invokeSensitiveObject(object);
+            SensitiveUtil.invokeSensitiveObject(applicationContext, object);
             super.writeInternal(object, outputMessage);
           }
         };

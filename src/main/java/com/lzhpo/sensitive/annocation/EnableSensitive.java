@@ -26,4 +26,20 @@ public @interface EnableSensitive {
    * @return {@link SensitiveConverterType}
    */
   SensitiveConverterType converterType() default SensitiveConverterType.JACKSON;
+
+  /**
+   * Whether automatic sensitive convert, no need to write the @JsonSerialize annotation, just mark
+   * the field with @Sensitive
+   *
+   * <p>If false, you need to do:
+   *
+   * <pre>{@code
+   * @Sensitive(strategy = SensitiveStrategy.PASSWORD)
+   * @JsonSerialize(using = JacksonSensitiveSerializer.class)
+   * private String password;
+   * }</pre>
+   *
+   * @return whether automatic sensitive convert
+   */
+  boolean autoConvert() default false;
 }

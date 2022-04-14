@@ -5,6 +5,7 @@ import cn.hutool.core.lang.SimpleCache;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.extra.spring.SpringUtil;
+import com.lzhpo.sensitive.annocation.EnableSensitive;
 import com.lzhpo.sensitive.annocation.IgnoreSensitive;
 import com.lzhpo.sensitive.annocation.Sensitive;
 import com.lzhpo.sensitive.enums.SensitiveStrategy;
@@ -16,6 +17,8 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationContext;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.method.HandlerMethod;
@@ -32,6 +35,14 @@ public class SensitiveUtil {
 
   /** For Class, field cache with @Sensitive annotation and String type */
   private static final SimpleCache<Class<?>, Field[]> REQUIRE_FIELDS_CACHE = new SimpleCache<>();
+
+  public static void invokeSensitiveObject(ApplicationContext applicationContext, Object object) {
+    EnableSensitive enableSensitive =
+        findFirstAnnotation(applicationContext, EnableSensitive.class);
+    if (Objects.nonNull(enableSensitive) && enableSensitive.autoConvert()) {
+      invokeSensitiveObject(object);
+    }
+  }
 
   /**
    * Invoke object field sensitive
@@ -116,17 +127,27 @@ public class SensitiveUtil {
    * @param annotationType annotationType
    * @return {@link Annotation}
    */
-  public static Annotation getAnnotation(
-      HandlerMethod handlerMethod, Class<? extends Annotation> annotationType) {
+  public static <T extends Annotation> T getAnnotation(
+      HandlerMethod handlerMethod, Class<T> annotationType) {
     if (Objects.nonNull(handlerMethod)) {
       Class<?> beanType = handlerMethod.getBeanType();
       // First get the annotation from the class of the method
-      Annotation annotation = AnnotationUtil.getAnnotation(beanType, annotationType);
+      T annotation = AnnotationUtil.getAnnotation(beanType, annotationType);
       if (Objects.isNull(annotation)) {
         // If not get the annotation from this class, will get it from the current method
         annotation = handlerMethod.getMethodAnnotation(annotationType);
       }
       return annotation;
+    }
+    return null;
+  }
+
+  public static <T extends Annotation> T findFirstAnnotation(
+      ApplicationContext applicationContext, Class<T> annotationType) {
+    String[] beanNamesForAnnotation =
+        Objects.requireNonNull(applicationContext).getBeanNamesForAnnotation(annotationType);
+    if (!ObjectUtils.isEmpty(beanNamesForAnnotation)) {
+      return applicationContext.findAnnotationOnBean(beanNamesForAnnotation[0], annotationType);
     }
     return null;
   }

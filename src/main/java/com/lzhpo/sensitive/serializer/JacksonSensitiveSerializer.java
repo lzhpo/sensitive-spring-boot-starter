@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.method.HandlerMethod;
 
 /**
- * Sensitive field for jackson
+ * Sensitive <b>String type field</b> for jackson
  *
  * <pre>
  * Reference code:

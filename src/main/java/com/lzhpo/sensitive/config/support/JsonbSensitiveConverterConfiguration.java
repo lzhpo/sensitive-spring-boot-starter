@@ -8,6 +8,7 @@ import javax.json.bind.JsonbBuilder;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnResource;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.json.JsonbHttpMessageConverter;
@@ -36,12 +37,13 @@ public class JsonbSensitiveConverterConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
-  public JsonbHttpMessageConverter jsonbHttpMessageConverter(Jsonb jsonb) {
+  public JsonbHttpMessageConverter jsonbHttpMessageConverter(
+      ApplicationContext applicationContext, Jsonb jsonb) {
     JsonbHttpMessageConverter jsonbHttpMessageConverter =
         new JsonbHttpMessageConverter() {
           @Override
           protected void writeInternal(Object object, Type type, Writer writer) throws Exception {
-            SensitiveUtil.invokeSensitiveObject(object);
+            SensitiveUtil.invokeSensitiveObject(applicationContext, object);
             super.writeInternal(object, type, writer);
           }
         };

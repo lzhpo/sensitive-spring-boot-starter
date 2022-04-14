@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpOutputMessage;
@@ -32,12 +33,13 @@ public class JacksonSensitiveConverterConfiguration {
   @Bean
   @ConditionalOnMissingBean
   public MappingJackson2HttpMessageConverter jackson2HttpMessageConverter(
+      ApplicationContext applicationContext,
       ObjectMapper objectMapper) {
     return new MappingJackson2HttpMessageConverter(objectMapper) {
       @Override
       protected void writeInternal(Object object, Type type, HttpOutputMessage outputMessage)
           throws IOException, HttpMessageNotWritableException {
-        SensitiveUtil.invokeSensitiveObject(object);
+        SensitiveUtil.invokeSensitiveObject(applicationContext, object);
         super.writeInternal(object, type, outputMessage);
       }
     };

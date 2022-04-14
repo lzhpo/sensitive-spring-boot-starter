@@ -6,6 +6,7 @@ import java.io.Writer;
 import java.lang.reflect.Type;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
@@ -29,11 +30,11 @@ public class GsonSensitiveConverterConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
-  public GsonHttpMessageConverter gsonHttpMessageConverter(Gson gson) {
+  public GsonHttpMessageConverter gsonHttpMessageConverter(ApplicationContext applicationContext, Gson gson) {
     GsonHttpMessageConverter converter = new GsonHttpMessageConverter() {
       @Override
       protected void writeInternal(Object object, Type type, Writer writer) throws Exception {
-        SensitiveUtil.invokeSensitiveObject(object);
+        SensitiveUtil.invokeSensitiveObject(applicationContext, object);
         super.writeInternal(object, type, writer);
       }
     };
