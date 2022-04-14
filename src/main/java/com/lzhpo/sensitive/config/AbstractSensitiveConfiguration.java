@@ -29,6 +29,7 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 @Slf4j
 public abstract class AbstractSensitiveConfiguration {
 
+  /** For Class, field cache with @Sensitive annotation and String type */
   private static final SimpleCache<Class<?>, Field[]> REQUIRE_FIELDS_CACHE = new SimpleCache<>();
 
   /**
