@@ -1,6 +1,6 @@
 package com.lzhpo.sensitive.config.support;
 
-import com.lzhpo.sensitive.config.AbstractSensitiveConfiguration;
+import com.lzhpo.sensitive.utils.SensitiveUtil;
 import java.io.Writer;
 import java.lang.reflect.Type;
 import javax.json.bind.Jsonb;
@@ -26,7 +26,7 @@ import org.springframework.http.converter.json.JsonbHttpMessageConverter;
       "classpath:META-INF/services/javax.json.bind.spi.JsonbProvider",
       "classpath:META-INF/services/javax.json.spi.JsonProvider"
     })
-public class JsonbSensitiveConverterConfiguration extends AbstractSensitiveConfiguration {
+public class JsonbSensitiveConverterConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
@@ -41,7 +41,7 @@ public class JsonbSensitiveConverterConfiguration extends AbstractSensitiveConfi
         new JsonbHttpMessageConverter() {
           @Override
           protected void writeInternal(Object object, Type type, Writer writer) throws Exception {
-            invokeSensitive(object);
+            SensitiveUtil.invokeSensitiveObject(object);
             super.writeInternal(object, type, writer);
           }
         };

@@ -1,7 +1,7 @@
 package com.lzhpo.sensitive.config.support;
 
 import com.google.gson.Gson;
-import com.lzhpo.sensitive.config.AbstractSensitiveConfiguration;
+import com.lzhpo.sensitive.utils.SensitiveUtil;
 import java.io.Writer;
 import java.lang.reflect.Type;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -19,7 +19,7 @@ import org.springframework.http.converter.json.GsonHttpMessageConverter;
  */
 @Configuration
 @ConditionalOnClass({Gson.class})
-public class GsonSensitiveConverterConfiguration extends AbstractSensitiveConfiguration {
+public class GsonSensitiveConverterConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
@@ -33,7 +33,7 @@ public class GsonSensitiveConverterConfiguration extends AbstractSensitiveConfig
     GsonHttpMessageConverter converter = new GsonHttpMessageConverter() {
       @Override
       protected void writeInternal(Object object, Type type, Writer writer) throws Exception {
-        invokeSensitive(object);
+        SensitiveUtil.invokeSensitiveObject(object);
         super.writeInternal(object, type, writer);
       }
     };
