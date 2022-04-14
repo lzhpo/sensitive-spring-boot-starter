@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author lzhpo
  */
 @SpringBootApplication
-@EnableSensitive(converterType = SensitiveConverterType.FASTJSON)
+@EnableSensitive(converterType = SensitiveConverterType.JSONB)
 public class SensitiveApplication {
 
   public static void main(String[] args) {

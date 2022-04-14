@@ -1,9 +1,9 @@
 package com.lzhpo.samples.entity;
 
-import com.alibaba.fastjson.annotation.JSONField;
 import com.lzhpo.sensitive.annocation.Sensitive;
 import com.lzhpo.sensitive.enums.SensitiveStrategy;
-import com.lzhpo.sensitive.serializer.FastJsonSensitiveSerializer;
+import com.lzhpo.sensitive.serializer.JsonbSensitiveSerializer;
+import javax.json.bind.annotation.JsonbTypeSerializer;
 import lombok.Builder;
 import lombok.Data;
 
@@ -12,17 +12,18 @@ import lombok.Data;
  */
 @Data
 @Builder
-public class FastJsonSerializerJavaBean {
+@JsonbTypeSerializer(JsonbSensitiveSerializer.class)
+public class JsonbSerializerJavaBean {
 
   @Sensitive(strategy = SensitiveStrategy.CHINESE_NAME)
-  @JSONField(serializeUsing = FastJsonSensitiveSerializer.class)
+  //  @JsonbTypeSerializer(JsonbSensitiveSerializer.class)
   private String name;
 
   @Sensitive(strategy = SensitiveStrategy.PASSWORD)
-  @JSONField(serializeUsing = FastJsonSensitiveSerializer.class)
+  //  @JsonbTypeSerializer(JsonbSensitiveSerializer.class)
   private String password;
 
   @Sensitive(strategy = SensitiveStrategy.ID_CARD)
-  @JSONField(serializeUsing = FastJsonSensitiveSerializer.class)
+  //  @JsonbTypeSerializer(JsonbSensitiveSerializer.class)
   private String idCard;
 }

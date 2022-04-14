@@ -1,7 +1,9 @@
 package com.lzhpo.samples.controller;
 
 import com.lzhpo.samples.entity.FastJsonSerializerJavaBean;
+import com.lzhpo.samples.entity.GsonSerializerJavaBean;
 import com.lzhpo.samples.entity.JacksonSerializerJavaBean;
+import com.lzhpo.samples.entity.JsonbSerializerJavaBean;
 import com.lzhpo.samples.entity.SampleJavaBean;
 import com.lzhpo.sensitive.annocation.IgnoreSensitive;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +33,24 @@ public class TestController {
         .name("王小明")
         .password("1234567")
         .idCard("530321199204074622")
+        .build();
+  }
+
+  @GetMapping("jsonbSerializer")
+  public JsonbSerializerJavaBean jsonbSerializer() {
+    return JsonbSerializerJavaBean.builder()
+        .name("刘小明")
+        .password("12345678")
+        .idCard("530321199204074633")
+        .build();
+  }
+
+  @GetMapping("gsonSerializer")
+  public GsonSerializerJavaBean gsonSerializer() {
+    return GsonSerializerJavaBean.builder()
+        .name("张三丰")
+        .password("123987345")
+        .idCard("530321199204074644")
         .build();
   }
 

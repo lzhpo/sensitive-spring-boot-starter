@@ -12,10 +12,10 @@ import lombok.Data;
  */
 @Data
 @Builder
-// @JsonSerialize(using = JacksonSensitiveSerializer.class)
 public class JacksonSerializerJavaBean {
 
   @Sensitive(strategy = SensitiveStrategy.CHINESE_NAME)
+  @JsonSerialize(using = JacksonSensitiveSerializer.class)
   private String name;
 
   @Sensitive(strategy = SensitiveStrategy.PASSWORD)
