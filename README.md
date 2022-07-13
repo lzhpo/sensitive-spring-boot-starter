@@ -1,3 +1,3 @@
-[](docs/images/logo.png)
+![](./docs/images/logo.png)
 
 English | [中文](README-CN.md)
