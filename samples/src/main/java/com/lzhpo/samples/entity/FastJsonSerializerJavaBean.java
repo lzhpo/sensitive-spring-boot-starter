@@ -3,7 +3,7 @@ package com.lzhpo.samples.entity;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.lzhpo.sensitive.annocation.Sensitive;
 import com.lzhpo.sensitive.enums.SensitiveStrategy;
-import com.lzhpo.sensitive.serializer.FastJsonSensitiveSerializer;
+import com.lzhpo.sensitive.support.serializer.FastJsonSensitiveSerializer;
 import lombok.Builder;
 import lombok.Data;
 

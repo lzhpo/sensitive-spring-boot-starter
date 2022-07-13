@@ -1,4 +1,4 @@
-package com.lzhpo.sensitive.serializer;
+package com.lzhpo.sensitive.support.serializer;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;

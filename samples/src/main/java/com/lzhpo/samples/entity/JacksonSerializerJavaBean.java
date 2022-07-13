@@ -3,7 +3,7 @@ package com.lzhpo.samples.entity;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.lzhpo.sensitive.annocation.Sensitive;
 import com.lzhpo.sensitive.enums.SensitiveStrategy;
-import com.lzhpo.sensitive.serializer.JacksonSensitiveSerializer;
+import com.lzhpo.sensitive.support.serializer.JacksonSensitiveSerializer;
 import lombok.Builder;
 import lombok.Data;
 

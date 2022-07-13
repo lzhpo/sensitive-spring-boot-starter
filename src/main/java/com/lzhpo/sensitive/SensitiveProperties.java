@@ -13,7 +13,9 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix = "sensitive")
 public class SensitiveProperties {
 
-  private boolean proxy;
+  private boolean enabled = true;
+
+  private boolean proxy = true;
 
   private JsonConverter converter = JsonConverter.JACKSON;
 }

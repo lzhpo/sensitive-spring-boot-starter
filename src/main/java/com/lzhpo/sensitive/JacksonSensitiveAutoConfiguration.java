@@ -1,9 +1,11 @@
 package com.lzhpo.sensitive;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.lzhpo.sensitive.utils.SensitiveInvokeUtil;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
@@ -21,6 +23,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
  */
 @Configuration
 @ConditionalOnClass({ObjectMapper.class})
+@ConditionalOnExpression("${sensitive.enabled}")
 @ConditionalOnProperty(prefix = "sensitive", value = "converter", havingValue = "jackson")
 public class JacksonSensitiveAutoConfiguration {
 
@@ -38,7 +41,7 @@ public class JacksonSensitiveAutoConfiguration {
       @Override
       protected void writeInternal(Object object, Type type, HttpOutputMessage outputMessage)
           throws IOException, HttpMessageNotWritableException {
-        SensitiveUtil.invokeSensitiveObject(object);
+        SensitiveInvokeUtil.invokeSensitiveObject(object);
         super.writeInternal(object, type, outputMessage);
       }
     };

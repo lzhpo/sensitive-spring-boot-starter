@@ -2,7 +2,7 @@ package com.lzhpo.samples.entity;
 
 import com.lzhpo.sensitive.annocation.Sensitive;
 import com.lzhpo.sensitive.enums.SensitiveStrategy;
-import com.lzhpo.sensitive.serializer.JsonbSensitiveSerializer;
+import com.lzhpo.sensitive.support.serializer.JsonbSensitiveSerializer;
 import javax.json.bind.annotation.JsonbTypeSerializer;
 import lombok.Builder;
 import lombok.Data;

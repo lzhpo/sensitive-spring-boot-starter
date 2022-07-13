@@ -1,4 +1,4 @@
-package com.lzhpo.sensitive.serializer;
+package com.lzhpo.sensitive.support.serializer;
 
 import javax.json.bind.serializer.JsonbSerializer;
 import javax.json.bind.serializer.SerializationContext;

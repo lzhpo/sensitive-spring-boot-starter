@@ -1,4 +1,4 @@
-package com.lzhpo.sensitive.serializer;
+package com.lzhpo.sensitive.support.serializer;
 
 import cn.hutool.core.annotation.AnnotationUtil;
 import cn.hutool.core.util.ReflectUtil;
@@ -8,7 +8,7 @@ import com.alibaba.fastjson.serializer.SerialContext;
 import com.alibaba.fastjson.serializer.SerializeWriter;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.lzhpo.sensitive.annocation.Sensitive;
-import com.lzhpo.sensitive.SensitiveUtil;
+import com.lzhpo.sensitive.utils.SensitiveInvokeUtil;
 import java.lang.reflect.Field;
 import java.lang.reflect.Type;
 import java.util.IdentityHashMap;
@@ -54,7 +54,7 @@ public class FastJsonSensitiveSerializer implements ObjectSerializer {
     if (Objects.nonNull(targetObject)) {
       Field field = ReflectUtil.getField(targetObject.getClass(), fieldName);
       Sensitive sensitive = AnnotationUtil.getAnnotation(field, Sensitive.class);
-      String finalFieldValue = SensitiveUtil.invokeSensitiveField(sensitive, filedValue);
+      String finalFieldValue = SensitiveInvokeUtil.invokeSensitiveField(sensitive, filedValue);
       out.writeString(finalFieldValue);
     } else {
       out.writeString(filedValue);

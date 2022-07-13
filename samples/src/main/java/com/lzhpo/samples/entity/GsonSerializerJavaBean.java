@@ -3,7 +3,7 @@ package com.lzhpo.samples.entity;
 import com.google.gson.annotations.JsonAdapter;
 import com.lzhpo.sensitive.annocation.Sensitive;
 import com.lzhpo.sensitive.enums.SensitiveStrategy;
-import com.lzhpo.sensitive.serializer.GsonSensitiveSerializer;
+import com.lzhpo.sensitive.support.serializer.GsonSensitiveSerializer;
 import lombok.Builder;
 import lombok.Data;
 
