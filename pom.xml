@@ -21,13 +21,18 @@
   <description>sensitive-spring-boot-starter</description>
 
   <properties>
+    <server.id>ossrh</server.id>
     <java.version>1.8</java.version>
-    <revision>1.0.0</revision>
-    <hutool.version>5.7.22</hutool.version>
-    <fmt-maven-plugin.version>2.18</fmt-maven-plugin.version>
-    <fastjson.version>1.2.80</fastjson.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <maven.gpg.version>3.0.1</maven.gpg.version>
+    <maven.source.version>3.0.1</maven.source.version>
+    <maven.javadoc.version>3.0.1</maven.javadoc.version>
+    <fmt-maven-plugin.version>2.19</fmt-maven-plugin.version>
     <jsonb.version>1.1.4</jsonb.version>
     <yasson.version>1.0.11</yasson.version>
+    <hutool.version>5.8.3</hutool.version>
+    <fastjson.version>1.2.83</fastjson.version>
   </properties>
 
   <dependencies>
@@ -54,7 +59,6 @@
       <scope>test</scope>
     </dependency>
 
-    <!-- hutool -->
     <dependency>
       <groupId>cn.hutool</groupId>
       <artifactId>hutool-all</artifactId>
@@ -66,13 +70,14 @@
       <groupId>com.alibaba</groupId>
       <artifactId>fastjson</artifactId>
       <version>${fastjson.version}</version>
-      <scope>provided</scope>
+      <optional>true</optional>
     </dependency>
 
     <!-- gson -->
     <dependency>
       <groupId>com.google.code.gson</groupId>
       <artifactId>gson</artifactId>
+      <optional>true</optional>
     </dependency>
 
     <!-- jsonb -->
@@ -80,11 +85,13 @@
       <groupId>org.eclipse</groupId>
       <artifactId>yasson</artifactId>
       <version>${yasson.version}</version>
+      <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>javax.json</groupId>
       <artifactId>javax.json-api</artifactId>
       <version>${jsonb.version}</version>
+      <optional>true</optional>
     </dependency>
   </dependencies>
 
@@ -93,14 +100,6 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
-        <configuration>
-          <excludes>
-            <exclude>
-              <groupId>org.projectlombok</groupId>
-              <artifactId>lombok</artifactId>
-            </exclude>
-          </excludes>
-        </configuration>
       </plugin>
 
       <plugin>
@@ -113,7 +112,7 @@
         <executions>
           <execution>
             <goals>
-              <goal>format</goal>
+              <goal>check</goal>
             </goals>
           </execution>
         </executions>
@@ -121,4 +120,75 @@
     </plugins>
   </build>
 
+  <profiles>
+    <profile>
+      <id>release-ossrh</id>
+      <build>
+        <plugins>
+          <!-- Source -->
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <version>${maven.source.version}</version>
+            <executions>
+              <execution>
+                <phase>package</phase>
+                <goals>
+                  <goal>jar-no-fork</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+
+          <!-- Javadoc -->
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>${maven.javadoc.version}</version>
+            <executions>
+              <execution>
+                <phase>package</phase>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+                <configuration>
+                  <locale>en_US</locale>
+                  <encoding>UTF-8</encoding>
+                  <charset>UTF-8</charset>
+                  <doclint>none</doclint>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+
+          <!-- GPG -->
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>${maven.gpg.version}</version>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+
+      <distributionManagement>
+        <snapshotRepository>
+          <id>${server.id}</id>
+          <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+          <id>${server.id}</id>
+          <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+      </distributionManagement>
+    </profile>
+  </profiles>
 </project>

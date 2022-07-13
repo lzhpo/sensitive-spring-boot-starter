@@ -10,19 +10,17 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum SensitiveConverterType {
+public enum JsonConverter {
 
   /** jackson converter type */
-  JACKSON("jackson"),
+  JACKSON,
 
   /** jsonb converter type */
-  JSONB("jsonb"),
+  JSONB,
 
   /** fastjson converter type */
-  FASTJSON("fastjson"),
+  FASTJSON,
 
   /** gson converter type */
-  GSON("gson");
-
-  private final String name;
+  GSON
 }

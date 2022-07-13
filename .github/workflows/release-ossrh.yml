@@ -1,0 +1,36 @@
+name: Release ossrh
+
+on:
+  release:
+    types: [released]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Release ossrh jobs
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Apache Maven Central
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+          # It needs to be the same as the id corresponding to the snapshot Repository in pom.xml
+          server-id: ossrh
+          # env variable for username in deploy
+          server-username: MAVEN_USERNAME
+          # env variable for token in deploy
+          server-password: MAVEN_CENTRAL_TOKEN
+          # Value of the GPG private key to import
+          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
+          # env variable for GPG private key passphrase
+          gpg-passphrase: MAVEN_GPG_PASSPHRASE
+
+      - name: Release to Apache Maven Central
+        run: mvn -Prelease-ossrh deploy
+        env:
+          MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          MAVEN_CENTRAL_TOKEN: ${{ secrets.OSSRH_TOKEN }}
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}

@@ -8,7 +8,7 @@ import com.alibaba.fastjson.serializer.SerialContext;
 import com.alibaba.fastjson.serializer.SerializeWriter;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.lzhpo.sensitive.annocation.Sensitive;
-import com.lzhpo.sensitive.utils.SensitiveUtil;
+import com.lzhpo.sensitive.SensitiveUtil;
 import java.lang.reflect.Field;
 import java.lang.reflect.Type;
 import java.util.IdentityHashMap;

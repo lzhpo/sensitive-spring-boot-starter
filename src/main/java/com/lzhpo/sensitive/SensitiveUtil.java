@@ -1,11 +1,10 @@
-package com.lzhpo.sensitive.utils;
+package com.lzhpo.sensitive;
 
 import cn.hutool.core.annotation.AnnotationUtil;
 import cn.hutool.core.lang.SimpleCache;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.extra.spring.SpringUtil;
-import com.lzhpo.sensitive.annocation.EnableSensitive;
 import com.lzhpo.sensitive.annocation.IgnoreSensitive;
 import com.lzhpo.sensitive.annocation.Sensitive;
 import com.lzhpo.sensitive.enums.SensitiveStrategy;
@@ -17,8 +16,6 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.ApplicationContext;
-import org.springframework.util.ObjectUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.method.HandlerMethod;
@@ -36,20 +33,17 @@ public class SensitiveUtil {
   /** For Class, field cache with @Sensitive annotation and String type */
   private static final SimpleCache<Class<?>, Field[]> REQUIRE_FIELDS_CACHE = new SimpleCache<>();
 
-  public static void invokeSensitiveObject(ApplicationContext applicationContext, Object object) {
-    EnableSensitive enableSensitive =
-        findFirstAnnotation(applicationContext, EnableSensitive.class);
-    if (Objects.nonNull(enableSensitive) && enableSensitive.autoConvert()) {
-      invokeSensitiveObject(object);
-    }
-  }
-
   /**
    * Invoke object field sensitive
    *
    * @param object object
    */
   public static void invokeSensitiveObject(Object object) {
+    SensitiveProperties sensitiveProperties = SpringUtil.getBean(SensitiveProperties.class);
+    if (!sensitiveProperties.isProxy()) {
+      return;
+    }
+
     long startMillis = System.currentTimeMillis();
     Class<?> clazz = object.getClass();
 
@@ -138,16 +132,6 @@ public class SensitiveUtil {
         annotation = handlerMethod.getMethodAnnotation(annotationType);
       }
       return annotation;
-    }
-    return null;
-  }
-
-  public static <T extends Annotation> T findFirstAnnotation(
-      ApplicationContext applicationContext, Class<T> annotationType) {
-    String[] beanNamesForAnnotation =
-        Objects.requireNonNull(applicationContext).getBeanNamesForAnnotation(annotationType);
-    if (!ObjectUtils.isEmpty(beanNamesForAnnotation)) {
-      return applicationContext.findAnnotationOnBean(beanNamesForAnnotation[0], annotationType);
     }
     return null;
   }

@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.ContextualSerializer;
 import com.lzhpo.sensitive.annocation.Sensitive;
-import com.lzhpo.sensitive.utils.SensitiveUtil;
+import com.lzhpo.sensitive.SensitiveUtil;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.Optional;
@@ -56,7 +56,7 @@ public class JacksonSensitiveSerializer extends JsonSerializer<String>
 
     if (Objects.nonNull(handlerMethod)) {
       boolean ignoreSensitive = SensitiveUtil.isIgnoreSensitive();
-      // If neither the current class nor the method has the @IgnoreSensitive annotation
+      // If neither the current class nor the method has the @IgnoreSensitive annotation,
       // it means that the field sensitive is not ignored
       if (!ignoreSensitive) {
         this.sensitive =
