@@ -36,17 +36,11 @@ public class SensitiveConfigurationSelector implements ImportSelector {
   public String[] selectImports(AnnotationMetadata importingClassMetadata) {
     MergedAnnotations annotations = importingClassMetadata.getAnnotations();
     MergedAnnotation<EnableSensitive> mergedAnnotation = annotations.get(EnableSensitive.class);
-
     if (!mergedAnnotation.isPresent()) {
       return new String[0];
     }
 
-    boolean proxy = mergedAnnotation.getBoolean("proxy");
-    if (!proxy) {
-      return new String[0];
-    }
-
-    JsonConverter converter = mergedAnnotation.getEnum("converter", JsonConverter.class);
+    JsonConverter converter = mergedAnnotation.getEnum("value", JsonConverter.class);
     switch (converter) {
       case GSON:
         return new String[] {GsonSensitiveConfiguration.class.getName()};

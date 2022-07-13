@@ -37,20 +37,11 @@ import org.springframework.context.annotation.Import;
 public @interface EnableSensitive {
 
   /**
-   * Whether to proxy sensitive by the internal json sensitive.
-   *
-   * <p>Default proxy
-   *
-   * @return proxy
-   */
-  boolean proxy() default true;
-
-  /**
-   * If {@link EnableSensitive#proxy()}, Which {@link JsonConverter} to use.
+   * Which {@link JsonConverter} to use.
    *
    * <p>Default use {@link JsonConverter#JACKSON}
    *
    * @return {@link JsonConverter}
    */
-  JsonConverter converter() default JsonConverter.JACKSON;
+  JsonConverter value() default JsonConverter.JACKSON;
 }
