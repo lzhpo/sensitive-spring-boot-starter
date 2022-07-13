@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerExecutionChain;
-import org.springframework.web.servlet.HandlerMapping;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 /**
  * @author lzhpo
@@ -17,14 +17,14 @@ import org.springframework.web.servlet.HandlerMapping;
 public class HandlerMethodServletParser implements HandlerMethodParser {
 
   @Autowired
-  private HandlerMapping handlerMapping;
+  private RequestMappingHandlerMapping handlerMapping;
 
   @Override
   @SneakyThrows
   public HandlerMethod get() {
     HttpServletRequest servletRequest = ServletContextUtil.getRequest();
     HandlerExecutionChain executionChain = handlerMapping.getHandler(servletRequest);
-    Assert.notNull(executionChain, "Cannot parse handler from the request.");
+    Assert.notNull(executionChain, "Cannot parse to HandlerExecutionChain.");
     return (HandlerMethod) executionChain.getHandler();
   }
 }

@@ -3,7 +3,7 @@ package com.lzhpo.sensitive.support.handler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.method.HandlerMethod;
-import org.springframework.web.reactive.HandlerMapping;
+import org.springframework.web.reactive.result.method.annotation.RequestMappingHandlerMapping;
 import reactor.core.publisher.Mono;
 
 /**
@@ -13,7 +13,7 @@ import reactor.core.publisher.Mono;
 public class HandlerMethodWebfluxParser implements HandlerMethodParser {
 
   @Autowired
-  private HandlerMapping handlerMapping;
+  private RequestMappingHandlerMapping handlerMapping;
 
   @Override
   public HandlerMethod get() {
