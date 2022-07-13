@@ -22,7 +22,7 @@ public class TestController {
   public JacksonSerializerJavaBean jacksonSerializer() {
     return JacksonSerializerJavaBean.builder()
         .name("张小明")
-        .password("123456")
+        .password("egfiuajlsdk")
         .idCard("530321199204074611")
         .build();
   }
@@ -31,7 +31,7 @@ public class TestController {
   public FastJsonSerializerJavaBean fastJsonSerializer() {
     return FastJsonSerializerJavaBean.builder()
         .name("王小明")
-        .password("1234567")
+        .password("gifuebakds")
         .idCard("530321199204074622")
         .build();
   }
@@ -40,7 +40,7 @@ public class TestController {
   public JsonbSerializerJavaBean jsonbSerializer() {
     return JsonbSerializerJavaBean.builder()
         .name("刘小明")
-        .password("12345678")
+        .password("gewfuadsfsf")
         .idCard("530321199204074633")
         .build();
   }
@@ -49,7 +49,7 @@ public class TestController {
   public GsonSerializerJavaBean gsonSerializer() {
     return GsonSerializerJavaBean.builder()
         .name("张三丰")
-        .password("123987345")
+        .password("graharehtht")
         .idCard("530321199204074644")
         .build();
   }
@@ -91,21 +91,21 @@ public class TestController {
         .password("123456")
         .carLicense("粤A66666")
         .bankCard("9988002866797031")
-        .preKeep1PostKeep1("1234567891")
-        .preKeep1PostKeep2("1234567892")
-        .preKeep1PostKeep3("1234567892")
-        .preKeep6PostKeep0("12345")
-        .preKeep0PostKeep6("1234567")
         .preKeep1("ABC66651")
         .postKeep1("ABC66691")
         .customize("ABC6661")
         .preKeep0("ABC6662")
         .postKeep0("ABC6663")
-        .preKeep0PostKeep0("ABC6664")
-        .preKeep10PostKeep0("1234567890")
-        .preKeep0PostKeep10("1234567890")
-        .preKeep9PostKeep0("123456789")
-        .preKeep10PostKeep9("123456789")
+        .preKeep0PostKeep0("123")
+        .preKeep1PostKeep1("1234")
+        .preKeep1PostKeep2("12345")
+        .preKeep1PostKeep3("123456")
+        .preKeep6PostKeep0("1234567")
+        .preKeep0PostKeep6("1234567")
+        .preKeep7PostKeep0("12345678")
+        .preKeep0PostKeep7("12345678")
+        .preKeep8PostKeep0("123456789")
+        .preKeep0PostKeep8("123456789")
         .build();
   }
 }
