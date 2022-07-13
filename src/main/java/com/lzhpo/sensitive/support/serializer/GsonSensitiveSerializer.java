@@ -7,7 +7,7 @@ import com.google.gson.JsonSerializer;
 import java.lang.reflect.Type;
 
 /**
- * TODO
+ * TODO: Currently not support it.
  *
  * @author lzhpo
  * @see com.google.gson.internal.bind.TreeTypeAdapter

@@ -4,7 +4,6 @@ import cn.hutool.core.lang.SimpleCache;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.extra.spring.SpringUtil;
-import com.lzhpo.sensitive.SensitiveProperties;
 import com.lzhpo.sensitive.annocation.IgnoreSensitive;
 import com.lzhpo.sensitive.annocation.Sensitive;
 import com.lzhpo.sensitive.enums.SensitiveStrategy;
@@ -33,13 +32,7 @@ public class SensitiveInvokeUtil {
    * @param object object
    */
   public static void invokeSensitiveObject(Object object) {
-    SensitiveProperties sensitiveProperties = SpringUtil.getBean(SensitiveProperties.class);
-    if (!sensitiveProperties.isProxy()) {
-      return;
-    }
-
     Class<?> clazz = object.getClass();
-
     if (!ignoreSensitive()) {
       Field[] requireFields =
           REQUIRE_FIELDS_CACHE.get(
@@ -86,7 +79,7 @@ public class SensitiveInvokeUtil {
     return Arrays.stream(SensitiveStrategy.values())
         .filter(x -> x == sensitive.strategy())
         .findAny()
-        .map(handler -> handler.accept(fieldValue, sensitive))
+        .map(handler -> handler.apply(fieldValue, sensitive))
         .orElseThrow(() -> new IllegalArgumentException("Unknown sensitive strategy type"));
   }
 

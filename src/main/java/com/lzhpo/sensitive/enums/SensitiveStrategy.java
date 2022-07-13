@@ -17,7 +17,7 @@ public enum SensitiveStrategy {
   /** chinese name */
   CHINESE_NAME() {
     @Override
-    public String accept(String value, Sensitive sensitive) {
+    public String apply(String value, Sensitive sensitive) {
       return SensitiveStrategy.invoke(value, sensitive, () -> DesensitizedUtil.chineseName(value));
     }
   },
@@ -25,7 +25,7 @@ public enum SensitiveStrategy {
   /** id card */
   ID_CARD() {
     @Override
-    public String accept(String value, Sensitive sensitive) {
+    public String apply(String value, Sensitive sensitive) {
       return SensitiveStrategy.invoke(
           value, sensitive, () -> DesensitizedUtil.idCardNum(value, 1, 2));
     }
@@ -34,7 +34,7 @@ public enum SensitiveStrategy {
   /** fixed phone */
   FIXED_PHONE() {
     @Override
-    public String accept(String value, Sensitive sensitive) {
+    public String apply(String value, Sensitive sensitive) {
       return SensitiveStrategy.invoke(value, sensitive, () -> DesensitizedUtil.fixedPhone(value));
     }
   },
@@ -42,7 +42,7 @@ public enum SensitiveStrategy {
   /** mobile phone */
   MOBILE_PHONE() {
     @Override
-    public String accept(String value, Sensitive sensitive) {
+    public String apply(String value, Sensitive sensitive) {
       return SensitiveStrategy.invoke(value, sensitive, () -> DesensitizedUtil.mobilePhone(value));
     }
   },
@@ -50,7 +50,7 @@ public enum SensitiveStrategy {
   /** address */
   ADDRESS() {
     @Override
-    public String accept(String value, Sensitive sensitive) {
+    public String apply(String value, Sensitive sensitive) {
       return SensitiveStrategy.invoke(value, sensitive, () -> DesensitizedUtil.address(value, 8));
     }
   },
@@ -58,7 +58,7 @@ public enum SensitiveStrategy {
   /** email */
   EMAIL() {
     @Override
-    public String accept(String value, Sensitive sensitive) {
+    public String apply(String value, Sensitive sensitive) {
       return SensitiveStrategy.invoke(value, sensitive, () -> DesensitizedUtil.email(value));
     }
   },
@@ -66,7 +66,7 @@ public enum SensitiveStrategy {
   /** password */
   PASSWORD() {
     @Override
-    public String accept(String value, Sensitive sensitive) {
+    public String apply(String value, Sensitive sensitive) {
       return SensitiveStrategy.invoke(value, sensitive, () -> DesensitizedUtil.password(value));
     }
   },
@@ -74,7 +74,7 @@ public enum SensitiveStrategy {
   /** Chinese mainland license plates, including ordinary vehicles, new energy vehicles */
   CAR_LICENSE() {
     @Override
-    public String accept(String value, Sensitive sensitive) {
+    public String apply(String value, Sensitive sensitive) {
       return SensitiveStrategy.invoke(value, sensitive, () -> DesensitizedUtil.carLicense(value));
     }
   },
@@ -82,7 +82,7 @@ public enum SensitiveStrategy {
   /** bank card */
   BANK_CARD() {
     @Override
-    public String accept(String value, Sensitive sensitive) {
+    public String apply(String value, Sensitive sensitive) {
       return SensitiveStrategy.invoke(value, sensitive, () -> DesensitizedUtil.bankCard(value));
     }
   },
@@ -90,7 +90,7 @@ public enum SensitiveStrategy {
   /** customize */
   CUSTOMIZE() {
     @Override
-    public String accept(String value, Sensitive sensitive) {
+    public String apply(String value, Sensitive sensitive) {
       return SensitiveStrategy.invoke(value, sensitive, null);
     }
   };
@@ -130,5 +130,5 @@ public enum SensitiveStrategy {
    * @param sensitive {@link Sensitive}
    * @return after sensitive value
    */
-  public abstract String accept(String value, Sensitive sensitive);
+  public abstract String apply(String value, Sensitive sensitive);
 }

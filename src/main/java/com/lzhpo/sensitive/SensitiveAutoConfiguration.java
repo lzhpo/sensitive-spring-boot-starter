@@ -2,19 +2,18 @@ package com.lzhpo.sensitive;
 
 import com.lzhpo.sensitive.support.handler.HandlerMethodServletParser;
 import com.lzhpo.sensitive.support.handler.HandlerMethodWebfluxParser;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication.Type;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 
 /**
  * @author lzhpo
  */
 @Configuration
-@ConditionalOnExpression("${sensitive.enabled}")
-@EnableConfigurationProperties({SensitiveProperties.class})
+@Import({SensitiveConfigurationSelector.class})
 public class SensitiveAutoConfiguration {
 
   @Bean

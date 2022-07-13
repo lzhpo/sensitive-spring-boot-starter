@@ -40,47 +40,47 @@ public class SampleJavaBean {
   private String bankCard;
 
   @Sensitive(strategy = SensitiveStrategy.CUSTOMIZE, preKeep = 1, postKeep = 1)
-  private String customize1;
+  private String preKeep1PostKeep1;
 
   @Sensitive(strategy = SensitiveStrategy.CUSTOMIZE, preKeep = 1, postKeep = 2)
-  private String customize2;
+  private String preKeep1PostKeep2;
 
   @Sensitive(strategy = SensitiveStrategy.CUSTOMIZE, preKeep = 1, postKeep = 3)
-  private String customize3;
+  private String preKeep1PostKeep3;
 
   @Sensitive(strategy = SensitiveStrategy.CUSTOMIZE, preKeep = 6, postKeep = 0)
-  private String customize4;
+  private String preKeep6PostKeep0;
 
   @Sensitive(strategy = SensitiveStrategy.CUSTOMIZE, preKeep = 0, postKeep = 6)
-  private String customize5;
+  private String preKeep0PostKeep6;
 
   @Sensitive(strategy = SensitiveStrategy.CUSTOMIZE)
-  private String customizeIgnoreKeep1;
+  private String customize;
 
   @Sensitive(strategy = SensitiveStrategy.CUSTOMIZE, preKeep = 0)
-  private String customizeIgnoreKeep2;
+  private String preKeep0;
 
   @Sensitive(strategy = SensitiveStrategy.CUSTOMIZE, postKeep = 0)
-  private String customizeIgnoreKeep3;
+  private String postKeep0;
 
   @Sensitive(strategy = SensitiveStrategy.CUSTOMIZE, preKeep = 0, postKeep = 0)
-  private String customizeIgnoreKeep4;
+  private String preKeep0PostKeep0;
 
   @Sensitive(strategy = SensitiveStrategy.CUSTOMIZE, preKeep = 1)
-  private String customizePreKeep1;
+  private String preKeep1;
 
   @Sensitive(strategy = SensitiveStrategy.CUSTOMIZE, postKeep = 1)
-  private String customizePostKeep1;
+  private String postKeep1;
 
   @Sensitive(strategy = SensitiveStrategy.CUSTOMIZE, preKeep = 10, postKeep = 0)
-  private String customizeOutOfRange1;
+  private String preKeep10PostKeep0;
 
   @Sensitive(strategy = SensitiveStrategy.CUSTOMIZE, preKeep = 0, postKeep = 10)
-  private String customizeOutOfRange2;
+  private String preKeep0PostKeep10;
 
   @Sensitive(strategy = SensitiveStrategy.CUSTOMIZE, preKeep = 9, postKeep = 0)
-  private String customizeOutOfRange3;
+  private String preKeep9PostKeep0;
 
   @Sensitive(strategy = SensitiveStrategy.CUSTOMIZE, preKeep = 10, postKeep = 9)
-  private String customizeOutOfRange4;
+  private String preKeep10PostKeep9;
 }

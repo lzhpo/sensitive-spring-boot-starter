@@ -6,12 +6,9 @@ import java.lang.reflect.Type;
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnResource;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.json.JsonbHttpMessageConverter;
 
 /**
@@ -21,16 +18,13 @@ import org.springframework.http.converter.json.JsonbHttpMessageConverter;
  * @see org.springframework.boot.autoconfigure.http.JsonbHttpMessageConvertersConfiguration
  * @see org.springframework.boot.autoconfigure.jsonb.JsonbAutoConfiguration
  */
-@Configuration
 @ConditionalOnClass(Jsonb.class)
 @ConditionalOnResource(
     resources = {
       "classpath:META-INF/services/javax.json.bind.spi.JsonbProvider",
       "classpath:META-INF/services/javax.json.spi.JsonProvider"
     })
-@ConditionalOnExpression("${sensitive.enabled}")
-@ConditionalOnProperty(prefix = "sensitive", value = "converter", havingValue = "jsonb")
-public class JsonbSensitiveAutoConfiguration {
+public class JsonbSensitiveConfiguration {
 
   @Bean
   @ConditionalOnMissingBean

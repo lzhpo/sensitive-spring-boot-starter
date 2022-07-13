@@ -1,6 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.lzhpo.sensitive.SensitiveAutoConfiguration,\
-  com.lzhpo.sensitive.FastJsonSensitiveAutoConfiguration,\
-  com.lzhpo.sensitive.GsonSensitiveAutoConfiguration,\
-  com.lzhpo.sensitive.JacksonSensitiveAutoConfiguration,\
-  com.lzhpo.sensitive.JsonbSensitiveAutoConfiguration
+  com.lzhpo.sensitive.SensitiveAutoConfiguration

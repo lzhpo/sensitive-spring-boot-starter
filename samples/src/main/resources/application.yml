@@ -1,8 +1,3 @@
 logging:
   level:
     com.lzhpo: debug
-
-sensitive:
-  enabled: true
-  proxy: true
-  converter: jackson
