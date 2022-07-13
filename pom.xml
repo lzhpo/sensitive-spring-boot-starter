@@ -20,8 +20,36 @@
   <groupId>com.lzhpo</groupId>
   <artifactId>panda-sensitive</artifactId>
   <version>${revision}</version>
-  <name>sensitive-spring-boot-starter</name>
-  <description>sensitive-spring-boot-starter</description>
+  <name>panda-sensitive</name>
+  <url>https://github.com/lzhpo/panda-sensitive</url>
+  <description>panda sensitive</description>
+
+  <scm>
+    <url>git@github.com:lzhpo/panda-sensitive.git</url>
+    <connection>scm:git@github.com:lzhpo/panda-sensitive.git</connection>
+    <developerConnection>scm:git@github.com:lzhpo/panda-sensitive.git</developerConnection>
+    <tag>HEAD</tag>
+  </scm>
+
+  <licenses>
+    <license>
+      <name>Apache License, Version 2.0</name>
+      <url>https://www.apache.org/licenses/LICENSE-2.0</url>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <id>lzhpo</id>
+      <name>lzhpo</name>
+      <email>lzhpo1024@gmail.com</email>
+      <organizationUrl>http://www.lzhpo.com</organizationUrl>
+      <roles>
+        <role>Developer</role>
+      </roles>
+      <timezone>+8</timezone>
+    </developer>
+  </developers>
 
   <properties>
     <server.id>ossrh</server.id>
