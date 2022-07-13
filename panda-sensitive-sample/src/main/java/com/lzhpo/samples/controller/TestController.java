@@ -54,32 +54,17 @@ public class TestController {
         .build();
   }
 
-  /**
-   * 忽略字段脱敏
-   *
-   * @return mock {@link SampleJavaBean}
-   */
   @IgnoreSensitive
   @GetMapping("ignoreSensitive")
   public SampleJavaBean ignoreSensitive() {
     return mockJavaBean();
   }
 
-  /**
-   * 字段脱敏
-   *
-   * @return mock {@link SampleJavaBean}
-   */
   @GetMapping("sensitive")
   public SampleJavaBean sensitive() {
     return mockJavaBean();
   }
 
-  /**
-   * 模拟数据，非真实数据，仅可用作测试
-   *
-   * @return {@link SampleJavaBean}
-   */
   private SampleJavaBean mockJavaBean() {
     return SampleJavaBean.builder()
         .name("刘子豪")
