@@ -1,4 +1,4 @@
 ![](./docs/images/logo.png)
 
-[English](README.md) | 中文
+[English](README-EN.md) | 中文
 
