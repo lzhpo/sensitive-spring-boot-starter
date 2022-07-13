@@ -16,8 +16,7 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 @Slf4j
 public class HandlerMethodServletParser implements HandlerMethodParser {
 
-  @Autowired
-  private RequestMappingHandlerMapping handlerMapping;
+  @Autowired private RequestMappingHandlerMapping handlerMapping;
 
   @Override
   @SneakyThrows

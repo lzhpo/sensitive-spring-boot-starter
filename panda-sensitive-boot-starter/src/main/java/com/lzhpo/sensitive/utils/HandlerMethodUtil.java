@@ -15,13 +15,12 @@ public class HandlerMethodUtil {
   /**
    * According to {@code annotationType}, get the annotation from {@code handlerMethod}
    *
-   * @param handlerMethod  {@link HandlerMethod}
+   * @param handlerMethod {@link HandlerMethod}
    * @param annotationType annotationType
    * @return {@link Annotation}
    */
   public static <T extends Annotation> T getAnnotation(
-      HandlerMethod handlerMethod,
-      Class<T> annotationType) {
+      HandlerMethod handlerMethod, Class<T> annotationType) {
 
     if (Objects.isNull(handlerMethod)) {
       return null;

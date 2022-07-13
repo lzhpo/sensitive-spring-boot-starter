@@ -34,8 +34,7 @@ public class JsonbSensitiveConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
-  public JsonbHttpMessageConverter jsonbHttpMessageConverter(
-      Jsonb jsonb) {
+  public JsonbHttpMessageConverter jsonbHttpMessageConverter(Jsonb jsonb) {
     JsonbHttpMessageConverter jsonbHttpMessageConverter =
         new JsonbHttpMessageConverter() {
           @Override

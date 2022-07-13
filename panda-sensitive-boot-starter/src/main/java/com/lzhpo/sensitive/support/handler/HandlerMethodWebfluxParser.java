@@ -12,8 +12,7 @@ import reactor.core.publisher.Mono;
 @Slf4j
 public class HandlerMethodWebfluxParser implements HandlerMethodParser {
 
-  @Autowired
-  private RequestMappingHandlerMapping handlerMapping;
+  @Autowired private RequestMappingHandlerMapping handlerMapping;
 
   @Override
   public HandlerMethod get() {

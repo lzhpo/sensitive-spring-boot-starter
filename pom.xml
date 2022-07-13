@@ -13,11 +13,12 @@
   </parent>
 
   <modules>
-    <module>samples</module>
+    <module>panda-sensitive-sample</module>
+    <module>panda-sensitive-boot-starter</module>
   </modules>
 
   <groupId>com.lzhpo</groupId>
-  <artifactId>sensitive-spring-boot-starter</artifactId>
+  <artifactId>panda-sensitive</artifactId>
   <version>${revision}</version>
   <name>sensitive-spring-boot-starter</name>
   <description>sensitive-spring-boot-starter</description>

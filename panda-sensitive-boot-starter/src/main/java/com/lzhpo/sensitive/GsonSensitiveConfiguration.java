@@ -28,13 +28,14 @@ public class GsonSensitiveConfiguration {
   @Bean
   @ConditionalOnMissingBean
   public GsonHttpMessageConverter gsonHttpMessageConverter(Gson gson) {
-    GsonHttpMessageConverter converter = new GsonHttpMessageConverter() {
-      @Override
-      protected void writeInternal(Object object, Type type, Writer writer) throws Exception {
-        SensitiveInvokeUtil.invokeSensitiveObject(object);
-        super.writeInternal(object, type, writer);
-      }
-    };
+    GsonHttpMessageConverter converter =
+        new GsonHttpMessageConverter() {
+          @Override
+          protected void writeInternal(Object object, Type type, Writer writer) throws Exception {
+            SensitiveInvokeUtil.invokeSensitiveObject(object);
+            super.writeInternal(object, type, writer);
+          }
+        };
     converter.setGson(gson);
     return converter;
   }
