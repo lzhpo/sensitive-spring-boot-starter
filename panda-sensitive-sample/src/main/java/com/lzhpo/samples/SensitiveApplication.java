@@ -25,7 +25,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author lzhpo
  */
 @SpringBootApplication
-@EnableSensitive(JsonConverter.FASTJSON)
+@EnableSensitive(JsonConverter.GSON)
 public class SensitiveApplication {
 
   public static void main(String[] args) {

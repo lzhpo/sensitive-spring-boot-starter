@@ -16,8 +16,7 @@
 
 package com.lzhpo.sensitive;
 
-import com.lzhpo.sensitive.support.handler.HandlerMethodServletParser;
-import com.lzhpo.sensitive.support.handler.HandlerMethodWebfluxParser;
+import com.lzhpo.sensitive.resolve.RequestMappingResolver;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication.Type;
 import org.springframework.context.annotation.Bean;
@@ -33,13 +32,7 @@ public class SensitiveAutoConfiguration {
 
   @Bean
   @ConditionalOnWebApplication(type = Type.SERVLET)
-  public HandlerMethodServletParser handlerMethodServletParser() {
-    return new HandlerMethodServletParser();
-  }
-
-  @Bean
-  @ConditionalOnWebApplication(type = Type.REACTIVE)
-  public HandlerMethodWebfluxParser handlerMethodWebfluxParser() {
-    return new HandlerMethodWebfluxParser();
+  public RequestMappingResolver handlerMethodServletParser() {
+    return new RequestMappingResolver();
   }
 }

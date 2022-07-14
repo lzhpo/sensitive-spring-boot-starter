@@ -73,7 +73,7 @@ public class SampleJavaBean {
   @Sensitive(strategy = SensitiveStrategy.CUSTOMIZE, preKeep = 0, postKeep = 0)
   private String preKeep0PostKeep0;
 
-  @Sensitive(strategy = SensitiveStrategy.CUSTOMIZE, preKeep = 1, postKeep = 1)
+  @Sensitive(strategy = SensitiveStrategy.CUSTOMIZE, preKeep = 1, postKeep = 1, replacer = '#')
   private String preKeep1PostKeep1;
 
   @Sensitive(strategy = SensitiveStrategy.CUSTOMIZE, preKeep = 1, postKeep = 2)

@@ -19,7 +19,6 @@ package com.lzhpo.sensitive;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
-import com.lzhpo.sensitive.utils.SensitiveInvokeUtil;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -35,7 +34,7 @@ import org.springframework.http.converter.HttpMessageNotWritableException;
  * @author lzhpo
  */
 @ConditionalOnClass({FastJsonConfig.class, FastJsonHttpMessageConverter.class})
-public class FastJsonSensitiveConfiguration {
+public class FastJsonSensitiveConfiguration extends AbstractSensitiveConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
@@ -45,7 +44,7 @@ public class FastJsonSensitiveConfiguration {
           @Override
           protected void writeInternal(Object object, HttpOutputMessage outputMessage)
               throws IOException, HttpMessageNotWritableException {
-            SensitiveInvokeUtil.invokeSensitiveObject(object);
+            invokeSensitiveObject(object);
             super.writeInternal(object, outputMessage);
           }
         };

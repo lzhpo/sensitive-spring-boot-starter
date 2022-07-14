@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.lzhpo.sensitive.support.handler;
+package com.lzhpo.sensitive.resolve;
 
 import com.lzhpo.sensitive.utils.ServletContextUtil;
 import javax.servlet.http.HttpServletRequest;
@@ -30,13 +30,13 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
  * @author lzhpo
  */
 @Slf4j
-public class HandlerMethodServletParser implements HandlerMethodParser {
+public class RequestMappingResolver implements HandlerMethodResolver {
 
   @Autowired private RequestMappingHandlerMapping handlerMapping;
 
   @Override
   @SneakyThrows
-  public HandlerMethod get() {
+  public HandlerMethod resolve() {
     HttpServletRequest servletRequest = ServletContextUtil.getRequest();
     HandlerExecutionChain executionChain = handlerMapping.getHandler(servletRequest);
     Assert.notNull(executionChain, "Cannot parse to HandlerExecutionChain.");
