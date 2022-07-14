@@ -39,9 +39,7 @@ implementation 'com.lzhpo:panda-sensitive-boot-starter:${latest-version}'
 
 ### 3.实体类字段上使用`@Sensitive`注解配置脱敏规则
 
-将`@Sensitive`注解中的`strategy`设置为`SensitiveStrategy.CUSTOMIZE`。
-
-`preKeep`是字符串前置保留字符个数，`postKeep`是字符串后置保留字符个数，`replacer`是脱敏后的字符。
+`@Sensitive`注解说明：`strategy`是脱敏策略，`preKeep`是字符串前置保留字符个数，`postKeep`是字符串后置保留字符个数，`replacer`是脱敏后的字符。
 
 #### 支持的脱敏策略
 
