@@ -2,7 +2,7 @@
 
 ## 它是什么？
 
-> 一款强大的数据脱敏插件，支持多种脱敏策略，支持自定义脱敏策略，支持自定义脱敏替换符，支持在controller上使用注解跳过脱敏，等等...
+> 一款强大的数据脱敏插件，支持多种脱敏策略（中文姓名、身份证号、固定电话、手机号码、地址、电子邮箱、密码、车牌号、银行卡号 等等...），支持自定义脱敏策略，支持自定义脱敏替换符，支持在Controller上使用注解跳过脱敏，等等...
 
 ## 如何使用？
 
@@ -45,7 +45,7 @@ implementation 'com.lzhpo:panda-sensitive-boot-starter:${latest-version}'
    ```
    比如：`刘子豪`脱敏之后为`刘**`。
 
-2. 身份证：保留前1位和后2位。
+2. 身份证号：保留前1位和后2位。
    ```java
    @Sensitive(strategy = SensitiveStrategy.ID_CARD)
    private String idCard;
@@ -127,7 +127,7 @@ private String preKeep1PostKeep1;
 
 ### 3.使用`@IgnoreSensitive`注解标注在controller上可忽略脱敏
 
-#### 3.1.在controller类上使用`@IgnoreSensitive`表示此类下所有接口都忽略脱敏
+#### 3.1.在Controller类上使用`@IgnoreSensitive`表示此类下所有接口都忽略脱敏
 
 此controller下的所有接口都将忽略脱敏。
 
@@ -149,7 +149,7 @@ public class NoSensitiveController {
 }
 ```
 
-#### 3.2.在controller的方法中使用`@IgnoreSensitive`表示此接口忽略脱敏
+#### 3.2.在Controller的方法中使用`@IgnoreSensitive`表示此接口忽略脱敏
 
 ```java
 @RestController
@@ -175,7 +175,7 @@ sample2将忽略`SampleJavaBean`对象的字段脱敏，sample1不影响。
 
 ### 1.支持使用注解指定Spring的`HttpMessageConverter`
 
-*这部分是为了方便不想自己手动写代码配置`HttpMessageConverter`的，和数据脱敏逻辑无关，如果不需要更改Spring默认的jackson，则无需配置。*
+*这部分是为了方便不想自己手动写代码配置`HttpMessageConverter`的，和数据脱敏逻辑无关，如果不需要更改Spring默认的Jackson，则无需配置。*
 
 配置方式如下：
 
