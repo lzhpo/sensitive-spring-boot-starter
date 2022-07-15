@@ -18,9 +18,9 @@ package com.lzhpo.sensitive.resolve;
 
 import com.lzhpo.sensitive.utils.ServletContextUtil;
 import javax.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerExecutionChain;
@@ -30,9 +30,10 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
  * @author lzhpo
  */
 @Slf4j
+@RequiredArgsConstructor
 public class RequestMappingResolver implements HandlerMethodResolver {
 
-  @Autowired private RequestMappingHandlerMapping handlerMapping;
+  private final RequestMappingHandlerMapping handlerMapping;
 
   @Override
   @SneakyThrows

@@ -16,7 +16,7 @@
 
 package com.lzhpo.sensitive.annocation;
 
-import com.lzhpo.sensitive.enums.SensitiveStrategy;
+import com.lzhpo.sensitive.SensitiveStrategy;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;

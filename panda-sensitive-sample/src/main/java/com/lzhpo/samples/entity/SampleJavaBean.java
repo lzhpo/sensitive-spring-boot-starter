@@ -16,8 +16,8 @@
 
 package com.lzhpo.samples.entity;
 
+import com.lzhpo.sensitive.SensitiveStrategy;
 import com.lzhpo.sensitive.annocation.Sensitive;
-import com.lzhpo.sensitive.enums.SensitiveStrategy;
 import lombok.Builder;
 import lombok.Data;
 

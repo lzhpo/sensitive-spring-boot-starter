@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
-package com.lzhpo.sensitive;
+package com.lzhpo.sensitive.support;
 
 import com.google.gson.Gson;
-import java.io.Writer;
-import java.lang.reflect.Type;
+import com.lzhpo.sensitive.AbstractSensitiveConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -32,7 +31,7 @@ import org.springframework.http.converter.json.GsonHttpMessageConverter;
  * @see org.springframework.boot.autoconfigure.gson.GsonAutoConfiguration
  */
 @ConditionalOnClass({Gson.class})
-public class GsonSensitiveConfiguration extends AbstractSensitiveConfiguration {
+public class GsonConverterConfiguration extends AbstractSensitiveConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
@@ -43,15 +42,8 @@ public class GsonSensitiveConfiguration extends AbstractSensitiveConfiguration {
   @Bean
   @ConditionalOnMissingBean
   public GsonHttpMessageConverter gsonHttpMessageConverter(Gson gson) {
-    GsonHttpMessageConverter converter =
-        new GsonHttpMessageConverter() {
-          @Override
-          protected void writeInternal(Object object, Type type, Writer writer) throws Exception {
-            invokeSensitiveObject(object);
-            super.writeInternal(object, type, writer);
-          }
-        };
-    converter.setGson(gson);
-    return converter;
+    GsonHttpMessageConverter messageConverter = new GsonHttpMessageConverter();
+    messageConverter.setGson(gson);
+    return messageConverter;
   }
 }

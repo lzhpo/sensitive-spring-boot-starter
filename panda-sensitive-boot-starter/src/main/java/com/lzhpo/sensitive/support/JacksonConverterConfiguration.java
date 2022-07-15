@@ -14,16 +14,13 @@
  * limitations under the License.
  */
 
-package com.lzhpo.sensitive;
+package com.lzhpo.sensitive.support;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.IOException;
-import java.lang.reflect.Type;
+import com.lzhpo.sensitive.AbstractSensitiveConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpOutputMessage;
-import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 
 /**
@@ -34,7 +31,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
  * @see org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration
  */
 @ConditionalOnClass({ObjectMapper.class})
-public class JacksonSensitiveConfiguration extends AbstractSensitiveConfiguration {
+public class JacksonConverterConfiguration extends AbstractSensitiveConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
@@ -44,15 +41,8 @@ public class JacksonSensitiveConfiguration extends AbstractSensitiveConfiguratio
 
   @Bean
   @ConditionalOnMissingBean
-  public MappingJackson2HttpMessageConverter jackson2HttpMessageConverter(
+  public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter(
       ObjectMapper objectMapper) {
-    return new MappingJackson2HttpMessageConverter(objectMapper) {
-      @Override
-      protected void writeInternal(Object object, Type type, HttpOutputMessage outputMessage)
-          throws IOException, HttpMessageNotWritableException {
-        invokeSensitiveObject(object);
-        super.writeInternal(object, type, outputMessage);
-      }
-    };
+    return new MappingJackson2HttpMessageConverter(objectMapper);
   }
 }

@@ -5,15 +5,14 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.ReflectUtil;
 import com.lzhpo.sensitive.annocation.IgnoreSensitive;
 import com.lzhpo.sensitive.annocation.Sensitive;
-import com.lzhpo.sensitive.enums.SensitiveStrategy;
 import com.lzhpo.sensitive.resolve.HandlerMethodResolver;
 import com.lzhpo.sensitive.utils.HandlerMethodUtil;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Optional;
-import javax.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration;
 import org.springframework.web.method.HandlerMethod;
 
@@ -25,9 +24,18 @@ import org.springframework.web.method.HandlerMethod;
 @Slf4j
 public abstract class AbstractSensitiveConfiguration {
 
-  @Resource protected HandlerMethodResolver handlerMethodResolver;
+  protected HandlerMethodResolver handlerMethodResolver;
 
   private static final SimpleCache<Class<?>, Field[]> SENSITIVE_FIELDS_CACHE = new SimpleCache<>();
+
+  protected HandlerMethodResolver getHandlerMethodResolver() {
+    return handlerMethodResolver;
+  }
+
+  @Autowired
+  protected void setHandlerMethodResolver(HandlerMethodResolver handlerMethodResolver) {
+    this.handlerMethodResolver = handlerMethodResolver;
+  }
 
   /**
    * Invoke object field sensitive

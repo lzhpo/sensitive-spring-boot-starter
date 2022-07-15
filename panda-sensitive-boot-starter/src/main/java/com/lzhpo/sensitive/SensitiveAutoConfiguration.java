@@ -16,23 +16,31 @@
 
 package com.lzhpo.sensitive;
 
+import com.lzhpo.sensitive.resolve.HandlerMethodResolver;
 import com.lzhpo.sensitive.resolve.RequestMappingResolver;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication.Type;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 /**
  * @author lzhpo
  */
 @Configuration
-@Import({SensitiveConfigurationSelector.class})
+@ConditionalOnWebApplication(type = Type.SERVLET)
 public class SensitiveAutoConfiguration {
 
   @Bean
-  @ConditionalOnWebApplication(type = Type.SERVLET)
-  public RequestMappingResolver handlerMethodServletParser() {
-    return new RequestMappingResolver();
+  public RequestMappingResolver handlerMethodServletParser(
+      RequestMappingHandlerMapping handlerMapping) {
+    return new RequestMappingResolver(handlerMapping);
+  }
+
+  @Bean
+  public ConverterBeanPostProcessor converterBeanPostProcessor(
+      @Lazy HandlerMethodResolver handlerMethodResolver) {
+    return new ConverterBeanPostProcessor(handlerMethodResolver);
   }
 }

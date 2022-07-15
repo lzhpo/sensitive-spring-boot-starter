@@ -14,11 +14,9 @@
  * limitations under the License.
  */
 
-package com.lzhpo.sensitive;
+package com.lzhpo.sensitive.support;
 
-import com.lzhpo.sensitive.annocation.EnableSensitive;
-import com.lzhpo.sensitive.enums.JsonConverter;
-import lombok.RequiredArgsConstructor;
+import com.lzhpo.sensitive.annocation.HttpMessageConverter;
 import org.springframework.context.annotation.ImportSelector;
 import org.springframework.core.annotation.MergedAnnotation;
 import org.springframework.core.annotation.MergedAnnotations;
@@ -29,28 +27,29 @@ import org.springframework.core.type.AnnotationMetadata;
  *
  * @author lzhpo
  */
-@RequiredArgsConstructor
-public class SensitiveConfigurationSelector implements ImportSelector {
+public class HttpMessageConverterSelector implements ImportSelector {
 
   @Override
   public String[] selectImports(AnnotationMetadata importingClassMetadata) {
     MergedAnnotations annotations = importingClassMetadata.getAnnotations();
-    MergedAnnotation<EnableSensitive> mergedAnnotation = annotations.get(EnableSensitive.class);
+    MergedAnnotation<HttpMessageConverter> mergedAnnotation =
+        annotations.get(HttpMessageConverter.class);
     if (!mergedAnnotation.isPresent()) {
       return new String[0];
     }
 
-    JsonConverter converter = mergedAnnotation.getEnum("value", JsonConverter.class);
+    HttpMessageConverterEnum converter =
+        mergedAnnotation.getEnum("value", HttpMessageConverterEnum.class);
     switch (converter) {
       case GSON:
-        return new String[] {GsonSensitiveConfiguration.class.getName()};
+        return new String[] {GsonConverterConfiguration.class.getName()};
       case FASTJSON:
-        return new String[] {FastJsonSensitiveConfiguration.class.getName()};
+        return new String[] {FastJsonConverterConfiguration.class.getName()};
       case JSONB:
-        return new String[] {JsonbSensitiveConfiguration.class.getName()};
+        return new String[] {JsonbConverterConfiguration.class.getName()};
       case JACKSON:
       default:
-        return new String[] {JacksonSensitiveConfiguration.class.getName()};
+        return new String[] {JacksonConverterConfiguration.class.getName()};
     }
   }
 }

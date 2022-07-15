@@ -14,19 +14,16 @@
  * limitations under the License.
  */
 
-package com.lzhpo.sensitive;
+package com.lzhpo.sensitive.support;
 
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
-import java.io.IOException;
+import com.lzhpo.sensitive.AbstractSensitiveConfiguration;
 import java.nio.charset.StandardCharsets;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpOutputMessage;
-import org.springframework.http.converter.HttpMessageNotWritableException;
 
 /**
  * Use fastJson as sensitive converter
@@ -34,25 +31,17 @@ import org.springframework.http.converter.HttpMessageNotWritableException;
  * @author lzhpo
  */
 @ConditionalOnClass({FastJsonConfig.class, FastJsonHttpMessageConverter.class})
-public class FastJsonSensitiveConfiguration extends AbstractSensitiveConfiguration {
+public class FastJsonConverterConfiguration extends AbstractSensitiveConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
-  public HttpMessageConverters fastJsonHttpMessageConverters() {
-    FastJsonHttpMessageConverter fastJsonHttpMessageConverter =
-        new FastJsonHttpMessageConverter() {
-          @Override
-          protected void writeInternal(Object object, HttpOutputMessage outputMessage)
-              throws IOException, HttpMessageNotWritableException {
-            invokeSensitiveObject(object);
-            super.writeInternal(object, outputMessage);
-          }
-        };
+  public FastJsonHttpMessageConverter fastJsonHttpMessageConverter() {
+    FastJsonHttpMessageConverter messageConverter = new FastJsonHttpMessageConverter();
     // Avoid Chinese garbled characters
-    fastJsonHttpMessageConverter.setDefaultCharset(StandardCharsets.UTF_8);
+    messageConverter.setDefaultCharset(StandardCharsets.UTF_8);
     FastJsonConfig fastJsonConfig = new FastJsonConfig();
     fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat);
-    fastJsonHttpMessageConverter.setFastJsonConfig(fastJsonConfig);
-    return new HttpMessageConverters(fastJsonHttpMessageConverter);
+    messageConverter.setFastJsonConfig(fastJsonConfig);
+    return messageConverter;
   }
 }

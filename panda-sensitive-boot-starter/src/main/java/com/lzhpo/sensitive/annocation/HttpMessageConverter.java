@@ -16,8 +16,8 @@
 
 package com.lzhpo.sensitive.annocation;
 
-import com.lzhpo.sensitive.SensitiveConfigurationSelector;
-import com.lzhpo.sensitive.enums.JsonConverter;
+import com.lzhpo.sensitive.support.HttpMessageConverterEnum;
+import com.lzhpo.sensitive.support.HttpMessageConverterSelector;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -26,22 +26,25 @@ import java.lang.annotation.Target;
 import org.springframework.context.annotation.Import;
 
 /**
- * Enabled sensitive.
+ * Specifies which JSON component to use.
+ *
+ * <p>If is jackson, unnecessary configure, because jackson is default {@link
+ * org.springframework.http.converter.HttpMessageConverter} for spring.
  *
  * @author lzhpo
  */
 @Documented
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Import(SensitiveConfigurationSelector.class)
-public @interface EnableSensitive {
+@Import(HttpMessageConverterSelector.class)
+public @interface HttpMessageConverter {
 
   /**
-   * Which {@link JsonConverter} to use.
+   * Which {@link HttpMessageConverterEnum} to use.
    *
-   * <p>Default use {@link JsonConverter#JACKSON}
+   * <p>Default use {@link HttpMessageConverterEnum#JACKSON}
    *
-   * @return {@link JsonConverter}
+   * @return {@link HttpMessageConverterEnum}
    */
-  JsonConverter value() default JsonConverter.JACKSON;
+  HttpMessageConverterEnum value() default HttpMessageConverterEnum.JACKSON;
 }

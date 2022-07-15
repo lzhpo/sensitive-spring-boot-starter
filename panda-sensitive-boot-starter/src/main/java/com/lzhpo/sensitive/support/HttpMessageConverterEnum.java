@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.lzhpo.sensitive.enums;
+package com.lzhpo.sensitive.support;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,7 +26,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum JsonConverter {
+public enum HttpMessageConverterEnum {
 
   /** jackson converter type */
   JACKSON,

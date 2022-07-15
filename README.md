@@ -2,13 +2,13 @@
 
 ## 它是什么？
 
-> 一款强大的字段脱敏插件，支持市面上大多数主流JSON组件，支持多种脱敏策略，支持自定义脱敏策略，支持自定义脱敏字符，支持在controller上使用注解跳过脱敏，等等...
+> 一款强大的数据脱敏插件，支持多种脱敏策略，支持自定义脱敏策略，支持自定义脱敏替换符，支持在controller上使用注解跳过脱敏，等等...
 
 ## 如何使用？
 
 ### 1.导入依赖
 
-> panda-sensitive依赖已发布到Maven中央仓库，可直接引入依赖。
+> 依赖已发布至Maven中央仓库，可直接引入依赖。
 
 #### Maven
 
@@ -26,24 +26,15 @@
 implementation 'com.lzhpo:panda-sensitive-boot-starter:${latest-version}'
 ```
 
-### 2.使用`@EnableSensitive`注解开启
-
-支持市面上大部分主流的JSON组件，开启方式为：
-
-1. Jackson：`@EnableSensitive(JsonConverter.JACKSON)`，默认就是Jackson，可简写为`@EnableSensitive`
-2. JsonB：`@EnableSensitive(JsonConverter.JSONB)`
-3. FastJson：`@EnableSensitive(JsonConverter.FASTJSON)`
-4. Gson：`@EnableSensitive(JsonConverter.GSON)`
-
-### 3.实体类字段上使用`@Sensitive`注解配置脱敏规则
+### 2.实体类字段上使用`@Sensitive`注解配置脱敏规则
 
 `@Sensitive`注解说明：
 - `strategy`是脱敏策略。
 - `preKeep`是字符串前置保留字符个数。
 - `postKeep`是字符串后置保留字符个数。
-- `replacer`是脱敏后的字符。
+- `replacer`是脱敏替换符。
 
-#### 支持的脱敏策略
+#### 2.1.支持的脱敏策略
 
 *以下数据均为随意构造的测试数据，如有相同，纯属巧合。*
 
@@ -112,7 +103,7 @@ implementation 'com.lzhpo:panda-sensitive-boot-starter:${latest-version}'
 
 10. 等等...
 
-#### 自定义脱敏策略
+#### 2.2.自定义脱敏策略
 
 ##### 示例1：字符串前后都只保留1个字符。
 
@@ -123,9 +114,9 @@ private String preKeep1PostKeep1;
 
 如果值为`1234`，那么脱敏之后就变成`1**4`
 
-#### 自定义脱敏符号
+#### 2.3自定义脱敏替换符
 
-默认脱敏符号为`*`，可以配置为任意符号。
+默认脱敏替换符为`*`，可以配置为任意字符。
 
 ```java
 @Sensitive(strategy = SensitiveStrategy.CUSTOMIZE, preKeep = 1, postKeep = 1, replacer = '#')
@@ -134,9 +125,9 @@ private String preKeep1PostKeep1;
 
 如果值为`1234`，那么脱敏之后就变成`1##4`
 
-### 4.使用`@IgnoreSensitive`注解标注在controller上可忽略脱敏
+### 3.使用`@IgnoreSensitive`注解标注在controller上可忽略脱敏
 
-#### 1.在controller类上使用`@IgnoreSensitive`表示此类下所有接口都忽略脱敏
+#### 3.1.在controller类上使用`@IgnoreSensitive`表示此类下所有接口都忽略脱敏
 
 此controller下的所有接口都将忽略脱敏。
 
@@ -158,7 +149,7 @@ public class NoSensitiveController {
 }
 ```
 
-#### 2.在controller的方法中使用`@IgnoreSensitive`表示此接口忽略脱敏
+#### 3.2.在controller的方法中使用`@IgnoreSensitive`表示此接口忽略脱敏
 
 ```java
 @RestController
@@ -180,11 +171,18 @@ public class SensitiveController {
 
 sample2将忽略`SampleJavaBean`对象的字段脱敏，sample1不影响。
 
+## 其它配置
 
+### 1.支持使用注解指定Spring的`HttpMessageConverter`
 
+*这部分是为了方便不想自己手动写代码配置`HttpMessageConverter`的，和数据脱敏逻辑无关，如果不需要更改Spring默认的jackson，则无需配置。*
 
+配置方式如下：
 
-
+1. Jackson：`@HttpMessageConverter(JsonConverter.JACKSON)`，默认就是Jackson，可以不用配置。
+2. JsonB：`@HttpMessageConverter(JsonConverter.JSONB)`
+3. FastJson：`@HttpMessageConverter(JsonConverter.FASTJSON)`
+4. Gson：`@HttpMessageConverter(JsonConverter.GSON)`
 
 
 

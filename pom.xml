@@ -13,8 +13,8 @@
   </parent>
 
   <modules>
-    <module>panda-sensitive-sample</module>
     <module>panda-sensitive-boot-starter</module>
+    <module>panda-sensitive-sample</module>
   </modules>
 
   <groupId>com.lzhpo</groupId>

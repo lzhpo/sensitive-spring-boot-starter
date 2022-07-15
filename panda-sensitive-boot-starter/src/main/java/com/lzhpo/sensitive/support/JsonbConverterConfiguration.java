@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 
-package com.lzhpo.sensitive;
+package com.lzhpo.sensitive.support;
 
-import java.io.Writer;
-import java.lang.reflect.Type;
+import com.lzhpo.sensitive.AbstractSensitiveConfiguration;
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -39,7 +38,7 @@ import org.springframework.http.converter.json.JsonbHttpMessageConverter;
       "classpath:META-INF/services/javax.json.bind.spi.JsonbProvider",
       "classpath:META-INF/services/javax.json.spi.JsonProvider"
     })
-public class JsonbSensitiveConfiguration extends AbstractSensitiveConfiguration {
+public class JsonbConverterConfiguration extends AbstractSensitiveConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
@@ -50,15 +49,8 @@ public class JsonbSensitiveConfiguration extends AbstractSensitiveConfiguration 
   @Bean
   @ConditionalOnMissingBean
   public JsonbHttpMessageConverter jsonbHttpMessageConverter(Jsonb jsonb) {
-    JsonbHttpMessageConverter jsonbHttpMessageConverter =
-        new JsonbHttpMessageConverter() {
-          @Override
-          protected void writeInternal(Object object, Type type, Writer writer) throws Exception {
-            invokeSensitiveObject(object);
-            super.writeInternal(object, type, writer);
-          }
-        };
-    jsonbHttpMessageConverter.setJsonb(jsonb);
-    return jsonbHttpMessageConverter;
+    JsonbHttpMessageConverter messageConverter = new JsonbHttpMessageConverter();
+    messageConverter.setJsonb(jsonb);
+    return messageConverter;
   }
 }

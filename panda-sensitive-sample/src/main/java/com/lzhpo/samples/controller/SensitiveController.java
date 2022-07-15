@@ -31,6 +31,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/")
 public class SensitiveController {
 
+  @GetMapping("hello")
+  public String hello() {
+    return "hello";
+  }
+
   @GetMapping("sample1")
   public ResponseEntity<SampleJavaBean> sample1() {
     return ResponseEntity.ok(SampleJavaBeanMock.sampleJavaBean());
