@@ -21,7 +21,7 @@
 #### Gradle
 
 ```groovy
-implementation 'com.lzhpo:panda-sensitive-boot-starter:${latest-version}'
+implementation 'com.lzhpo:sensitive-spring-boot-starter:${latest-version}'
 ```
 
 ### 2.实体类字段上使用`@Sensitive`注解配置脱敏规则
