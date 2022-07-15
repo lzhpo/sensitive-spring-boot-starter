@@ -1,5 +1,0 @@
-logging:
-  level:
-    com.lzhpo: debug
-sensitive:
-  converter: fastjson

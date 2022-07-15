@@ -1,5 +1,3 @@
-![](./docs/images/logo.png)
-
 ## 它是什么？
 
 > 一款强大的数据脱敏插件，支持多种脱敏策略（中文姓名、身份证号、固定电话、手机号码、地址、电子邮箱、密码、车牌号、银行卡号...），支持自定义脱敏策略，支持自定义脱敏替换符，支持在Controller上使用注解跳过脱敏...
@@ -15,7 +13,7 @@
 ```xml
 <dependency>
   <groupId>com.lzhpo</groupId>
-  <artifactId>panda-sensitive-boot-starter</artifactId>
+  <artifactId>sensitive-spring-boot-starter</artifactId>
   <version>${latest-version}</version>
 </dependency>
 ```
