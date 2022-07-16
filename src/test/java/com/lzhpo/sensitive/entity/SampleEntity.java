@@ -16,7 +16,7 @@ import lombok.Data;
 @Builder
 public class SampleEntity {
 
-  @Sensitive(strategy = SensitiveStrategy.CHINESE_NAME)
+  @Sensitive(strategy = SensitiveStrategy.CHINESE_NAME, replacer = '#')
   private String name;
 
   @Sensitive(strategy = SensitiveStrategy.ID_CARD)

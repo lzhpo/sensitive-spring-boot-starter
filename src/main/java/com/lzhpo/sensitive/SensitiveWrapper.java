@@ -13,11 +13,15 @@ import lombok.NonNull;
 @Data
 public class SensitiveWrapper {
 
+  /** 字段归属的对象 */
   @NonNull private Object object;
 
+  /** 字段 */
   @NonNull private Field field;
 
+  /** 字段值 */
   @NonNull private String fieldValue;
 
+  /** {@link Sensitive}注解信息 */
   @NonNull private Sensitive sensitive;
 }
