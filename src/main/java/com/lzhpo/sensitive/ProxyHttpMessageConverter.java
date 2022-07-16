@@ -31,7 +31,7 @@ import org.springframework.http.converter.HttpMessageNotWritableException;
  * @author lzhpo
  */
 @Slf4j
-public class ProxyHttpMessageConverter extends AbstractSensitiveConfiguration
+public class ProxyHttpMessageConverter extends AbstractSensitiveInvoker
     implements HttpMessageConverter<Object> {
 
   private final HttpMessageConverter<Object> httpMessageConverter;
@@ -72,7 +72,7 @@ public class ProxyHttpMessageConverter extends AbstractSensitiveConfiguration
   @Override
   public void write(Object o, MediaType contentType, HttpOutputMessage outputMessage)
       throws IOException, HttpMessageNotWritableException {
-    invokeSensitiveObject(o);
+    invokeSensitive(o);
     httpMessageConverter.write(o, contentType, outputMessage);
   }
 }

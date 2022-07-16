@@ -30,6 +30,7 @@ import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.method.HandlerMethod;
 
 /**
@@ -38,15 +39,11 @@ import org.springframework.web.method.HandlerMethod;
  * @author lzhpo
  */
 @Slf4j
-public abstract class AbstractSensitiveConfiguration {
+public abstract class AbstractSensitiveInvoker {
 
   protected HandlerMethodResolver handlerMethodResolver;
 
   private static final SimpleCache<Class<?>, Field[]> SENSITIVE_FIELDS_CACHE = new SimpleCache<>();
-
-  protected HandlerMethodResolver getHandlerMethodResolver() {
-    return handlerMethodResolver;
-  }
 
   @Autowired
   protected void setHandlerMethodResolver(HandlerMethodResolver handlerMethodResolver) {
@@ -58,44 +55,26 @@ public abstract class AbstractSensitiveConfiguration {
    *
    * @param object object
    */
-  protected void invokeSensitiveObject(Object object) {
+  protected void invokeSensitive(Object object) {
     Class<?> clazz = object.getClass();
     if (!ignoreSensitive()) {
       Field[] requireFields = SENSITIVE_FIELDS_CACHE.get(clazz, () -> getSensitiveFields(clazz));
       for (Field field : requireFields) {
         Sensitive sensitive = field.getAnnotation(Sensitive.class);
-        Object fieldValue = ReflectUtil.getFieldValue(object, field);
-        if (Objects.nonNull(sensitive) && Objects.nonNull(fieldValue)) {
-          String finalFieldValue = invokeSensitiveField(sensitive, (String) fieldValue);
-          ReflectUtil.setFieldValue(object, field.getName(), finalFieldValue);
+        String fieldName = field.getName();
+        String fieldValue = (String) ReflectUtil.getFieldValue(object, field);
+
+        SensitiveStrategy strategy = sensitive.strategy();
+        if (isBlankFieldValue(fieldName, fieldValue)
+            || isNullSensitive(sensitive, fieldName)
+            || isNullStrategy(strategy, fieldName)) {
+          continue;
         }
+
+        fieldValue = strategy.apply(new SensitiveWrapper(object, field, fieldValue, sensitive));
+        ReflectUtil.setFieldValue(object, fieldName, fieldValue);
       }
     }
-  }
-
-  /**
-   * Invoke field value sensitive
-   *
-   * @param sensitive {@link Sensitive}
-   * @param fieldValue field value
-   * @return after sensitive field value
-   */
-  protected String invokeSensitiveField(Sensitive sensitive, String fieldValue) {
-    if (Objects.isNull(sensitive)) {
-      log.warn("@Sensitive is null, ignored sensitive fieldValue [{}]", fieldValue);
-      return fieldValue;
-    }
-
-    if (Objects.isNull(sensitive.strategy())) {
-      log.warn("@Sensitive strategy is null, ignored sensitive fieldValue [{}]", fieldValue);
-      return fieldValue;
-    }
-
-    return Arrays.stream(SensitiveStrategy.values())
-        .filter(x -> x == sensitive.strategy())
-        .findAny()
-        .map(handler -> handler.apply(fieldValue, sensitive))
-        .orElseThrow(() -> new IllegalArgumentException("Unknown sensitive strategy type"));
   }
 
   /**
@@ -131,5 +110,50 @@ public abstract class AbstractSensitiveConfiguration {
                 field.isAnnotationPresent(Sensitive.class)
                     && field.getType().isAssignableFrom(String.class))
         .toArray(Field[]::new);
+  }
+
+  /**
+   * Whether fieldValue is empty
+   *
+   * @param fieldName fieldName
+   * @param fieldValue fieldValue
+   * @return whether fieldValue is empty
+   */
+  private boolean isBlankFieldValue(String fieldName, String fieldValue) {
+    boolean empty = ObjectUtils.isEmpty(fieldValue);
+    if (log.isDebugEnabled()) {
+      log.warn("{} is blank, will ignore sensitive it.", fieldName);
+    }
+    return empty;
+  }
+
+  /**
+   * Whether sensitive is empty
+   *
+   * @param sensitive {@link Sensitive}
+   * @param fieldName fieldName
+   * @return whether sensitive is empty
+   */
+  private boolean isNullSensitive(Sensitive sensitive, String fieldName) {
+    boolean empty = ObjectUtils.isEmpty(sensitive);
+    if (log.isDebugEnabled()) {
+      log.warn("{} not has @Sensitive, will ignored sensitive it", fieldName);
+    }
+    return empty;
+  }
+
+  /**
+   * Whether strategy is empty
+   *
+   * @param strategy {@link SensitiveStrategy}
+   * @param fieldName fieldName
+   * @return whether strategy is empty
+   */
+  private boolean isNullStrategy(SensitiveStrategy strategy, String fieldName) {
+    boolean empty = ObjectUtils.isEmpty(strategy);
+    if (log.isDebugEnabled()) {
+      log.warn("{} not has @Sensitive strategy, will ignored sensitive it", fieldName);
+    }
+    return empty;
   }
 }

@@ -16,6 +16,7 @@
 
 package com.lzhpo.sensitive.annocation;
 
+import com.lzhpo.sensitive.SensitiveConst;
 import com.lzhpo.sensitive.SensitiveStrategy;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -31,8 +32,8 @@ import java.lang.annotation.Target;
  */
 @Inherited
 @Documented
-@Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
 public @interface Sensitive {
 
   /**
@@ -43,33 +44,9 @@ public @interface Sensitive {
   SensitiveStrategy strategy();
 
   /**
-   * Pre-reserved digits, all types of {@link SensitiveStrategy} are supported
-   *
-   * <pre>
-   * If less than or equal to 0, it means ignore
-   * </pre>
-   *
-   * @return pre-reserved digits
-   * @throws IllegalArgumentException If it is less than -1, an exception will be thrown
-   */
-  int preKeep() default -1;
-
-  /**
-   * Post-reserved digits, all types of {@link SensitiveStrategy} are supported
-   *
-   * <pre>
-   * If less than or equal to 0, it means ignore
-   * </pre>
-   *
-   * @return post-reserved digits
-   * @throws IllegalArgumentException If it is less than -1, an exception will be thrown
-   */
-  int postKeep() default -1;
-
-  /**
    * Sensitive replacer
    *
    * @return replacer
    */
-  char replacer() default '*';
+  char replacer() default SensitiveConst.REPLACER;
 }

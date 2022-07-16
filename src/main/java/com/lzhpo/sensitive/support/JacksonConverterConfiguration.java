@@ -17,7 +17,7 @@
 package com.lzhpo.sensitive.support;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lzhpo.sensitive.AbstractSensitiveConfiguration;
+import com.lzhpo.sensitive.AbstractSensitiveInvoker;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -31,7 +31,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
  * @see org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration
  */
 @ConditionalOnClass({ObjectMapper.class})
-public class JacksonConverterConfiguration extends AbstractSensitiveConfiguration {
+public class JacksonConverterConfiguration extends AbstractSensitiveInvoker {
 
   @Bean
   @ConditionalOnMissingBean

@@ -19,7 +19,7 @@ package com.lzhpo.sensitive.support;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
-import com.lzhpo.sensitive.AbstractSensitiveConfiguration;
+import com.lzhpo.sensitive.AbstractSensitiveInvoker;
 import java.nio.charset.StandardCharsets;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -31,7 +31,7 @@ import org.springframework.context.annotation.Bean;
  * @author lzhpo
  */
 @ConditionalOnClass({FastJsonConfig.class, FastJsonHttpMessageConverter.class})
-public class FastJsonConverterConfiguration extends AbstractSensitiveConfiguration {
+public class FastJsonConverterConfiguration extends AbstractSensitiveInvoker {
 
   @Bean
   @ConditionalOnMissingBean

@@ -1,0 +1,3 @@
+sensitive:
+  replacer: '#'
+  filter-words: "广州市"

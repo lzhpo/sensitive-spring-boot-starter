@@ -17,134 +17,178 @@
 package com.lzhpo.sensitive;
 
 import cn.hutool.core.text.CharSequenceUtil;
-import cn.hutool.core.util.DesensitizedUtil;
+import cn.hutool.core.util.ReflectUtil;
 import com.lzhpo.sensitive.annocation.Sensitive;
-import java.util.Optional;
-import java.util.function.Supplier;
+import com.lzhpo.sensitive.annocation.SensitiveFilterWords;
+import com.lzhpo.sensitive.annocation.SensitiveHandler;
+import com.lzhpo.sensitive.annocation.SensitiveKeepLength;
+import com.lzhpo.sensitive.utils.SensitiveUtil;
+import java.lang.reflect.Field;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.Assert;
+import org.springframework.util.ObjectUtils;
 
 /**
  * Sensitive strategy
  *
  * @author lzhpo
  */
+@Slf4j
 public enum SensitiveStrategy {
 
-  /** chinese name */
+  /** Chinese name */
   CHINESE_NAME() {
     @Override
-    public String apply(String value, Sensitive sensitive) {
-      return SensitiveStrategy.invoke(value, sensitive, () -> DesensitizedUtil.chineseName(value));
+    public String apply(SensitiveWrapper sensitiveWrapper) {
+      Sensitive sensitive = sensitiveWrapper.getSensitive();
+      return SensitiveUtil.chineseName(sensitiveWrapper.getFieldValue(), sensitive.replacer());
     }
   },
 
-  /** id card */
+  /** ID card */
   ID_CARD() {
     @Override
-    public String apply(String value, Sensitive sensitive) {
-      return SensitiveStrategy.invoke(
-          value, sensitive, () -> DesensitizedUtil.idCardNum(value, 1, 2));
+    public String apply(SensitiveWrapper sensitiveWrapper) {
+      Sensitive sensitive = sensitiveWrapper.getSensitive();
+      return SensitiveUtil.idCardNum(sensitiveWrapper.getFieldValue(), 1, 2, sensitive.replacer());
     }
   },
 
-  /** fixed phone */
+  /** Fixed phone */
   FIXED_PHONE() {
     @Override
-    public String apply(String value, Sensitive sensitive) {
-      return SensitiveStrategy.invoke(value, sensitive, () -> DesensitizedUtil.fixedPhone(value));
+    public String apply(SensitiveWrapper sensitiveWrapper) {
+      Sensitive sensitive = sensitiveWrapper.getSensitive();
+      return SensitiveUtil.fixedPhone(sensitiveWrapper.getFieldValue(), sensitive.replacer());
     }
   },
 
-  /** mobile phone */
+  /** Mobile phone */
   MOBILE_PHONE() {
     @Override
-    public String apply(String value, Sensitive sensitive) {
-      return SensitiveStrategy.invoke(value, sensitive, () -> DesensitizedUtil.mobilePhone(value));
+    public String apply(SensitiveWrapper sensitiveWrapper) {
+      Sensitive sensitive = sensitiveWrapper.getSensitive();
+      return SensitiveUtil.mobilePhone(sensitiveWrapper.getFieldValue(), sensitive.replacer());
     }
   },
 
-  /** address */
+  /** Address */
   ADDRESS() {
     @Override
-    public String apply(String value, Sensitive sensitive) {
-      return SensitiveStrategy.invoke(value, sensitive, () -> DesensitizedUtil.address(value, 8));
+    public String apply(SensitiveWrapper sensitiveWrapper) {
+      Sensitive sensitive = sensitiveWrapper.getSensitive();
+      return SensitiveUtil.address(sensitiveWrapper.getFieldValue(), 8, sensitive.replacer());
     }
   },
 
-  /** email */
+  /** Email */
   EMAIL() {
     @Override
-    public String apply(String value, Sensitive sensitive) {
-      return SensitiveStrategy.invoke(value, sensitive, () -> DesensitizedUtil.email(value));
+    public String apply(SensitiveWrapper sensitiveWrapper) {
+      Sensitive sensitive = sensitiveWrapper.getSensitive();
+      return SensitiveUtil.email(sensitiveWrapper.getFieldValue(), sensitive.replacer());
     }
   },
 
-  /** password */
+  /** Password */
   PASSWORD() {
     @Override
-    public String apply(String value, Sensitive sensitive) {
-      return SensitiveStrategy.invoke(value, sensitive, () -> DesensitizedUtil.password(value));
+    public String apply(SensitiveWrapper sensitiveWrapper) {
+      Sensitive sensitive = sensitiveWrapper.getSensitive();
+      return SensitiveUtil.password(sensitiveWrapper.getFieldValue(), sensitive.replacer());
     }
   },
 
   /** Chinese mainland license plates, including ordinary vehicles, new energy vehicles */
   CAR_LICENSE() {
     @Override
-    public String apply(String value, Sensitive sensitive) {
-      return SensitiveStrategy.invoke(value, sensitive, () -> DesensitizedUtil.carLicense(value));
+    public String apply(SensitiveWrapper sensitiveWrapper) {
+      Sensitive sensitive = sensitiveWrapper.getSensitive();
+      return SensitiveUtil.carLicense(sensitiveWrapper.getFieldValue(), sensitive.replacer());
     }
   },
 
-  /** bank card */
+  /** Bank card */
   BANK_CARD() {
     @Override
-    public String apply(String value, Sensitive sensitive) {
-      return SensitiveStrategy.invoke(value, sensitive, () -> DesensitizedUtil.bankCard(value));
+    public String apply(SensitiveWrapper sensitiveWrapper) {
+      Sensitive sensitive = sensitiveWrapper.getSensitive();
+      return SensitiveUtil.bankCard(sensitiveWrapper.getFieldValue(), sensitive.replacer());
     }
   },
 
-  /** customize */
-  CUSTOMIZE() {
+  /** Customize sensitive keep length */
+  CUSTOMIZE_FILTER_WORDS() {
     @Override
-    public String apply(String value, Sensitive sensitive) {
-      return SensitiveStrategy.invoke(value, sensitive, null);
+    public String apply(SensitiveWrapper sensitiveWrapper) {
+      String fieldValue = sensitiveWrapper.getFieldValue();
+      Field field = sensitiveWrapper.getField();
+      Sensitive sensitive = sensitiveWrapper.getSensitive();
+      SensitiveFilterWords filterWords = field.getAnnotation(SensitiveFilterWords.class);
+      if (ObjectUtils.isEmpty(filterWords)) {
+        log.warn(
+            "{} is marked CUSTOMIZE_FILTER_WORDS strategy, but not has @FilterWords, will ignore sensitive it.",
+            field.getName());
+        return fieldValue;
+      }
+
+      char replacer = sensitive.replacer();
+      String[] words = filterWords.value();
+      if (!ObjectUtils.isEmpty(words)) {
+        for (String filterWord : words) {
+          if (fieldValue.contains(filterWord)) {
+            String replacers = CharSequenceUtil.repeat(replacer, filterWord.length());
+            fieldValue = fieldValue.replace(filterWord, replacers);
+          }
+        }
+      }
+
+      return fieldValue;
+    }
+  },
+
+  /** Customize sensitive keep length */
+  CUSTOMIZE_KEEP_LENGTH() {
+    @Override
+    public String apply(SensitiveWrapper sensitiveWrapper) {
+      Field field = sensitiveWrapper.getField();
+      String fieldValue = sensitiveWrapper.getFieldValue();
+      Sensitive sensitive = sensitiveWrapper.getSensitive();
+      SensitiveKeepLength sensitiveKeepLength = field.getAnnotation(SensitiveKeepLength.class);
+      int preKeep = sensitiveKeepLength.preKeep();
+      int postKeep = sensitiveKeepLength.postKeep();
+      Assert.isTrue(preKeep >= SensitiveConst.NOP_KEEP, "preKeep must greater than -1");
+      Assert.isTrue(postKeep >= SensitiveConst.NOP_KEEP, "postKeep must greater than -1");
+
+      boolean ignorePreKeep = preKeep <= 0;
+      boolean ignoreSuffixKeep = postKeep <= 0;
+      if (ignorePreKeep && ignoreSuffixKeep) {
+        return fieldValue;
+      }
+
+      char replacer = sensitive.replacer();
+      return CharSequenceUtil.replace(
+          fieldValue, preKeep, fieldValue.length() - postKeep, replacer);
+    }
+  },
+
+  /** Customize sensitive handler */
+  CUSTOMIZE_HANDLER() {
+    @Override
+    public String apply(SensitiveWrapper sensitiveWrapper) {
+      Field field = sensitiveWrapper.getField();
+      SensitiveHandler customizeHandler = field.getAnnotation(SensitiveHandler.class);
+      Class<? extends CustomizeSensitiveHandler> handlerClass = customizeHandler.value();
+      CustomizeSensitiveHandler handler = ReflectUtil.newInstance(handlerClass);
+      return handler.customize(sensitiveWrapper);
     }
   };
 
   /**
-   * Determine the strategy and execute the field sensitive method
-   *
-   * @param value to sensitive value
-   * @param sensitive {@link Sensitive}
-   * @param orElse will be executed if pre-reserved and post-reserved digits are not specified
-   * @return after sensitive value
-   */
-  private static String invoke(String value, Sensitive sensitive, Supplier<String> orElse) {
-    int preKeep = sensitive.preKeep();
-    int postKeep = sensitive.postKeep();
-    Assert.isTrue(preKeep >= -1, "preKeep must greater than -1");
-    Assert.isTrue(postKeep >= -1, "postKeep must greater than -1");
-
-    boolean ignorePreKeep = preKeep <= 0;
-    boolean ignoreSuffixKeep = postKeep <= 0;
-    if (ignorePreKeep && ignoreSuffixKeep) {
-      return Optional.ofNullable(orElse).map(Supplier::get).orElse(value);
-    }
-
-    if (CharSequenceUtil.isBlank(value)) {
-      return CharSequenceUtil.EMPTY;
-    }
-
-    char replacer = sensitive.replacer();
-    return CharSequenceUtil.replace(value, preKeep, value.length() - postKeep, replacer);
-  }
-
-  /**
    * Field sensitive strategy method
    *
-   * @param value to sensitive value
-   * @param sensitive {@link Sensitive}
+   * @param sensitiveWrapper sensitive require message
    * @return after sensitive value
    */
-  public abstract String apply(String value, Sensitive sensitive);
+  public abstract String apply(SensitiveWrapper sensitiveWrapper);
 }

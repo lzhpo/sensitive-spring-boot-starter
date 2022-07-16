@@ -57,7 +57,7 @@ implementation 'com.lzhpo:sensitive-spring-boot-starter:${latest-version}'
    ```
    比如：`01086551122`脱敏之后为`0108*****22`。
 
-4. 手机号码：保留前3位，后4位。
+4. 手机号码：保留前3位和后4位。
    ```java
    @Sensitive(strategy = SensitiveStrategy.MOBILE_PHONE)
    private String mobilePhone;
@@ -181,6 +181,14 @@ sample2将忽略`SampleJavaBean`对象的字段脱敏，sample1不影响。
 2. JsonB：`@HttpMessageConverter(JsonConverter.JSONB)`
 3. FastJson：`@HttpMessageConverter(JsonConverter.FASTJSON)`
 4. Gson：`@HttpMessageConverter(JsonConverter.GSON)`
+
+## 特别感谢
+
+- 广大无私的开源爱好者。
+
+- [Hutool](https://github.com/dromara/hutool)：让Java语言也可以“甜甜的”。
+
+
 
 
 

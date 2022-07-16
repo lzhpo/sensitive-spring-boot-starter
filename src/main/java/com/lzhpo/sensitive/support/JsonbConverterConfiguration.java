@@ -16,7 +16,7 @@
 
 package com.lzhpo.sensitive.support;
 
-import com.lzhpo.sensitive.AbstractSensitiveConfiguration;
+import com.lzhpo.sensitive.AbstractSensitiveInvoker;
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -38,7 +38,7 @@ import org.springframework.http.converter.json.JsonbHttpMessageConverter;
       "classpath:META-INF/services/javax.json.bind.spi.JsonbProvider",
       "classpath:META-INF/services/javax.json.spi.JsonProvider"
     })
-public class JsonbConverterConfiguration extends AbstractSensitiveConfiguration {
+public class JsonbConverterConfiguration extends AbstractSensitiveInvoker {
 
   @Bean
   @ConditionalOnMissingBean

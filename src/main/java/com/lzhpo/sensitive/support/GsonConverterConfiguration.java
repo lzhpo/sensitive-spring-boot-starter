@@ -17,7 +17,7 @@
 package com.lzhpo.sensitive.support;
 
 import com.google.gson.Gson;
-import com.lzhpo.sensitive.AbstractSensitiveConfiguration;
+import com.lzhpo.sensitive.AbstractSensitiveInvoker;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -31,7 +31,7 @@ import org.springframework.http.converter.json.GsonHttpMessageConverter;
  * @see org.springframework.boot.autoconfigure.gson.GsonAutoConfiguration
  */
 @ConditionalOnClass({Gson.class})
-public class GsonConverterConfiguration extends AbstractSensitiveConfiguration {
+public class GsonConverterConfiguration extends AbstractSensitiveInvoker {
 
   @Bean
   @ConditionalOnMissingBean
