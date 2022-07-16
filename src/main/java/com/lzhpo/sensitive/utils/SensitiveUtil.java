@@ -19,7 +19,7 @@ package com.lzhpo.sensitive.utils;
 import cn.hutool.core.text.CharPool;
 import cn.hutool.core.text.CharSequenceUtil;
 import cn.hutool.core.util.DesensitizedUtil;
-import com.lzhpo.sensitive.SensitiveConst;
+import com.lzhpo.sensitive.SensitiveConstants;
 import lombok.experimental.UtilityClass;
 import org.springframework.util.StringUtils;
 
@@ -229,11 +229,11 @@ public class SensitiveUtil extends DesensitizedUtil {
     }
 
     // 普通车牌
-    if (carLicense.length() == SensitiveConst.ORDINARY_CAR_LICENSE_LENGTH) {
-      carLicense = CharSequenceUtil.replace(carLicense, 3, 6, replacer);
-    } else if (carLicense.length() == SensitiveConst.NEW_ENERGY_CAR_LICENSE_LENGTH) {
+    if (carLicense.length() == SensitiveConstants.ORDINARY_CAR_LICENSE_LENGTH) {
+      return CharSequenceUtil.replace(carLicense, 3, 6, replacer);
+    } else if (carLicense.length() == SensitiveConstants.NEW_ENERGY_CAR_LICENSE_LENGTH) {
       // 新能源车牌
-      carLicense = CharSequenceUtil.replace(carLicense, 3, 7, replacer);
+      return CharSequenceUtil.replace(carLicense, 3, 7, replacer);
     }
 
     return carLicense;
@@ -258,16 +258,16 @@ public class SensitiveUtil extends DesensitizedUtil {
       return bankCardNo;
     }
 
-    bankCardNo = CharSequenceUtil.trim(bankCardNo);
-    if (bankCardNo.length() < SensitiveConst.ERROR_BANK_CARD_LENGTH) {
-      return bankCardNo;
+    String trimBankCardNo = bankCardNo.trim();
+    if (trimBankCardNo.length() < SensitiveConstants.ERROR_BANK_CARD_LENGTH) {
+      return trimBankCardNo;
     }
 
-    final int length = bankCardNo.length();
+    final int length = trimBankCardNo.length();
     final int midLength = length - 8;
     final StringBuilder buf = new StringBuilder();
 
-    buf.append(bankCardNo, 0, 4);
+    buf.append(trimBankCardNo, 0, 4);
     for (int i = 0; i < midLength; ++i) {
       if (i % 4 == 0) {
         buf.append(CharPool.SPACE);
@@ -275,7 +275,7 @@ public class SensitiveUtil extends DesensitizedUtil {
       buf.append(replacer);
     }
 
-    buf.append(CharPool.SPACE).append(bankCardNo, length - 4, length);
+    buf.append(CharPool.SPACE).append(trimBankCardNo, length - 4, length);
     return buf.toString();
   }
 }

@@ -158,8 +158,8 @@ public enum SensitiveStrategy {
       SensitiveKeepLength sensitiveKeepLength = field.getAnnotation(SensitiveKeepLength.class);
       int preKeep = sensitiveKeepLength.preKeep();
       int postKeep = sensitiveKeepLength.postKeep();
-      Assert.isTrue(preKeep >= SensitiveConst.NOP_KEEP, "preKeep must greater than -1");
-      Assert.isTrue(postKeep >= SensitiveConst.NOP_KEEP, "postKeep must greater than -1");
+      Assert.isTrue(preKeep >= SensitiveConstants.NOP_KEEP, "preKeep must greater than -1");
+      Assert.isTrue(postKeep >= SensitiveConstants.NOP_KEEP, "postKeep must greater than -1");
 
       boolean ignorePreKeep = preKeep <= 0;
       boolean ignoreSuffixKeep = postKeep <= 0;

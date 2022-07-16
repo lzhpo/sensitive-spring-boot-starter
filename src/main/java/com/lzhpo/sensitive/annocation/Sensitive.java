@@ -16,7 +16,7 @@
 
 package com.lzhpo.sensitive.annocation;
 
-import com.lzhpo.sensitive.SensitiveConst;
+import com.lzhpo.sensitive.SensitiveConstants;
 import com.lzhpo.sensitive.SensitiveStrategy;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -48,5 +48,5 @@ public @interface Sensitive {
    *
    * @return replacer
    */
-  char replacer() default SensitiveConst.REPLACER;
+  char replacer() default SensitiveConstants.REPLACER;
 }

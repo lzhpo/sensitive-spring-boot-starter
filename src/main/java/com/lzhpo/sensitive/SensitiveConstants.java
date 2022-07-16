@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
  * @author lzhpo
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class SensitiveConst {
+public final class SensitiveConstants {
 
   /** 默认脱敏替换符 */
   public static final char REPLACER = '*';
