@@ -6,8 +6,8 @@
 
 ## 开源地址
 
-  - GitHub：[ https://github.com/lzhpo/sensitive-spring-boot-starter ]( https://github.com/lzhpo/sensitive-spring-boot-starter )
-  - Gitee：[ https://gitee.com/lzhpo/sensitive-spring-boot-starter ]( https://gitee.com/lzhpo/sensitive-spring-boot-starter )
+- GitHub：[https://github.com/lzhpo/sensitive-spring-boot-starter](https://github.com/lzhpo/sensitive-spring-boot-starter)
+- Gitee：[https://gitee.com/lzhpo/sensitive-spring-boot-starter](https://gitee.com/lzhpo/sensitive-spring-boot-starter)
 
 ## 如何使用？
 
@@ -268,10 +268,10 @@ sample2将忽略`SampleJavaBean`对象的字段脱敏，sample1不影响。
 *这部分是为了方便不想自己手动写代码配置`HttpMessageConverter`的，和数据脱敏逻辑无关，如果不需要更改Spring默认的Jackson，则无需配置。*
 
 配置方式如下：
-  1. Jackson：`@HttpMessageConverter(JsonConverter.JACKSON)`，默认就是Jackson，可以不用配置。
-  2. JsonB：`@HttpMessageConverter(JsonConverter.JSONB)`
-  3. FastJson：`@HttpMessageConverter(JsonConverter.FASTJSON)`
-  4. Gson：`@HttpMessageConverter(JsonConverter.GSON)`
+1. Jackson：`@HttpMessageConverter(JsonConverter.JACKSON)`，默认就是Jackson，可以不用配置。
+2. JsonB：`@HttpMessageConverter(JsonConverter.JSONB)`
+3. FastJson：`@HttpMessageConverter(JsonConverter.FASTJSON)`
+4. Gson：`@HttpMessageConverter(JsonConverter.GSON)`
 
 ## 公众号
 
@@ -291,5 +291,5 @@ sample2将忽略`SampleJavaBean`对象的字段脱敏，sample1不影响。
 
 ## 特别感谢
 
-  - 广大无私的开源爱好者。
-  - [ Hutool ]( https://github.com/dromara/hutool )：让Java语言也可以“甜甜的”。
+- 广大无私的开源爱好者。
+- [ Hutool ]( https://github.com/dromara/hutool )：让Java语言也可以“甜甜的”。
