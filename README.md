@@ -290,9 +290,9 @@ sample2将忽略`SampleJavaBean`对象的字段脱敏，sample1不影响。
 
 ## 公众号
 
-|                         微信                          |                        公众号                         |
-| :---------------------------------------------------: | :---------------------------------------------------: |
-| ![](http://cdn.lzhpo.com/lzhpo/20220716180320593.jpg) | ![](http://cdn.lzhpo.com/lzhpo/20220716180311682.jpg) |
+|         微信          |            公众号             |
+|:-------------------:|:--------------------------:|
+| ![](./docs/images/微信.jpg) | ![](./docs/images/公众号.jpg) |
 
 ## 博客
 
@@ -302,7 +302,7 @@ sample2将忽略`SampleJavaBean`对象的字段脱敏，sample1不影响。
 
 |                             微信                             |                            支付宝                            |
 | :----------------------------------------------------------: | :----------------------------------------------------------: |
-| <img src="http://cdn.lzhpo.com/lzhpo/qrcode/20201101180655635.png" with=200 height=200> | <img src="http://cdn.lzhpo.com/lzhpo/qrcode/20201101180657109.jpg" with=200 height=200> |
+| <img src="./docs/images/微信收款码.png" with=200 height=200> | <img src="./docs/images/支付宝收款码.jpg" with=200 height=200> |
 
 ## 特别感谢
 
