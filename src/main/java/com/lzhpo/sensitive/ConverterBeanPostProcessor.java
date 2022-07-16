@@ -18,6 +18,7 @@ package com.lzhpo.sensitive;
 
 import com.lzhpo.sensitive.resolve.HandlerMethodResolver;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -26,6 +27,7 @@ import org.springframework.http.converter.StringHttpMessageConverter;
 /**
  * @author lzhpo
  */
+@Slf4j
 @RequiredArgsConstructor
 public class ConverterBeanPostProcessor implements BeanPostProcessor {
 
@@ -37,8 +39,9 @@ public class ConverterBeanPostProcessor implements BeanPostProcessor {
     if (HttpMessageConverter.class.isAssignableFrom(bean.getClass())
         && !(bean instanceof StringHttpMessageConverter)) {
       HttpMessageConverter<Object> messageConverter = (HttpMessageConverter<Object>) bean;
+      log.info("Injected sensitive logic to {}[{}]", beanName, bean);
       return new ProxyHttpMessageConverter(messageConverter, handlerMethodResolver);
     }
-    return BeanPostProcessor.super.postProcessAfterInitialization(bean, beanName);
+    return bean;
   }
 }

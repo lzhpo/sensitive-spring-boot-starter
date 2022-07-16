@@ -14,25 +14,23 @@
  * limitations under the License.
  */
 
-package com.lzhpo.sensitive;
+package com.lzhpo.sensitive.entity;
 
-import com.lzhpo.sensitive.annocation.Sensitive;
-import java.lang.reflect.Field;
+import lombok.Builder;
 import lombok.Data;
-import lombok.NonNull;
 
 /**
  * @author lzhpo
  */
 @Data
-public class SensitiveWrapper {
+@Builder
+public class NoSensitiveEntity {
 
-  /** 字段 */
-  @NonNull private Field field;
+  private String name;
 
-  /** 字段值 */
-  @NonNull private String fieldValue;
+  private String mobilePhone;
 
-  /** {@link Sensitive}注解信息 */
-  @NonNull private Sensitive sensitive;
+  private String address;
+
+  private String email;
 }

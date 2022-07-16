@@ -72,7 +72,7 @@ public class ProxyHttpMessageConverter extends AbstractSensitiveInvoker
   @Override
   public void write(Object o, MediaType contentType, HttpOutputMessage outputMessage)
       throws IOException, HttpMessageNotWritableException {
-    invokeSensitive(o);
+    sensitiveInvoke(o);
     httpMessageConverter.write(o, contentType, outputMessage);
   }
 }

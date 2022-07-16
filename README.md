@@ -214,10 +214,12 @@ public class FaceCustomizeSensitiveHandler implements CustomizeSensitiveHandler 
 
   @Override
   public String customize(SensitiveWrapper sensitiveWrapper) {
-    // 字段归属的对象
-    Object object = sensitiveWrapper.getObject();
     // 字段
     Field field = sensitiveWrapper.getField();
+    // 字段归属的对象
+    Class<?> objectClass = field.getDeclaringClass();
+    // 字段上的注解
+    Annotation[] annotations = field.getAnnotations();
     // 字段值
     String fieldValue = sensitiveWrapper.getFieldValue();
     // 注解信息
@@ -227,7 +229,7 @@ public class FaceCustomizeSensitiveHandler implements CustomizeSensitiveHandler 
 }
 ```
 
-可以看到，我提供了含有`@Sensitive`注解的字段、字段值、字段归属的对象以及注解的信息供开发者定制，非常丰富的信息。
+可以看到，提供了含有`@Sensitive`注解的字段、字段值、字段归属的对象、注解的信息等等供开发者定制。
 
 ### 3.使用`@IgnoreSensitive`注解标注在controller上可忽略脱敏
 

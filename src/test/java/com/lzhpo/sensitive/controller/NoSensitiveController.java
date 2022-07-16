@@ -14,25 +14,24 @@
  * limitations under the License.
  */
 
-package com.lzhpo.sensitive;
+package com.lzhpo.sensitive.controller;
 
-import com.lzhpo.sensitive.annocation.Sensitive;
-import java.lang.reflect.Field;
-import lombok.Data;
-import lombok.NonNull;
+import com.lzhpo.sensitive.entity.NoSensitiveEntity;
+import com.lzhpo.sensitive.mock.MockHelper;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author lzhpo
  */
-@Data
-public class SensitiveWrapper {
+@RestController
+@RequestMapping("/")
+public class NoSensitiveController {
 
-  /** 字段 */
-  @NonNull private Field field;
-
-  /** 字段值 */
-  @NonNull private String fieldValue;
-
-  /** {@link Sensitive}注解信息 */
-  @NonNull private Sensitive sensitive;
+  @GetMapping("noSensitive")
+  public ResponseEntity<NoSensitiveEntity> noSensitive() {
+    return ResponseEntity.ok(MockHelper.noSensitive());
+  }
 }
