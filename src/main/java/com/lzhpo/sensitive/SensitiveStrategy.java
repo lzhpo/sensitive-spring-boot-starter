@@ -127,7 +127,8 @@ public enum SensitiveStrategy {
       SensitiveFilterWords filterWords = field.getAnnotation(SensitiveFilterWords.class);
       if (ObjectUtils.isEmpty(filterWords)) {
         log.warn(
-            "{} is marked CUSTOMIZE_FILTER_WORDS strategy, but not has @FilterWords, will ignore sensitive it.",
+            "{} is marked CUSTOMIZE_FILTER_WORDS strategy, "
+                + "but not has @SensitiveFilterWords, will ignore sensitive it.",
             field.getName());
         return fieldValue;
       }
