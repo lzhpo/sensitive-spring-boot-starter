@@ -1,8 +1,8 @@
 ## 项目地址
 
-- GitHub：[https://github.com/lzhpo/sensitive-spring-boot-starter](https://github.com/lzhpo/sensitive-spring-boot-starter)
+- GitHub：<a href="https://github.com/lzhpo/sensitive-spring-boot-starter" target="_blank">https://github.com/lzhpo/sensitive-spring-boot-starter</a>
 
-- Gitee：[https://gitee.com/lzhpo/sensitive-spring-boot-starter](https://gitee.com/lzhpo/sensitive-spring-boot-starter)
+- Gitee：<a href="https://gitee.com/lzhpo/sensitive-spring-boot-starter" target="_blank">https://gitee.com/lzhpo/sensitive-spring-boot-starter</a>
 
 ## 如何使用？
 
