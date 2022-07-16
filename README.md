@@ -6,8 +6,8 @@
 
 ## 开源地址
 
-  - GitHub：[https://github.com/lzhpo/sensitive-spring-boot-starter](https://github.com/lzhpo/sensitive-spring-boot-starter)
-  - Gitee：[https://gitee.com/lzhpo/sensitive-spring-boot-starter](https://gitee.com/lzhpo/sensitive-spring-boot-starter)
+  - GitHub：[ https://github.com/lzhpo/sensitive-spring-boot-starter ]( https://github.com/lzhpo/sensitive-spring-boot-starter )
+  - Gitee：[ https://gitee.com/lzhpo/sensitive-spring-boot-starter ]( https://gitee.com/lzhpo/sensitive-spring-boot-starter )
 
 ## 如何使用？
 
@@ -34,13 +34,13 @@ implementation 'com.lzhpo:sensitive-spring-boot-starter:${latest-version}'
 ### 2.实体类字段上使用`@Sensitive`注解配置脱敏规则
 
 `@Sensitive`注解说明：
-  - `strategy`：脱敏策略，支持12种脱敏策略。
-  - `replacer`：脱敏策略的替换符，默认脱敏替换符为星号`*`，可以配置为任意字符。 
-    比如：配置为`#`
-    ```java
-    @Sensitive(strategy = SensitiveStrategy.CHINESE_NAME, replacer = '#')
-    private String name;
-    ```
+- `strategy`：脱敏策略，支持12种脱敏策略。
+- `replacer`：脱敏策略的替换符，默认脱敏替换符为星号`*`，可以配置为任意字符。 
+  比如：配置为`#`
+  ```java
+  @Sensitive(strategy = SensitiveStrategy.CHINESE_NAME, replacer = '#')
+  private String name;
+  ```
 
 #### 2.1.支持的脱敏策略
 
@@ -139,17 +139,17 @@ private String bankCard;
 ##### 2.2.1 自定义脱敏策略
 
 当前支持三种风格的自定义脱敏策略：
- 1. 保留前后缀脱敏策略。
- 2. 敏感字符脱敏策略。
- 3. Handler脱敏策略。
+1. 保留前后缀脱敏策略。
+2. 敏感字符脱敏策略。
+3. Handler脱敏策略。
 
 ###### 2.2.1.1 保留前后缀脱敏策略
 
 使用`@Sensitive(strategy = SensitiveStrategy.CUSTOMIZE_KEEP_LENGTH)`配合`@SensitiveKeepLength`一起使用。
 
 `@SensitiveFilterWords`注解：
-  - `preKeep`是字符串前置保留字符个数。
-  - `postKeep`是字符串后置保留字符个数。
+- `preKeep`是字符串前置保留字符个数。
+- `postKeep`是字符串后置保留字符个数。
 
 举个例子：`name`前后都只保留1个字符。
 
@@ -268,10 +268,10 @@ sample2将忽略`SampleJavaBean`对象的字段脱敏，sample1不影响。
 *这部分是为了方便不想自己手动写代码配置`HttpMessageConverter`的，和数据脱敏逻辑无关，如果不需要更改Spring默认的Jackson，则无需配置。*
 
 配置方式如下：
- 1. Jackson：`@HttpMessageConverter(JsonConverter.JACKSON)`，默认就是Jackson，可以不用配置。
- 2. JsonB：`@HttpMessageConverter(JsonConverter.JSONB)`
- 3. FastJson：`@HttpMessageConverter(JsonConverter.FASTJSON)`
- 4. Gson：`@HttpMessageConverter(JsonConverter.GSON)`
+  1. Jackson：`@HttpMessageConverter(JsonConverter.JACKSON)`，默认就是Jackson，可以不用配置。
+  2. JsonB：`@HttpMessageConverter(JsonConverter.JSONB)`
+  3. FastJson：`@HttpMessageConverter(JsonConverter.FASTJSON)`
+  4. Gson：`@HttpMessageConverter(JsonConverter.GSON)`
 
 ## 公众号
 
@@ -292,11 +292,4 @@ sample2将忽略`SampleJavaBean`对象的字段脱敏，sample1不影响。
 ## 特别感谢
 
   - 广大无私的开源爱好者。
-  - [Hutool](https://github.com/dromara/hutool)：让Java语言也可以“甜甜的”。
-
-
-
-
-
-
-
+  - [ Hutool ]( https://github.com/dromara/hutool )：让Java语言也可以“甜甜的”。
