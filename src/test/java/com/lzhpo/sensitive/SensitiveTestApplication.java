@@ -16,6 +16,8 @@
 
 package com.lzhpo.sensitive;
 
+import com.lzhpo.sensitive.annocation.HttpMessageConverter;
+import com.lzhpo.sensitive.support.HttpMessageConverterEnum;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -23,6 +25,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author lzhpo
  */
 @SpringBootApplication
+@HttpMessageConverter(HttpMessageConverterEnum.FASTJSON)
 public class SensitiveTestApplication {
 
   public static void main(String[] args) {

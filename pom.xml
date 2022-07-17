@@ -15,9 +15,9 @@
   <groupId>com.lzhpo</groupId>
   <artifactId>sensitive-spring-boot-starter</artifactId>
   <version>${revision}</version>
-  <name>panda-sensitive</name>
+  <name>sensitive-spring-boot-starter</name>
   <url>https://github.com/lzhpo/panda-sensitive</url>
-  <description>panda sensitive</description>
+  <description>sensitive-spring-boot-starter</description>
 
   <scm>
     <url>git@github.com:lzhpo/panda-sensitive.git</url>
@@ -55,10 +55,9 @@
     <maven.source.version>3.0.1</maven.source.version>
     <maven.javadoc.version>3.0.1</maven.javadoc.version>
     <fmt-maven-plugin.version>2.19</fmt-maven-plugin.version>
-    <jsonb.version>1.1.4</jsonb.version>
     <yasson.version>1.0.11</yasson.version>
     <hutool.version>5.8.4</hutool.version>
-    <fastjson.version>1.2.83</fastjson.version>
+    <fastjson.version>2.0.9</fastjson.version>
   </properties>
 
   <dependencies>
@@ -94,6 +93,7 @@
       <groupId>com.alibaba</groupId>
       <artifactId>fastjson</artifactId>
       <version>${fastjson.version}</version>
+      <optional>true</optional>
     </dependency>
 
     <!-- gson -->
@@ -107,11 +107,7 @@
       <groupId>org.eclipse</groupId>
       <artifactId>yasson</artifactId>
       <version>${yasson.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>javax.json</groupId>
-      <artifactId>javax.json-api</artifactId>
-      <version>${jsonb.version}</version>
+      <optional>true</optional>
     </dependency>
   </dependencies>
 

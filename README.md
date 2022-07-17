@@ -266,9 +266,23 @@ sample2将忽略`SampleJavaBean`对象的字段脱敏，sample1不影响。
 
 配置方式如下：
 1. Jackson：`@HttpMessageConverter(JsonConverter.JACKSON)`，默认就是Jackson，可以不用配置。
-2. JsonB：`@HttpMessageConverter(JsonConverter.JSONB)`
+2. Gson：`@HttpMessageConverter(JsonConverter.GSON)`
 3. FastJson：`@HttpMessageConverter(JsonConverter.FASTJSON)`
-4. Gson：`@HttpMessageConverter(JsonConverter.GSON)`
+   ```xml
+   <dependency>
+     <groupId>com.alibaba</groupId>
+     <artifactId>fastjson</artifactId>
+     <version>${fastjson.version}</version>
+   </dependency>
+   ```
+4. JsonB：`@HttpMessageConverter(JsonConverter.JSONB)`
+   ```xml
+   <dependency>
+     <groupId>org.eclipse</groupId>
+     <artifactId>yasson</artifactId>
+     <version>1.0.11</version>
+   </dependency>
+   ```
 
 ## 公众号
 
