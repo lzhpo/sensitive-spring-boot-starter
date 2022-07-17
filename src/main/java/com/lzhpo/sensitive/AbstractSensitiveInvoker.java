@@ -87,7 +87,7 @@ public abstract class AbstractSensitiveInvoker {
               boolean ignore = !ObjectUtils.isEmpty(ignoreSensitive);
               if (ignore && log.isDebugEnabled()) {
                 String description = handlerMethod.toString();
-                log.info("{} has marked @IgnoreSensitive, ignore sensitive it.", description);
+                log.debug("{} has marked @IgnoreSensitive, ignore sensitive it.", description);
               }
               return ignore;
             })
