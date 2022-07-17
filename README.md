@@ -15,21 +15,18 @@
 
 > 依赖已发布至Maven中央仓库，可直接引入依赖。
 
-#### Maven
-
-```xml
-<dependency>
-  <groupId>com.lzhpo</groupId>
-  <artifactId>sensitive-spring-boot-starter</artifactId>
-  <version>${latest-version}</version>
-</dependency>
-```
-
-#### Gradle
-
-```groovy
-implementation 'com.lzhpo:sensitive-spring-boot-starter:${latest-version}'
-```
+- Maven：
+  ```xml
+  <dependency>
+    <groupId>com.lzhpo</groupId>
+    <artifactId>sensitive-spring-boot-starter</artifactId>
+    <version>${latest-version}</version>
+  </dependency>
+  ```
+- Gradle:
+  ```groovy
+  implementation 'com.lzhpo:sensitive-spring-boot-starter:${latest-version}'
+  ```
 
 ### 2.实体类字段上使用`@Sensitive`注解配置脱敏规则
 
