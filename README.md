@@ -275,18 +275,3 @@ sample2将忽略`SampleJavaBean`对象的字段脱敏，sample1不影响。
 |         微信          |            公众号             |
 |:-------------------:|:--------------------------:|
 | ![](./docs/images/微信.jpg) | ![](./docs/images/公众号.jpg) |
-
-## 博客
-
-会打篮球的程序猿：[www.lzhpo.com](http://www.lzhpo.com)
-
-## 赞助
-
-|                             微信                             |                            支付宝                            |
-| :----------------------------------------------------------: | :----------------------------------------------------------: |
-| <img src="./docs/images/微信收款码.png" with=200 height=200> | <img src="./docs/images/支付宝收款码.jpg" with=200 height=200> |
-
-## 特别感谢
-
-- 广大无私的开源爱好者。
-- [ Hutool ]( https://github.com/dromara/hutool )：让Java语言也可以“甜甜的”。
