@@ -55,6 +55,7 @@
     <maven.source.version>3.0.1</maven.source.version>
     <maven.javadoc.version>3.0.1</maven.javadoc.version>
     <fmt-maven-plugin.version>2.19</fmt-maven-plugin.version>
+    <flatten-maven-plugin>1.2.7</flatten-maven-plugin>
     <yasson.version>1.0.11</yasson.version>
     <hutool.version>5.8.4</hutool.version>
     <fastjson.version>2.0.9</fastjson.version>
@@ -113,6 +114,33 @@
 
   <build>
     <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>flatten-maven-plugin</artifactId>
+        <version>${flatten-maven-plugin}</version>
+        <configuration>
+          <!-- whether to update the pom file, e.g: revision -->
+          <updatePomFile>true</updatePomFile>
+          <flattenMode>resolveCiFriendliesOnly</flattenMode>
+        </configuration>
+        <executions>
+          <execution>
+            <id>flatten</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>flatten</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>flatten.clean</id>
+            <phase>clean</phase>
+            <goals>
+              <goal>clean</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
       <plugin>
         <groupId>com.spotify.fmt</groupId>
         <artifactId>fmt-maven-plugin</artifactId>
