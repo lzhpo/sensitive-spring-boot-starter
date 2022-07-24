@@ -214,7 +214,7 @@ public class FaceCustomizeSensitiveHandler implements CustomizeSensitiveHandler 
 
 ### 3.使用`@IgnoreSensitive`注解标注在controller上可忽略脱敏
 
-#### 3.1 在Controller类上使用`@IgnoreSensitive`表示此类下所有接口都忽略脱敏
+#### 1.在Controller类上使用`@IgnoreSensitive`表示此类下所有接口都忽略脱敏
 
 此controller下的所有接口都将忽略脱敏。
 
@@ -236,7 +236,7 @@ public class NoSensitiveController {
 }
 ```
 
-#### 3.2 在Controller的方法中使用`@IgnoreSensitive`表示此接口忽略脱敏
+#### 2.在Controller的方法中使用`@IgnoreSensitive`表示此接口忽略脱敏
 
 ```java
 @RestController
@@ -260,25 +260,7 @@ sample2将忽略`SampleJavaBean`对象的字段脱敏，sample1不影响。
 
 ## 注意事项
 
-### 1.将默认的Jackson切换为FastJson（不推荐）
-
-1. 加入FastJson依赖：
-    ```xml
-    <dependency>
-      <groupId>com.alibaba</groupId>
-      <artifactId>fastjson</artifactId>
-      <version>2.0.10</version>
-    </dependency>
-    ```
-2. 将`FastJsonHttpMessageConverter`声明为Bean即可，`sensitive-spring-boot-starter`会自动注入相关逻辑：
-    ```java
-    @Bean
-    public FastJsonHttpMessageConverter fastJsonHttpMessageConverter() {
-      return new FastJsonHttpMessageConverter();
-    }
-    ```
-
-### 2.有关单独使用`@Builder`注解、实体类多层嵌套问题
+### 1.有关单独使用`@Builder`注解、实体类多层嵌套问题
 
 需要数据脱敏的实体类以及嵌套类都应提供对应成员变量的get方法，否则JSON组件无法获取到嵌套的成员变量进行脱敏！
 
@@ -298,6 +280,25 @@ sample2将忽略`SampleJavaBean`对象的字段脱敏，sample1不影响。
     private String idCard;
   }
   ```
+
+### 2.将默认的Jackson切换为FastJson（不推荐）
+
+1. 加入FastJson依赖：
+    ```xml
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>fastjson</artifactId>
+      <version>2.0.10</version>
+    </dependency>
+    ```
+2. 将`FastJsonHttpMessageConverter`声明为Bean即可，`sensitive-spring-boot-starter`会自动注入相关逻辑。
+    ```java
+    @Bean
+    public FastJsonHttpMessageConverter fastJsonHttpMessageConverter() {
+      return new FastJsonHttpMessageConverter();
+    }
+    ```
+   _注意：导入的是FastJson2的`FastJsonHttpMessageConverter`。_
 
 ## 公众号
 

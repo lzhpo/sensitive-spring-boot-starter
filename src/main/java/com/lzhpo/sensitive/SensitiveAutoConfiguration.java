@@ -16,8 +16,10 @@
 
 package com.lzhpo.sensitive;
 
+import com.alibaba.fastjson2.support.spring.http.converter.FastJsonHttpMessageConverter;
 import com.lzhpo.sensitive.resolve.RequestMappingResolver;
 import com.lzhpo.sensitive.serializer.JacksonSensitiveSerializer;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication.Type;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
@@ -44,7 +46,8 @@ public class SensitiveAutoConfiguration {
   }
 
   @Bean
-  public HttpMessageConverterBeanPostProcessor httpMessageConverterBeanPostProcessor() {
-    return new HttpMessageConverterBeanPostProcessor();
+  @ConditionalOnBean({FastJsonHttpMessageConverter.class})
+  public FastjsonBeanPostProcessor httpMessageConverterBeanPostProcessor() {
+    return new FastjsonBeanPostProcessor();
   }
 }

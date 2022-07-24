@@ -21,7 +21,6 @@ import com.alibaba.fastjson2.filter.Filter;
 import com.alibaba.fastjson2.support.config.FastJsonConfig;
 import com.alibaba.fastjson2.support.spring.http.converter.FastJsonHttpMessageConverter;
 import com.lzhpo.sensitive.serializer.FastJsonSensitiveValueFilter;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
@@ -30,8 +29,7 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
  * @author lzhpo
  */
 @Slf4j
-@RequiredArgsConstructor
-public class HttpMessageConverterBeanPostProcessor implements BeanPostProcessor {
+public class FastjsonBeanPostProcessor implements BeanPostProcessor {
 
   @Override
   public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
