@@ -264,10 +264,12 @@ sample2将忽略`SampleJavaBean`对象的字段脱敏，sample1不影响。
 
 需要数据脱敏的实体类以及嵌套类都应提供对应成员变量的get方法，否则JSON组件无法获取到嵌套的成员变量进行脱敏！
 
-- 错误示范：嵌套对象单独使用一个`@Builder`
+- 错误示范：嵌套对象单独使用一个`@Builder`。
+
   ![](./docs/images/单独使用@Builder注解问题.png)
 
-- 正确示范：如果需要使用到`@Builder`，那么需要配合`@Data`或`@Getter`一起使用。
+- **正确示范**：如果需要使用到`@Builder`，那么需要配合`@Data`或`@Getter`一起使用。
+  
   ```java
   @Data
   @Builder
