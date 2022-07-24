@@ -16,13 +16,13 @@
   <artifactId>sensitive-spring-boot-starter</artifactId>
   <version>${revision}</version>
   <name>sensitive-spring-boot-starter</name>
-  <url>https://github.com/lzhpo/panda-sensitive</url>
+  <url>https://github.com/lzhpo/sensitive-spring-boot-starter</url>
   <description>sensitive-spring-boot-starter</description>
 
   <scm>
-    <url>git@github.com:lzhpo/panda-sensitive.git</url>
-    <connection>scm:git@github.com:lzhpo/panda-sensitive.git</connection>
-    <developerConnection>scm:git@github.com:lzhpo/panda-sensitive.git</developerConnection>
+    <url>git@github.com:lzhpo/sensitive-spring-boot-starter.git</url>
+    <connection>scm:git@github.com:lzhpo/sensitive-spring-boot-starter.git</connection>
+    <developerConnection>scm:git@github.com:lzhpo/sensitive-spring-boot-starter.git</developerConnection>
     <tag>HEAD</tag>
   </scm>
 
