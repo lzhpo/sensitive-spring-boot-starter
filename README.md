@@ -258,31 +258,46 @@ public class SensitiveController {
 
 sample2将忽略`SampleJavaBean`对象的字段脱敏，sample1不影响。
 
-## 其它配置
+## 注意事项
 
-### 1. 支持使用注解指定Spring的`HttpMessageConverter`
+### 1.将默认的Jackson切换为FastJson（不推荐）
 
-*这部分是为了方便不想自己手动写代码配置`HttpMessageConverter`的，和数据脱敏逻辑无关，如果不需要更改Spring默认的Jackson，则无需配置。*
+1. 加入FastJson依赖：
+    ```xml
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>fastjson</artifactId>
+      <version>2.0.10</version>
+    </dependency>
+    ```
+2. 将`FastJsonHttpMessageConverter`声明为Bean即可，`sensitive-spring-boot-starter`会自动注入相关逻辑：
+    ```java
+    @Bean
+    public FastJsonHttpMessageConverter fastJsonHttpMessageConverter() {
+      return new FastJsonHttpMessageConverter();
+    }
+    ```
 
-配置方式如下：
-1. Jackson：`@HttpMessageConverter(JsonConverter.JACKSON)`，默认就是Jackson，可以不用配置。
-2. Gson：`@HttpMessageConverter(JsonConverter.GSON)`
-3. FastJson：`@HttpMessageConverter(JsonConverter.FASTJSON)`
-   ```xml
-   <dependency>
-     <groupId>com.alibaba</groupId>
-     <artifactId>fastjson</artifactId>
-     <version>${fastjson.version}</version>
-   </dependency>
-   ```
-4. JsonB：`@HttpMessageConverter(JsonConverter.JSONB)`
-   ```xml
-   <dependency>
-     <groupId>org.eclipse</groupId>
-     <artifactId>yasson</artifactId>
-     <version>1.0.11</version>
-   </dependency>
-   ```
+### 2.有关单独使用`@Builder`注解、实体类多层嵌套问题
+
+需要数据脱敏的实体类以及嵌套类都应提供对应成员变量的get方法，否则JSON组件无法获取到嵌套的成员变量进行脱敏！
+
+- 错误示范：嵌套对象单独使用一个`@Builder`
+  ![](./docs/images/单独使用@Builder注解问题.png)
+
+- 正确示范：如果需要使用到`@Builder`，那么需要配合`@Data`或`@Getter`一起使用。
+  ```java
+  @Data
+  @Builder
+  public class SensitiveEntity {
+  
+    @Sensitive(strategy = SensitiveStrategy.CHINESE_NAME)
+    private String name;
+  
+    @Sensitive(strategy = SensitiveStrategy.ID_CARD)
+    private String idCard;
+  }
+  ```
 
 ## 公众号
 

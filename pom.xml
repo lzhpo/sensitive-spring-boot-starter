@@ -8,7 +8,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.7.1</version>
+    <version>2.7.2</version>
     <relativePath/>
   </parent>
 
@@ -56,9 +56,8 @@
     <maven.javadoc.version>3.0.1</maven.javadoc.version>
     <fmt-maven-plugin.version>2.19</fmt-maven-plugin.version>
     <flatten-maven-plugin>1.2.7</flatten-maven-plugin>
-    <yasson.version>1.0.11</yasson.version>
     <hutool.version>5.8.4</hutool.version>
-    <fastjson.version>2.0.9</fastjson.version>
+    <fastjson.version>2.0.10</fastjson.version>
   </properties>
 
   <dependencies>
@@ -89,25 +88,10 @@
       <artifactId>spring-boot-configuration-processor</artifactId>
     </dependency>
 
-    <!-- fastjson -->
     <dependency>
       <groupId>com.alibaba</groupId>
       <artifactId>fastjson</artifactId>
       <version>${fastjson.version}</version>
-      <optional>true</optional>
-    </dependency>
-
-    <!-- gson -->
-    <dependency>
-      <groupId>com.google.code.gson</groupId>
-      <artifactId>gson</artifactId>
-    </dependency>
-
-    <!-- jsonb -->
-    <dependency>
-      <groupId>org.eclipse</groupId>
-      <artifactId>yasson</artifactId>
-      <version>${yasson.version}</version>
       <optional>true</optional>
     </dependency>
   </dependencies>

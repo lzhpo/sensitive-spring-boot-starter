@@ -14,10 +14,13 @@
  * limitations under the License.
  */
 
-package com.lzhpo.sensitive.mock;
+package com.lzhpo.sensitive.test.mock;
 
-import com.lzhpo.sensitive.entity.NoSensitiveEntity;
-import com.lzhpo.sensitive.entity.SensitiveEntity;
+import cn.hutool.core.collection.ListUtil;
+import cn.hutool.core.map.MapUtil;
+import com.lzhpo.sensitive.test.entity.NestedSensitiveEntity;
+import com.lzhpo.sensitive.test.entity.NoSensitiveEntity;
+import com.lzhpo.sensitive.test.entity.SensitiveEntity;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -49,6 +52,17 @@ public class MockHelper {
         .address("江西省南昌市幸福小区102号")
         .email("example@qq.com")
         .mobilePhone("13248765916")
+        .build();
+  }
+
+  public static NestedSensitiveEntity nestedSensitive() {
+    SensitiveEntity entity = sensitive();
+    return NestedSensitiveEntity.builder()
+        .parentName("123456")
+        .sensitiveEntity(entity)
+        .array(new SensitiveEntity[] {entity})
+        .map(MapUtil.of(0, entity))
+        .list(ListUtil.of(entity))
         .build();
   }
 }

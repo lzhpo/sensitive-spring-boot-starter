@@ -14,23 +14,18 @@
  * limitations under the License.
  */
 
-package com.lzhpo.sensitive.entity;
+package com.lzhpo.sensitive.test;
 
-import lombok.Builder;
-import lombok.Data;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * @author lzhpo
  */
-@Data
-@Builder
-public class NoSensitiveEntity {
+@SpringBootApplication
+public class SensitiveTestApplication {
 
-  private String name;
-
-  private String mobilePhone;
-
-  private String address;
-
-  private String email;
+  public static void main(String[] args) {
+    SpringApplication.run(SensitiveTestApplication.class, args);
+  }
 }

@@ -14,29 +14,27 @@
  * limitations under the License.
  */
 
-package com.lzhpo.sensitive.support;
+package com.lzhpo.sensitive.test.entity;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
- * Sensitive converter type
- *
  * @author lzhpo
  */
-@Getter
+@Data
+@Builder
+@NoArgsConstructor
 @AllArgsConstructor
-public enum HttpMessageConverterEnum {
+public class NoSensitiveEntity {
 
-  /** jackson converter type */
-  JACKSON,
+  private String name;
 
-  /** jsonb converter type */
-  JSONB,
+  private String mobilePhone;
 
-  /** fastjson converter type */
-  FASTJSON,
+  private String address;
 
-  /** gson converter type */
-  GSON
+  private String email;
 }

@@ -14,24 +14,30 @@
  * limitations under the License.
  */
 
-package com.lzhpo.sensitive.controller;
+package com.lzhpo.sensitive.test.entity;
 
-import com.lzhpo.sensitive.entity.NoSensitiveEntity;
-import com.lzhpo.sensitive.mock.MockHelper;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.lzhpo.sensitive.SensitiveStrategy;
+import com.lzhpo.sensitive.annocation.Sensitive;
+import java.util.List;
+import java.util.Map;
+import lombok.Builder;
+import lombok.Data;
 
 /**
  * @author lzhpo
  */
-@RestController
-@RequestMapping("/")
-public class NoSensitiveController {
+@Data
+@Builder
+public class NestedSensitiveEntity {
 
-  @GetMapping("noSensitive")
-  public ResponseEntity<NoSensitiveEntity> noSensitive() {
-    return ResponseEntity.ok(MockHelper.noSensitive());
-  }
+  @Sensitive(strategy = SensitiveStrategy.CHINESE_NAME)
+  private String parentName;
+
+  private SensitiveEntity sensitiveEntity;
+
+  private List<SensitiveEntity> list;
+
+  private Map<Integer, SensitiveEntity> map;
+
+  private SensitiveEntity[] array;
 }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.lzhpo.sensitive.handler;
+package com.lzhpo.sensitive.test.handler;
 
 import com.lzhpo.sensitive.CustomizeSensitiveHandler;
 import com.lzhpo.sensitive.SensitiveWrapper;

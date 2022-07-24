@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package com.lzhpo.sensitive.entity;
+package com.lzhpo.sensitive.test.entity;
 
 import com.lzhpo.sensitive.SensitiveStrategy;
 import com.lzhpo.sensitive.annocation.Sensitive;
 import com.lzhpo.sensitive.annocation.SensitiveFilterWords;
 import com.lzhpo.sensitive.annocation.SensitiveHandler;
 import com.lzhpo.sensitive.annocation.SensitiveKeepLength;
-import com.lzhpo.sensitive.handler.FaceCustomizeSensitiveHandler;
+import com.lzhpo.sensitive.test.handler.FaceCustomizeSensitiveHandler;
 import lombok.Builder;
 import lombok.Data;
 
@@ -32,7 +32,7 @@ import lombok.Data;
 @Builder
 public class SensitiveEntity {
 
-  @Sensitive(strategy = SensitiveStrategy.CHINESE_NAME, replacer = '#')
+  @Sensitive(strategy = SensitiveStrategy.CHINESE_NAME)
   private String name;
 
   @Sensitive(strategy = SensitiveStrategy.ID_CARD)

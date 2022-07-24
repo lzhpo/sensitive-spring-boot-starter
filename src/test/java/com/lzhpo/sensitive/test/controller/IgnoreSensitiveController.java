@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.lzhpo.sensitive.controller;
+package com.lzhpo.sensitive.test.controller;
 
 import com.lzhpo.sensitive.annocation.IgnoreSensitive;
-import com.lzhpo.sensitive.entity.SensitiveEntity;
-import com.lzhpo.sensitive.mock.MockHelper;
+import com.lzhpo.sensitive.test.entity.SensitiveEntity;
+import com.lzhpo.sensitive.test.mock.MockHelper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,8 +32,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/")
 public class IgnoreSensitiveController {
 
-  @GetMapping("ignoreSensitive")
-  public ResponseEntity<SensitiveEntity> noSensitive() {
+  @GetMapping("ignore")
+  public ResponseEntity<SensitiveEntity> ignore() {
     return ResponseEntity.ok(MockHelper.sensitive());
   }
 }

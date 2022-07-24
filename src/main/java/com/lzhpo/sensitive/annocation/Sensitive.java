@@ -34,6 +34,8 @@ import java.lang.annotation.Target;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
+// @JacksonAnnotationsInside
+// @JsonSerialize(using = JacksonSensitiveSerializer.class)
 public @interface Sensitive {
 
   /**

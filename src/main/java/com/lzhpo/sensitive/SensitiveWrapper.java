@@ -18,21 +18,24 @@ package com.lzhpo.sensitive;
 
 import com.lzhpo.sensitive.annocation.Sensitive;
 import java.lang.reflect.Field;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NonNull;
+import lombok.NoArgsConstructor;
 
 /**
  * @author lzhpo
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class SensitiveWrapper {
 
   /** 字段 */
-  @NonNull private Field field;
+  private Field field;
 
   /** 字段值 */
-  @NonNull private String fieldValue;
+  private String fieldValue;
 
   /** {@link Sensitive}注解信息 */
-  @NonNull private Sensitive sensitive;
+  private Sensitive sensitive;
 }
