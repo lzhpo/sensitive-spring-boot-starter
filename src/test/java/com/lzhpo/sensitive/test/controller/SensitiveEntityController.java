@@ -71,8 +71,8 @@ public class SensitiveEntityController {
     return ResponseEntity.ok(sensitiveEntities);
   }
 
-  @GetMapping("wrapper")
-  public ResponseEntity<NestedSensitiveEntity> wrapper() {
+  @GetMapping("nested")
+  public ResponseEntity<NestedSensitiveEntity> nested() {
     return ResponseEntity.ok(MockHelper.nestedSensitive());
   }
 }
