@@ -269,6 +269,7 @@ sample2将忽略`SampleJavaBean`对象的字段脱敏，sample1不影响。
   ![](./docs/images/单独使用@Builder注解问题.png)
 
 - **正确示范**：如果需要使用到`@Builder`/`@SuperBuilder`，那么需要配合`@Data`或`@Getter`一起使用。
+  
   例如：
   ```java
   @Data
