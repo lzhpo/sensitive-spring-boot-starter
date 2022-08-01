@@ -16,10 +16,8 @@
 
 package com.lzhpo.sensitive.test;
 
-import com.alibaba.fastjson2.support.spring.http.converter.FastJsonHttpMessageConverter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 
 /**
  * @author lzhpo
@@ -31,8 +29,8 @@ public class SensitiveTestApplication {
     SpringApplication.run(SensitiveTestApplication.class, args);
   }
 
-  @Bean
-  public FastJsonHttpMessageConverter fastJsonHttpMessageConverter() {
-    return new FastJsonHttpMessageConverter();
-  }
+  //  @Bean
+  //  public FastJsonHttpMessageConverter fastJsonHttpMessageConverter() {
+  //    return new FastJsonHttpMessageConverter();
+  //  }
 }
