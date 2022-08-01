@@ -56,7 +56,7 @@
     <maven.javadoc.version>3.0.1</maven.javadoc.version>
     <fmt-maven-plugin.version>2.19</fmt-maven-plugin.version>
     <flatten-maven-plugin>1.2.7</flatten-maven-plugin>
-    <hutool.version>5.8.4</hutool.version>
+    <hutool.version>5.8.5</hutool.version>
     <fastjson.version>2.0.10</fastjson.version>
   </properties>
 

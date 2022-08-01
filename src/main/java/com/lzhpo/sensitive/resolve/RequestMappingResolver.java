@@ -16,12 +16,12 @@
 
 package com.lzhpo.sensitive.resolve;
 
-import com.lzhpo.sensitive.utils.ServletContextUtil;
+import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.util.Assert;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerExecutionChain;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
@@ -33,14 +33,27 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 @RequiredArgsConstructor
 public class RequestMappingResolver implements HandlerMethodResolver {
 
-  private final RequestMappingHandlerMapping handlerMapping;
+  private final RequestMappingHandlerMapping requestMappingHandlerMapping;
 
   @Override
-  @SneakyThrows
   public HandlerMethod resolve() {
-    HttpServletRequest servletRequest = ServletContextUtil.getRequest();
-    HandlerExecutionChain executionChain = handlerMapping.getHandler(servletRequest);
-    Assert.notNull(executionChain, "Cannot parse to HandlerExecutionChain.");
-    return (HandlerMethod) executionChain.getHandler();
+    return Optional.ofNullable(RequestContextHolder.getRequestAttributes())
+        .filter(ServletRequestAttributes.class::isInstance)
+        .map(ServletRequestAttributes.class::cast)
+        .map(ServletRequestAttributes::getRequest)
+        .map(this::getHandler)
+        .map(HandlerExecutionChain::getHandler)
+        .filter(HandlerMethod.class::isInstance)
+        .map(HandlerMethod.class::cast)
+        .orElse(null);
+  }
+
+  public final HandlerExecutionChain getHandler(HttpServletRequest request) {
+    try {
+      return requestMappingHandlerMapping.getHandler(request);
+    } catch (Exception e) {
+      log.error("Cannot get handler from current HttpServletRequest: {}", e.getMessage(), e);
+      return null;
+    }
   }
 }

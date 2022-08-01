@@ -305,6 +305,15 @@ sample2将忽略`SampleJavaBean`对象的字段脱敏，sample1不影响。
     ```
    _注意：导入的是FastJson2的`FastJsonHttpMessageConverter`。_
 
+### 3.关闭此数据脱敏功能
+
+其实直接别引入此maven依赖即可，但是也提供了基于配置的方式关闭：
+
+```yaml
+sensitive:
+  enabled: false
+```
+
 ## 公众号
 
 |         微信          |            公众号             |

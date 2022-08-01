@@ -30,8 +30,8 @@ import com.lzhpo.sensitive.utils.HandlerMethodUtil;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Objects;
-import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.method.HandlerMethod;
 
 /**
@@ -57,11 +57,14 @@ public class JacksonSensitiveSerializer extends JsonSerializer<String> {
 
     HandlerMethodResolver handlerMethodResolver = SpringUtil.getBean(HandlerMethodResolver.class);
     HandlerMethod handlerMethod = handlerMethodResolver.resolve();
-    Optional<IgnoreSensitive> ignoreSensitive =
-        Optional.ofNullable(handlerMethod)
-            .map(method -> HandlerMethodUtil.getAnnotation(method, IgnoreSensitive.class));
+    if (ObjectUtils.isEmpty(handlerMethod)) {
+      gen.writeString(value);
+      return;
+    }
 
-    if (!ignoreSensitive.isPresent()) {
+    IgnoreSensitive ignoreSensitive =
+        HandlerMethodUtil.getAnnotation(handlerMethod, IgnoreSensitive.class);
+    if (Objects.isNull(ignoreSensitive)) {
       String currentName = gen.getOutputContext().getCurrentName();
       Object currentValue = gen.getCurrentValue();
       Class<?> currentValueClass = currentValue.getClass();
