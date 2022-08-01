@@ -16,14 +16,12 @@
 
 package com.lzhpo.sensitive.annocation;
 
+import com.fasterxml.jackson.annotation.JacksonAnnotationsInside;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.lzhpo.sensitive.SensitiveConstants;
 import com.lzhpo.sensitive.SensitiveStrategy;
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Inherited;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import com.lzhpo.sensitive.serializer.JacksonSensitiveSerializer;
+import java.lang.annotation.*;
 
 /**
  * Sensitive strategy for the javaBean {@link String} type field
@@ -34,8 +32,8 @@ import java.lang.annotation.Target;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
-// @JacksonAnnotationsInside
-// @JsonSerialize(using = JacksonSensitiveSerializer.class)
+@JacksonAnnotationsInside
+@JsonSerialize(using = JacksonSensitiveSerializer.class)
 public @interface Sensitive {
 
   /**

@@ -18,14 +18,12 @@ package com.lzhpo.sensitive;
 
 import com.alibaba.fastjson2.support.spring.http.converter.FastJsonHttpMessageConverter;
 import com.lzhpo.sensitive.resolve.RequestMappingResolver;
-import com.lzhpo.sensitive.serializer.JacksonSensitiveSerializer;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication.Type;
-import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -50,11 +48,6 @@ public class SensitiveAutoConfiguration {
       @Qualifier("requestMappingHandlerMapping")
           RequestMappingHandlerMapping requestMappingHandlerMapping) {
     return new RequestMappingResolver(requestMappingHandlerMapping);
-  }
-
-  @Bean
-  public Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomizer() {
-    return builder -> builder.serializers(new JacksonSensitiveSerializer());
   }
 
   @Bean
