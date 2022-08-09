@@ -18,13 +18,12 @@ package com.lzhpo.sensitive.test.entity;
 
 import com.lzhpo.sensitive.SensitiveStrategy;
 import com.lzhpo.sensitive.annocation.Sensitive;
+import java.util.List;
+import java.util.Map;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author lzhpo
