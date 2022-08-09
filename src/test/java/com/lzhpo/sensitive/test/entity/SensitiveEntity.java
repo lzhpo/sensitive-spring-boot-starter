@@ -22,14 +22,18 @@ import com.lzhpo.sensitive.annocation.SensitiveFilterWords;
 import com.lzhpo.sensitive.annocation.SensitiveHandler;
 import com.lzhpo.sensitive.annocation.SensitiveKeepLength;
 import com.lzhpo.sensitive.test.handler.FaceCustomizeSensitiveHandler;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author lzhpo
  */
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class SensitiveEntity {
 
   @Sensitive(strategy = SensitiveStrategy.CHINESE_NAME)
