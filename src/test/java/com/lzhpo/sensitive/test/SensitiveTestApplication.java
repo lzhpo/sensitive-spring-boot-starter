@@ -19,9 +19,7 @@ package com.lzhpo.sensitive.test;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-/**
- * @author lzhpo
- */
+/** @author lzhpo */
 @SpringBootApplication
 public class SensitiveTestApplication {
 

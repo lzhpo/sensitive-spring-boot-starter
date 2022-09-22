@@ -31,9 +31,7 @@ import java.util.Objects;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.method.HandlerMethod;
 
-/**
- * @author lzhpo
- */
+/** @author lzhpo */
 public class FastJsonSensitiveValueFilter implements ContextValueFilter {
 
   @Override

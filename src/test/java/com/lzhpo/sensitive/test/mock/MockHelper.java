@@ -23,9 +23,7 @@ import com.lzhpo.sensitive.test.entity.NoSensitiveEntity;
 import com.lzhpo.sensitive.test.entity.SensitiveEntity;
 import lombok.experimental.UtilityClass;
 
-/**
- * @author lzhpo
- */
+/** @author lzhpo */
 @UtilityClass
 public class MockHelper {
 

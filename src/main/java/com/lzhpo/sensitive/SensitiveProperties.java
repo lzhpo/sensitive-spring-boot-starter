@@ -19,9 +19,7 @@ package com.lzhpo.sensitive;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-/**
- * @author lzhpo
- */
+/** @author lzhpo */
 @Data
 @ConfigurationProperties(prefix = "sensitive")
 public class SensitiveProperties {

@@ -16,9 +16,7 @@
 
 package com.lzhpo.sensitive;
 
-/**
- * @author lzhpo
- */
+/** @author lzhpo */
 public interface CustomizeSensitiveHandler {
 
   /**
