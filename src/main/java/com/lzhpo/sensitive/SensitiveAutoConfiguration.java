@@ -16,17 +16,14 @@
 
 package com.lzhpo.sensitive;
 
-import com.alibaba.fastjson2.support.config.FastJsonConfig;
-import com.alibaba.fastjson2.support.spring.http.converter.FastJsonHttpMessageConverter;
 import com.lzhpo.sensitive.resolve.RequestMappingResolver;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 /** @author lzhpo */
@@ -36,6 +33,7 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
     value = "enabled",
     havingValue = "true",
     matchIfMissing = true)
+@Import({FastJson2AutoConfiguration.class})
 @EnableConfigurationProperties({SensitiveProperties.class})
 public class SensitiveAutoConfiguration {
 
@@ -45,12 +43,5 @@ public class SensitiveAutoConfiguration {
       @Qualifier("requestMappingHandlerMapping")
           RequestMappingHandlerMapping requestMappingHandlerMapping) {
     return new RequestMappingResolver(requestMappingHandlerMapping);
-  }
-
-  @Bean
-  @ConditionalOnBean({FastJsonHttpMessageConverter.class})
-  @ConditionalOnClass({FastJsonConfig.class, FastJsonHttpMessageConverter.class})
-  public FastjsonBeanPostProcessor httpMessageConverterBeanPostProcessor() {
-    return new FastjsonBeanPostProcessor();
   }
 }
