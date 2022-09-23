@@ -288,7 +288,7 @@ sample2将忽略`SampleJavaBean`对象的字段脱敏，sample1不影响。
 
 ### 2.将默认的Jackson切换为FastJson（不推荐）
 
-1. 加入FastJson依赖（同时支持FastJson1和FastJson2）：
+1. 加入FastJson依赖（支持FastJson1和FastJson2）：
     ```xml
     <dependency>
       <groupId>com.alibaba</groupId>
