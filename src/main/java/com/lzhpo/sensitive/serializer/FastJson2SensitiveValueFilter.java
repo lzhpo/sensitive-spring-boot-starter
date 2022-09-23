@@ -16,11 +16,11 @@
 
 package com.lzhpo.sensitive.serializer;
 
-import com.alibaba.fastjson.serializer.BeanContext;
-import com.alibaba.fastjson.serializer.ContextValueFilter;
+import com.alibaba.fastjson2.filter.BeanContext;
+import com.alibaba.fastjson2.filter.ContextValueFilter;
 
 /** @author lzhpo */
-public class FastJsonSensitiveValueFilter extends AbstractFastJsonSensitiveValueFilter
+public class FastJson2SensitiveValueFilter extends AbstractFastJsonSensitiveValueFilter
     implements ContextValueFilter {
 
   @Override

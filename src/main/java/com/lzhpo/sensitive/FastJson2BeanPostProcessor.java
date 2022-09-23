@@ -20,14 +20,14 @@ import cn.hutool.core.util.ArrayUtil;
 import com.alibaba.fastjson2.filter.Filter;
 import com.alibaba.fastjson2.support.config.FastJsonConfig;
 import com.alibaba.fastjson2.support.spring.http.converter.FastJsonHttpMessageConverter;
-import com.lzhpo.sensitive.serializer.FastJsonSensitiveValueFilter;
+import com.lzhpo.sensitive.serializer.FastJson2SensitiveValueFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 
 /** @author lzhpo */
 @Slf4j
-public class FastjsonBeanPostProcessor implements BeanPostProcessor {
+public class FastJson2BeanPostProcessor implements BeanPostProcessor {
 
   @Override
   public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
@@ -35,12 +35,12 @@ public class FastjsonBeanPostProcessor implements BeanPostProcessor {
       FastJsonHttpMessageConverter fastJsonConverter = (FastJsonHttpMessageConverter) bean;
       FastJsonConfig fastJsonConfig = fastJsonConverter.getFastJsonConfig();
       Filter[] originalWriterFilters = fastJsonConfig.getWriterFilters();
-      FastJsonSensitiveValueFilter[] injectWriterFilters = {new FastJsonSensitiveValueFilter()};
+      FastJson2SensitiveValueFilter[] injectWriterFilters = {new FastJson2SensitiveValueFilter()};
       Filter[] finalWriterFilters = ArrayUtil.addAll(originalWriterFilters, injectWriterFilters);
       fastJsonConfig.setWriterFilters(finalWriterFilters);
       log.info(
           "Injected [{}] WriterFilter to FastJsonHttpMessageConverter",
-          FastJsonSensitiveValueFilter.class.getName());
+          FastJson2SensitiveValueFilter.class.getName());
       return fastJsonConverter;
     }
     return bean;

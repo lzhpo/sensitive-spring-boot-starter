@@ -28,7 +28,7 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 /** @author lzhpo */
 @Configuration
 @ConditionalOnExpression
-@Import({FastJson2AutoConfiguration.class})
+@Import({FastJsonAutoConfiguration.class, FastJson2AutoConfiguration.class})
 public class SensitiveAutoConfiguration {
 
   @Bean

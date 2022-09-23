@@ -16,8 +16,8 @@
 
 package com.lzhpo.sensitive;
 
-import com.alibaba.fastjson2.support.config.FastJsonConfig;
-import com.alibaba.fastjson2.support.spring.http.converter.FastJsonHttpMessageConverter;
+import com.alibaba.fastjson.support.config.FastJsonConfig;
+import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
@@ -27,10 +27,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConditionalOnBean({FastJsonHttpMessageConverter.class})
 @ConditionalOnClass({FastJsonConfig.class, FastJsonHttpMessageConverter.class})
-public class FastJson2AutoConfiguration {
+public class FastJsonAutoConfiguration {
 
   @Bean
-  public FastJson2BeanPostProcessor httpMessageConverterBeanPostProcessor() {
-    return new FastJson2BeanPostProcessor();
+  public FastJsonBeanPostProcessor fastJsonBeanPostProcessor() {
+    return new FastJsonBeanPostProcessor();
   }
 }
