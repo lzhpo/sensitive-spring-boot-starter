@@ -34,12 +34,16 @@ public class FastJsonBeanPostProcessor implements BeanPostProcessor {
     if (bean instanceof FastJsonHttpMessageConverter) {
       FastJsonHttpMessageConverter fastJsonConverter = (FastJsonHttpMessageConverter) bean;
       FastJsonConfig fastJsonConfig = fastJsonConverter.getFastJsonConfig();
-      SerializeFilter[] oldSerializeFilters = fastJsonConfig.getSerializeFilters();
+      SerializeFilter[] oldFilters = fastJsonConfig.getSerializeFilters();
 
-      SerializeFilter[] newSerializeFilters =
-          ArrayUtil.addAll(
-              oldSerializeFilters, new SerializeFilter[] {new FastJsonSensitiveValueFilter()});
-      fastJsonConfig.setSerializeFilters(newSerializeFilters);
+      SerializeFilter[] injectFilters = {new FastJsonSensitiveValueFilter()};
+      SerializeFilter[] newFilters = ArrayUtil.addAll(oldFilters, injectFilters);
+      fastJsonConfig.setSerializeFilters(newFilters);
+
+      log.info(
+          "Injected [{}] WriterFilter to [{}]",
+          FastJsonSensitiveValueFilter.class.getName(),
+          FastJsonHttpMessageConverter.class.getName());
 
       return fastJsonConverter;
     }

@@ -288,12 +288,12 @@ sample2将忽略`SampleJavaBean`对象的字段脱敏，sample1不影响。
 
 ### 2.将默认的Jackson切换为FastJson（不推荐）
 
-1. 加入FastJson依赖：
+1. 加入FastJson依赖（同时支持FastJson1和FastJson2）：
     ```xml
     <dependency>
       <groupId>com.alibaba</groupId>
       <artifactId>fastjson</artifactId>
-      <version>2.0.10</version>
+      <version>1.x.x/2.x.x</version>
     </dependency>
     ```
 2. 将`FastJsonHttpMessageConverter`声明为Bean即可，`sensitive-spring-boot-starter`会自动注入相关逻辑。
@@ -303,7 +303,6 @@ sample2将忽略`SampleJavaBean`对象的字段脱敏，sample1不影响。
       return new FastJsonHttpMessageConverter();
     }
     ```
-   _注意：导入的是FastJson2的`FastJsonHttpMessageConverter`。_
 
 ### 3.关闭此数据脱敏功能
 
