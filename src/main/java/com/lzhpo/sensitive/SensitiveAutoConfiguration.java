@@ -18,9 +18,8 @@ package com.lzhpo.sensitive;
 
 import com.lzhpo.sensitive.resolve.RequestMappingResolver;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -28,13 +27,8 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 
 /** @author lzhpo */
 @Configuration
-@ConditionalOnProperty(
-    prefix = "sensitive",
-    value = "enabled",
-    havingValue = "true",
-    matchIfMissing = true)
+@ConditionalOnExpression
 @Import({FastJson2AutoConfiguration.class})
-@EnableConfigurationProperties({SensitiveProperties.class})
 public class SensitiveAutoConfiguration {
 
   @Bean

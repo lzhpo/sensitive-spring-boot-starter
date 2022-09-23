@@ -35,5 +35,6 @@ public final class SensitiveConstants {
   /** 新能源车牌号长度 */
   public static final int NEW_ENERGY_CAR_LICENSE_LENGTH = 8;
 
+  /** 错误的银行卡号长度 */
   public static final int ERROR_BANK_CARD_LENGTH = 9;
 }
