@@ -21,4 +21,4 @@ jobs:
           distribution: 'adopt'
 
       - name: Execute style check
-        run: mvn com.coveo:fmt-maven-plugin:format -Dverbose=true
+        run: mvn clean com.coveo:fmt-maven-plugin:format -Dverbose=true
