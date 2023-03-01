@@ -20,10 +20,10 @@
   <description>sensitive-spring-boot-starter</description>
 
   <scm>
-    <url>git@github.com:lzhpo/sensitive-spring-boot-starter.git</url>
-    <connection>scm:git@github.com:lzhpo/sensitive-spring-boot-starter.git</connection>
-    <developerConnection>scm:git@github.com:lzhpo/sensitive-spring-boot-starter.git</developerConnection>
-    <tag>HEAD</tag>
+    <tag>master</tag>
+    <connection>https://github.com/lzhpo/sensitive-spring-boot-starter</connection>
+    <developerConnection>http://www.lzhpo.com</developerConnection>
+    <url>https://github.com/lzhpo/sensitive-spring-boot-starter.git</url>
   </scm>
 
   <licenses>
@@ -35,14 +35,8 @@
 
   <developers>
     <developer>
-      <id>lzhpo</id>
       <name>lzhpo</name>
       <email>lzhpo1024@gmail.com</email>
-      <organizationUrl>http://www.lzhpo.com</organizationUrl>
-      <roles>
-        <role>Developer</role>
-      </roles>
-      <timezone>+8</timezone>
     </developer>
   </developers>
 
