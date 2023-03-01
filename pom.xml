@@ -46,8 +46,8 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <maven.gpg.version>3.0.1</maven.gpg.version>
-    <maven.source.version>3.0.1</maven.source.version>
-    <maven.javadoc.version>3.0.1</maven.javadoc.version>
+    <maven.source.version>3.2.1</maven.source.version>
+    <maven.javadoc.version>3.5.0</maven.javadoc.version>
     <fmt-maven-plugin.version>2.9.1</fmt-maven-plugin.version>
     <flatten-maven-plugin>1.2.7</flatten-maven-plugin>
     <hutool.version>5.8.12</hutool.version>
@@ -169,7 +169,7 @@
                   <goal>jar</goal>
                 </goals>
                 <configuration>
-                  <locale>en_US</locale>
+                  <locale>zh_CN</locale>
                   <encoding>UTF-8</encoding>
                   <charset>UTF-8</charset>
                   <doclint>none</doclint>
