@@ -18,7 +18,6 @@ package com.lzhpo.sensitive;
 
 import com.lzhpo.sensitive.resolve.RequestMappingResolver;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,7 +26,6 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 
 /** @author lzhpo */
 @Configuration
-@ConditionalOnExpression
 @Import({FastJsonAutoConfiguration.class, FastJson2AutoConfiguration.class})
 public class SensitiveAutoConfiguration {
 
