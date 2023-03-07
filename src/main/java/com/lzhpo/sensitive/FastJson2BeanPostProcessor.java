@@ -19,7 +19,7 @@ package com.lzhpo.sensitive;
 import cn.hutool.core.util.ArrayUtil;
 import com.alibaba.fastjson2.filter.Filter;
 import com.alibaba.fastjson2.support.config.FastJsonConfig;
-import com.alibaba.fastjson2.support.spring.http.converter.FastJsonHttpMessageConverter;
+import com.alibaba.fastjson2.support.spring6.http.converter.FastJsonHttpMessageConverter;
 import com.lzhpo.sensitive.serializer.FastJson2SensitiveValueFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
@@ -33,8 +33,7 @@ public class FastJson2BeanPostProcessor implements BeanPostProcessor {
 
   @Override
   public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-    if (bean instanceof FastJsonHttpMessageConverter) {
-      FastJsonHttpMessageConverter fastJsonConverter = (FastJsonHttpMessageConverter) bean;
+    if (bean instanceof FastJsonHttpMessageConverter fastJsonConverter) {
       FastJsonConfig fastJsonConfig = fastJsonConverter.getFastJsonConfig();
       Filter[] oldWriterFilters = fastJsonConfig.getWriterFilters();
 

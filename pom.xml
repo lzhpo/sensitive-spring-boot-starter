@@ -50,8 +50,8 @@
     <maven.javadoc.version>3.5.0</maven.javadoc.version>
     <fmt-maven-plugin.version>2.19</fmt-maven-plugin.version>
     <flatten-maven-plugin>1.2.7</flatten-maven-plugin>
-    <hutool.version>5.8.12</hutool.version>
-    <fastjson.version>2.0.14</fastjson.version>
+    <hutool.version>5.8.14</hutool.version>
+    <fastjson.version>2.0.24</fastjson.version>
   </properties>
 
   <dependencies>
@@ -85,6 +85,13 @@
     <dependency>
       <groupId>com.alibaba</groupId>
       <artifactId>fastjson</artifactId>
+      <version>${fastjson.version}</version>
+      <optional>true</optional>
+    </dependency>
+
+    <dependency>
+      <groupId>com.alibaba.fastjson2</groupId>
+      <artifactId>fastjson2-extension-spring6</artifactId>
       <version>${fastjson.version}</version>
       <optional>true</optional>
     </dependency>

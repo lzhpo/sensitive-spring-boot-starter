@@ -33,8 +33,7 @@ public class FastJsonBeanPostProcessor implements BeanPostProcessor {
 
   @Override
   public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-    if (bean instanceof FastJsonHttpMessageConverter) {
-      FastJsonHttpMessageConverter fastJsonConverter = (FastJsonHttpMessageConverter) bean;
+    if (bean instanceof FastJsonHttpMessageConverter fastJsonConverter) {
       FastJsonConfig fastJsonConfig = fastJsonConverter.getFastJsonConfig();
       SerializeFilter[] oldFilters = fastJsonConfig.getSerializeFilters();
 
