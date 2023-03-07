@@ -11,11 +11,16 @@
 
 ## 如何使用？
 
+*sensitive-spring-boot-starter也支持SpringBoot3*
+
+> 3.0.0及以上版本的sensitive-spring-boot-starter只针对使用SpringBoot3用户，SpringBoot2用户请使用低于3.0.0版本的sensitive-spring-boot-starter，两者功能不受影响，均会同步更新！
+
 ### 1.导入依赖
 
 > 依赖已发布至Maven中央仓库，可直接引入依赖。
 
 - Maven：
+
   ```xml
   <dependency>
     <groupId>com.lzhpo</groupId>
