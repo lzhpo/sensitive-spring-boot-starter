@@ -24,7 +24,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-/** @author lzhpo */
+/**
+ * @author lzhpo
+ */
 @Inherited
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

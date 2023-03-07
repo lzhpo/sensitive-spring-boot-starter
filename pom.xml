@@ -48,7 +48,7 @@
     <maven.gpg.version>3.0.1</maven.gpg.version>
     <maven.source.version>3.2.1</maven.source.version>
     <maven.javadoc.version>3.5.0</maven.javadoc.version>
-    <fmt-maven-plugin.version>2.9.1</fmt-maven-plugin.version>
+    <fmt-maven-plugin.version>2.19</fmt-maven-plugin.version>
     <flatten-maven-plugin>1.2.7</flatten-maven-plugin>
     <hutool.version>5.8.12</hutool.version>
     <fastjson.version>2.0.14</fastjson.version>
@@ -120,7 +120,7 @@
       </plugin>
 
       <plugin>
-        <groupId>com.coveo</groupId>
+        <groupId>com.spotify.fmt</groupId>
         <artifactId>fmt-maven-plugin</artifactId>
         <version>${fmt-maven-plugin.version}</version>
         <configuration>

@@ -22,7 +22,9 @@ import com.lzhpo.sensitive.annocation.Sensitive;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 
-/** @author lzhpo */
+/**
+ * @author lzhpo
+ */
 public class FaceCustomizeSensitiveHandler implements CustomizeSensitiveHandler {
 
   @Override

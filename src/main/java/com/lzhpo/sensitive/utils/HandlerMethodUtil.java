@@ -22,7 +22,9 @@ import java.util.Objects;
 import lombok.experimental.UtilityClass;
 import org.springframework.web.method.HandlerMethod;
 
-/** @author lzhpo */
+/**
+ * @author lzhpo
+ */
 @UtilityClass
 public class HandlerMethodUtil {
 

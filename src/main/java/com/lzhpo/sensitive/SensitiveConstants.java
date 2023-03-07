@@ -19,7 +19,9 @@ package com.lzhpo.sensitive;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-/** @author lzhpo */
+/**
+ * @author lzhpo
+ */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class SensitiveConstants {
 

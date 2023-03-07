@@ -24,7 +24,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
-/** @author lzhpo */
+/**
+ * @author lzhpo
+ */
 @Configuration
 @Import({FastJsonAutoConfiguration.class, FastJson2AutoConfiguration.class})
 public class SensitiveAutoConfiguration {

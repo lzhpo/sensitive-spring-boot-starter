@@ -18,7 +18,9 @@ package com.lzhpo.sensitive.resolve;
 
 import org.springframework.web.method.HandlerMethod;
 
-/** @author lzhpo */
+/**
+ * @author lzhpo
+ */
 public interface HandlerMethodResolver {
 
   /**

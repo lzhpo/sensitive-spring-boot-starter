@@ -34,7 +34,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.method.HandlerMethod;
 
-/** @author lzhpo */
+/**
+ * @author lzhpo
+ */
 @Slf4j
 public class JacksonSensitiveSerializer extends JsonSerializer<String> {
 
