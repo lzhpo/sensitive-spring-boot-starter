@@ -42,7 +42,8 @@
 
     <properties>
         <server.id>ossrh</server.id>
-        <java.version>17</java.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.gpg.version>3.0.1</maven.gpg.version>
