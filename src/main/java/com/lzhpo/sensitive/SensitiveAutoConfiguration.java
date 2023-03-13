@@ -29,11 +29,10 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 @Import({FastJsonAutoConfiguration.class, FastJson2AutoConfiguration.class})
 public class SensitiveAutoConfiguration {
 
-  @Bean
-  @ConditionalOnMissingBean
-  public RequestMappingResolver handlerMethodServletParser(
-      @Qualifier("requestMappingHandlerMapping")
-          RequestMappingHandlerMapping requestMappingHandlerMapping) {
-    return new RequestMappingResolver(requestMappingHandlerMapping);
-  }
+    @Bean
+    @ConditionalOnMissingBean
+    public RequestMappingResolver handlerMethodServletParser(
+            @Qualifier("requestMappingHandlerMapping") RequestMappingHandlerMapping requestMappingHandlerMapping) {
+        return new RequestMappingResolver(requestMappingHandlerMapping);
+    }
 }

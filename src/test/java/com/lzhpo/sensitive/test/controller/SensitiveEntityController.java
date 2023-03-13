@@ -34,43 +34,43 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/")
 public class SensitiveEntityController {
 
-  @GetMapping("hello")
-  public String hello() {
-    return "hello";
-  }
+    @GetMapping("hello")
+    public String hello() {
+        return "hello";
+    }
 
-  @GetMapping("sensitive")
-  public ResponseEntity<SensitiveEntity> sensitive() {
-    return ResponseEntity.ok(MockHelper.sensitive());
-  }
+    @GetMapping("sensitive")
+    public ResponseEntity<SensitiveEntity> sensitive() {
+        return ResponseEntity.ok(MockHelper.sensitive());
+    }
 
-  @IgnoreSensitive
-  @GetMapping("none")
-  public ResponseEntity<SensitiveEntity> none() {
-    return ResponseEntity.ok(MockHelper.sensitive());
-  }
+    @IgnoreSensitive
+    @GetMapping("none")
+    public ResponseEntity<SensitiveEntity> none() {
+        return ResponseEntity.ok(MockHelper.sensitive());
+    }
 
-  @GetMapping("array")
-  public ResponseEntity<SensitiveEntity[]> array() {
-    return ResponseEntity.ok(new SensitiveEntity[] {MockHelper.sensitive()});
-  }
+    @GetMapping("array")
+    public ResponseEntity<SensitiveEntity[]> array() {
+        return ResponseEntity.ok(new SensitiveEntity[] {MockHelper.sensitive()});
+    }
 
-  @GetMapping("list")
-  public ResponseEntity<List<SensitiveEntity>> list() {
-    List<SensitiveEntity> sensitiveEntities = new ArrayList<>();
-    sensitiveEntities.add(MockHelper.sensitive());
-    return ResponseEntity.ok(sensitiveEntities);
-  }
+    @GetMapping("list")
+    public ResponseEntity<List<SensitiveEntity>> list() {
+        List<SensitiveEntity> sensitiveEntities = new ArrayList<>();
+        sensitiveEntities.add(MockHelper.sensitive());
+        return ResponseEntity.ok(sensitiveEntities);
+    }
 
-  @GetMapping("map")
-  public ResponseEntity<Map<Integer, SensitiveEntity>> map() {
-    Map<Integer, SensitiveEntity> sensitiveEntities = new HashMap<>();
-    sensitiveEntities.put(0, MockHelper.sensitive());
-    return ResponseEntity.ok(sensitiveEntities);
-  }
+    @GetMapping("map")
+    public ResponseEntity<Map<Integer, SensitiveEntity>> map() {
+        Map<Integer, SensitiveEntity> sensitiveEntities = new HashMap<>();
+        sensitiveEntities.put(0, MockHelper.sensitive());
+        return ResponseEntity.ok(sensitiveEntities);
+    }
 
-  @GetMapping("nested")
-  public ResponseEntity<NestedSensitiveEntity> nested() {
-    return ResponseEntity.ok(MockHelper.nestedSensitive());
-  }
+    @GetMapping("nested")
+    public ResponseEntity<NestedSensitiveEntity> nested() {
+        return ResponseEntity.ok(MockHelper.nestedSensitive());
+    }
 }

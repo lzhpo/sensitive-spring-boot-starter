@@ -36,160 +36,159 @@ import org.springframework.util.ObjectUtils;
 @Slf4j
 public enum SensitiveStrategy {
 
-  /** Chinese name */
-  CHINESE_NAME() {
-    @Override
-    public String apply(SensitiveWrapper sensitiveWrapper) {
-      Sensitive sensitive = sensitiveWrapper.getSensitive();
-      return SensitiveUtil.chineseName(sensitiveWrapper.getFieldValue(), sensitive.replacer());
-    }
-  },
-
-  /** ID card */
-  ID_CARD() {
-    @Override
-    public String apply(SensitiveWrapper sensitiveWrapper) {
-      Sensitive sensitive = sensitiveWrapper.getSensitive();
-      return SensitiveUtil.idCardNum(sensitiveWrapper.getFieldValue(), 1, 2, sensitive.replacer());
-    }
-  },
-
-  /** Fixed phone */
-  FIXED_PHONE() {
-    @Override
-    public String apply(SensitiveWrapper sensitiveWrapper) {
-      Sensitive sensitive = sensitiveWrapper.getSensitive();
-      return SensitiveUtil.fixedPhone(sensitiveWrapper.getFieldValue(), sensitive.replacer());
-    }
-  },
-
-  /** Mobile phone */
-  MOBILE_PHONE() {
-    @Override
-    public String apply(SensitiveWrapper sensitiveWrapper) {
-      Sensitive sensitive = sensitiveWrapper.getSensitive();
-      return SensitiveUtil.mobilePhone(sensitiveWrapper.getFieldValue(), sensitive.replacer());
-    }
-  },
-
-  /** Address */
-  ADDRESS() {
-    @Override
-    public String apply(SensitiveWrapper sensitiveWrapper) {
-      Sensitive sensitive = sensitiveWrapper.getSensitive();
-      return SensitiveUtil.address(sensitiveWrapper.getFieldValue(), 8, sensitive.replacer());
-    }
-  },
-
-  /** Email */
-  EMAIL() {
-    @Override
-    public String apply(SensitiveWrapper sensitiveWrapper) {
-      Sensitive sensitive = sensitiveWrapper.getSensitive();
-      return SensitiveUtil.email(sensitiveWrapper.getFieldValue(), sensitive.replacer());
-    }
-  },
-
-  /** Password */
-  PASSWORD() {
-    @Override
-    public String apply(SensitiveWrapper sensitiveWrapper) {
-      Sensitive sensitive = sensitiveWrapper.getSensitive();
-      return SensitiveUtil.password(sensitiveWrapper.getFieldValue(), sensitive.replacer());
-    }
-  },
-
-  /** Chinese mainland license plates, including ordinary vehicles, new energy vehicles */
-  CAR_LICENSE() {
-    @Override
-    public String apply(SensitiveWrapper sensitiveWrapper) {
-      Sensitive sensitive = sensitiveWrapper.getSensitive();
-      return SensitiveUtil.carLicense(sensitiveWrapper.getFieldValue(), sensitive.replacer());
-    }
-  },
-
-  /** Bank card */
-  BANK_CARD() {
-    @Override
-    public String apply(SensitiveWrapper sensitiveWrapper) {
-      Sensitive sensitive = sensitiveWrapper.getSensitive();
-      return SensitiveUtil.bankCard(sensitiveWrapper.getFieldValue(), sensitive.replacer());
-    }
-  },
-
-  /** Customize sensitive keep length */
-  CUSTOMIZE_FILTER_WORDS() {
-    @Override
-    public String apply(SensitiveWrapper sensitiveWrapper) {
-      String fieldValue = sensitiveWrapper.getFieldValue();
-      Field field = sensitiveWrapper.getField();
-      Sensitive sensitive = sensitiveWrapper.getSensitive();
-      SensitiveFilterWords filterWords = field.getAnnotation(SensitiveFilterWords.class);
-      if (ObjectUtils.isEmpty(filterWords)) {
-        log.warn(
-            "{} is marked CUSTOMIZE_FILTER_WORDS strategy, "
-                + "but not has @SensitiveFilterWords, will ignore sensitive it.",
-            field.getName());
-        return fieldValue;
-      }
-
-      char replacer = sensitive.replacer();
-      String[] words = filterWords.value();
-      if (!ObjectUtils.isEmpty(words)) {
-        for (String filterWord : words) {
-          if (fieldValue.contains(filterWord)) {
-            String replacers = CharSequenceUtil.repeat(replacer, filterWord.length());
-            fieldValue = fieldValue.replace(filterWord, replacers);
-          }
+    /** Chinese name */
+    CHINESE_NAME() {
+        @Override
+        public String apply(SensitiveWrapper sensitiveWrapper) {
+            Sensitive sensitive = sensitiveWrapper.getSensitive();
+            return SensitiveUtil.chineseName(sensitiveWrapper.getFieldValue(), sensitive.replacer());
         }
-      }
+    },
 
-      return fieldValue;
-    }
-  },
+    /** ID card */
+    ID_CARD() {
+        @Override
+        public String apply(SensitiveWrapper sensitiveWrapper) {
+            Sensitive sensitive = sensitiveWrapper.getSensitive();
+            return SensitiveUtil.idCardNum(sensitiveWrapper.getFieldValue(), 1, 2, sensitive.replacer());
+        }
+    },
 
-  /** Customize sensitive keep length */
-  CUSTOMIZE_KEEP_LENGTH() {
-    @Override
-    public String apply(SensitiveWrapper sensitiveWrapper) {
-      Field field = sensitiveWrapper.getField();
-      String fieldValue = sensitiveWrapper.getFieldValue();
-      Sensitive sensitive = sensitiveWrapper.getSensitive();
-      SensitiveKeepLength sensitiveKeepLength = field.getAnnotation(SensitiveKeepLength.class);
-      int preKeep = sensitiveKeepLength.preKeep();
-      int postKeep = sensitiveKeepLength.postKeep();
-      Assert.isTrue(preKeep >= SensitiveConstants.NOP_KEEP, "preKeep must greater than -1");
-      Assert.isTrue(postKeep >= SensitiveConstants.NOP_KEEP, "postKeep must greater than -1");
+    /** Fixed phone */
+    FIXED_PHONE() {
+        @Override
+        public String apply(SensitiveWrapper sensitiveWrapper) {
+            Sensitive sensitive = sensitiveWrapper.getSensitive();
+            return SensitiveUtil.fixedPhone(sensitiveWrapper.getFieldValue(), sensitive.replacer());
+        }
+    },
 
-      boolean ignorePreKeep = preKeep <= 0;
-      boolean ignoreSuffixKeep = postKeep <= 0;
-      if (ignorePreKeep && ignoreSuffixKeep) {
-        return fieldValue;
-      }
+    /** Mobile phone */
+    MOBILE_PHONE() {
+        @Override
+        public String apply(SensitiveWrapper sensitiveWrapper) {
+            Sensitive sensitive = sensitiveWrapper.getSensitive();
+            return SensitiveUtil.mobilePhone(sensitiveWrapper.getFieldValue(), sensitive.replacer());
+        }
+    },
 
-      char replacer = sensitive.replacer();
-      return CharSequenceUtil.replace(
-          fieldValue, preKeep, fieldValue.length() - postKeep, replacer);
-    }
-  },
+    /** Address */
+    ADDRESS() {
+        @Override
+        public String apply(SensitiveWrapper sensitiveWrapper) {
+            Sensitive sensitive = sensitiveWrapper.getSensitive();
+            return SensitiveUtil.address(sensitiveWrapper.getFieldValue(), 8, sensitive.replacer());
+        }
+    },
 
-  /** Customize sensitive handler */
-  CUSTOMIZE_HANDLER() {
-    @Override
-    public String apply(SensitiveWrapper sensitiveWrapper) {
-      Field field = sensitiveWrapper.getField();
-      SensitiveHandler customizeHandler = field.getAnnotation(SensitiveHandler.class);
-      Class<? extends CustomizeSensitiveHandler> handlerClass = customizeHandler.value();
-      CustomizeSensitiveHandler handler = ReflectUtil.newInstance(handlerClass);
-      return handler.customize(sensitiveWrapper);
-    }
-  };
+    /** Email */
+    EMAIL() {
+        @Override
+        public String apply(SensitiveWrapper sensitiveWrapper) {
+            Sensitive sensitive = sensitiveWrapper.getSensitive();
+            return SensitiveUtil.email(sensitiveWrapper.getFieldValue(), sensitive.replacer());
+        }
+    },
 
-  /**
-   * Field sensitive strategy method
-   *
-   * @param sensitiveWrapper sensitive require message
-   * @return after sensitive value
-   */
-  public abstract String apply(SensitiveWrapper sensitiveWrapper);
+    /** Password */
+    PASSWORD() {
+        @Override
+        public String apply(SensitiveWrapper sensitiveWrapper) {
+            Sensitive sensitive = sensitiveWrapper.getSensitive();
+            return SensitiveUtil.password(sensitiveWrapper.getFieldValue(), sensitive.replacer());
+        }
+    },
+
+    /** Chinese mainland license plates, including ordinary vehicles, new energy vehicles */
+    CAR_LICENSE() {
+        @Override
+        public String apply(SensitiveWrapper sensitiveWrapper) {
+            Sensitive sensitive = sensitiveWrapper.getSensitive();
+            return SensitiveUtil.carLicense(sensitiveWrapper.getFieldValue(), sensitive.replacer());
+        }
+    },
+
+    /** Bank card */
+    BANK_CARD() {
+        @Override
+        public String apply(SensitiveWrapper sensitiveWrapper) {
+            Sensitive sensitive = sensitiveWrapper.getSensitive();
+            return SensitiveUtil.bankCard(sensitiveWrapper.getFieldValue(), sensitive.replacer());
+        }
+    },
+
+    /** Customize sensitive keep length */
+    CUSTOMIZE_FILTER_WORDS() {
+        @Override
+        public String apply(SensitiveWrapper sensitiveWrapper) {
+            String fieldValue = sensitiveWrapper.getFieldValue();
+            Field field = sensitiveWrapper.getField();
+            Sensitive sensitive = sensitiveWrapper.getSensitive();
+            SensitiveFilterWords filterWords = field.getAnnotation(SensitiveFilterWords.class);
+            if (ObjectUtils.isEmpty(filterWords)) {
+                log.warn(
+                        "{} is marked CUSTOMIZE_FILTER_WORDS strategy, "
+                                + "but not has @SensitiveFilterWords, will ignore sensitive it.",
+                        field.getName());
+                return fieldValue;
+            }
+
+            char replacer = sensitive.replacer();
+            String[] words = filterWords.value();
+            if (!ObjectUtils.isEmpty(words)) {
+                for (String filterWord : words) {
+                    if (fieldValue.contains(filterWord)) {
+                        String replacers = CharSequenceUtil.repeat(replacer, filterWord.length());
+                        fieldValue = fieldValue.replace(filterWord, replacers);
+                    }
+                }
+            }
+
+            return fieldValue;
+        }
+    },
+
+    /** Customize sensitive keep length */
+    CUSTOMIZE_KEEP_LENGTH() {
+        @Override
+        public String apply(SensitiveWrapper sensitiveWrapper) {
+            Field field = sensitiveWrapper.getField();
+            String fieldValue = sensitiveWrapper.getFieldValue();
+            Sensitive sensitive = sensitiveWrapper.getSensitive();
+            SensitiveKeepLength sensitiveKeepLength = field.getAnnotation(SensitiveKeepLength.class);
+            int preKeep = sensitiveKeepLength.preKeep();
+            int postKeep = sensitiveKeepLength.postKeep();
+            Assert.isTrue(preKeep >= SensitiveConstants.NOP_KEEP, "preKeep must greater than -1");
+            Assert.isTrue(postKeep >= SensitiveConstants.NOP_KEEP, "postKeep must greater than -1");
+
+            boolean ignorePreKeep = preKeep <= 0;
+            boolean ignoreSuffixKeep = postKeep <= 0;
+            if (ignorePreKeep && ignoreSuffixKeep) {
+                return fieldValue;
+            }
+
+            char replacer = sensitive.replacer();
+            return CharSequenceUtil.replace(fieldValue, preKeep, fieldValue.length() - postKeep, replacer);
+        }
+    },
+
+    /** Customize sensitive handler */
+    CUSTOMIZE_HANDLER() {
+        @Override
+        public String apply(SensitiveWrapper sensitiveWrapper) {
+            Field field = sensitiveWrapper.getField();
+            SensitiveHandler customizeHandler = field.getAnnotation(SensitiveHandler.class);
+            Class<? extends CustomizeSensitiveHandler> handlerClass = customizeHandler.value();
+            CustomizeSensitiveHandler handler = ReflectUtil.newInstance(handlerClass);
+            return handler.customize(sensitiveWrapper);
+        }
+    };
+
+    /**
+     * Field sensitive strategy method
+     *
+     * @param sensitiveWrapper sensitive require message
+     * @return after sensitive value
+     */
+    public abstract String apply(SensitiveWrapper sensitiveWrapper);
 }

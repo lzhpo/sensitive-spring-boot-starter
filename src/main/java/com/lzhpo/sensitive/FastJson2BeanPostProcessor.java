@@ -29,24 +29,24 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
 @Slf4j
 public class FastJson2BeanPostProcessor implements BeanPostProcessor {
 
-  @Override
-  public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-    if (bean instanceof FastJsonHttpMessageConverter) {
-      FastJsonHttpMessageConverter fastJsonConverter = (FastJsonHttpMessageConverter) bean;
-      FastJsonConfig fastJsonConfig = fastJsonConverter.getFastJsonConfig();
-      Filter[] oldWriterFilters = fastJsonConfig.getWriterFilters();
+    @Override
+    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+        if (bean instanceof FastJsonHttpMessageConverter) {
+            FastJsonHttpMessageConverter fastJsonConverter = (FastJsonHttpMessageConverter) bean;
+            FastJsonConfig fastJsonConfig = fastJsonConverter.getFastJsonConfig();
+            Filter[] oldWriterFilters = fastJsonConfig.getWriterFilters();
 
-      FastJson2SensitiveValueFilter[] injectWriterFilters = {new FastJson2SensitiveValueFilter()};
-      Filter[] newWriterFilters = ArrayUtil.addAll(oldWriterFilters, injectWriterFilters);
-      fastJsonConfig.setWriterFilters(newWriterFilters);
+            FastJson2SensitiveValueFilter[] injectWriterFilters = {new FastJson2SensitiveValueFilter()};
+            Filter[] newWriterFilters = ArrayUtil.addAll(oldWriterFilters, injectWriterFilters);
+            fastJsonConfig.setWriterFilters(newWriterFilters);
 
-      log.info(
-          "Injected [{}] WriterFilter to [{}]",
-          FastJson2SensitiveValueFilter.class.getName(),
-          FastJsonHttpMessageConverter.class.getName());
+            log.info(
+                    "Injected [{}] WriterFilter to [{}]",
+                    FastJson2SensitiveValueFilter.class.getName(),
+                    FastJsonHttpMessageConverter.class.getName());
 
-      return fastJsonConverter;
+            return fastJsonConverter;
+        }
+        return bean;
     }
-    return bean;
-  }
 }

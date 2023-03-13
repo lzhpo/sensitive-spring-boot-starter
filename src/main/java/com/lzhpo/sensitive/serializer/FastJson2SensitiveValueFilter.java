@@ -20,11 +20,10 @@ import com.alibaba.fastjson2.filter.BeanContext;
 import com.alibaba.fastjson2.filter.ContextValueFilter;
 
 /** @author lzhpo */
-public class FastJson2SensitiveValueFilter extends AbstractFastJsonSensitiveValueFilter
-    implements ContextValueFilter {
+public class FastJson2SensitiveValueFilter extends AbstractFastJsonSensitiveValueFilter implements ContextValueFilter {
 
-  @Override
-  public Object process(BeanContext context, Object object, String name, Object value) {
-    return process(object, name, value);
-  }
+    @Override
+    public Object process(BeanContext context, Object object, String name, Object value) {
+        return process(object, name, value);
+    }
 }

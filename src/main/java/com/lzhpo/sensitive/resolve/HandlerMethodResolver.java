@@ -21,10 +21,10 @@ import org.springframework.web.method.HandlerMethod;
 /** @author lzhpo */
 public interface HandlerMethodResolver {
 
-  /**
-   * Get HandlerMethod
-   *
-   * @return {@link HandlerMethod}
-   */
-  HandlerMethod resolve();
+    /**
+     * Get HandlerMethod
+     *
+     * @return {@link HandlerMethod}
+     */
+    HandlerMethod resolve();
 }
