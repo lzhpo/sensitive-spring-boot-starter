@@ -32,8 +32,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/")
 public class IgnoreSensitiveController {
 
-  @GetMapping("ignore")
-  public ResponseEntity<SensitiveEntity> ignore() {
-    return ResponseEntity.ok(MockHelper.sensitive());
-  }
+    @GetMapping("ignore")
+    public ResponseEntity<SensitiveEntity> ignore() {
+        return ResponseEntity.ok(MockHelper.sensitive());
+    }
 }

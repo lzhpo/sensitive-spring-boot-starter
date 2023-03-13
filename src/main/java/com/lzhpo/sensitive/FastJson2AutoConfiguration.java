@@ -31,8 +31,8 @@ import org.springframework.context.annotation.Configuration;
 @ConditionalOnClass({FastJsonConfig.class, FastJsonHttpMessageConverter.class})
 public class FastJson2AutoConfiguration {
 
-  @Bean
-  public FastJson2BeanPostProcessor httpMessageConverterBeanPostProcessor() {
-    return new FastJson2BeanPostProcessor();
-  }
+    @Bean
+    public FastJson2BeanPostProcessor httpMessageConverterBeanPostProcessor() {
+        return new FastJson2BeanPostProcessor();
+    }
 }

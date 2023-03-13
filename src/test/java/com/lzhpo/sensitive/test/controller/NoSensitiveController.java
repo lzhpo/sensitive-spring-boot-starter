@@ -30,8 +30,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/")
 public class NoSensitiveController {
 
-  @GetMapping("not")
-  public ResponseEntity<NoSensitiveEntity> not() {
-    return ResponseEntity.ok(MockHelper.noSensitive());
-  }
+    @GetMapping("not")
+    public ResponseEntity<NoSensitiveEntity> not() {
+        return ResponseEntity.ok(MockHelper.noSensitive());
+    }
 }

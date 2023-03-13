@@ -36,17 +36,17 @@ import java.lang.annotation.*;
 @JsonSerialize(using = JacksonSensitiveSerializer.class)
 public @interface Sensitive {
 
-  /**
-   * Sensitive strategy
-   *
-   * @return strategy
-   */
-  SensitiveStrategy strategy();
+    /**
+     * Sensitive strategy
+     *
+     * @return strategy
+     */
+    SensitiveStrategy strategy();
 
-  /**
-   * Sensitive replacer
-   *
-   * @return replacer
-   */
-  char replacer() default SensitiveConstants.REPLACER;
+    /**
+     * Sensitive replacer
+     *
+     * @return replacer
+     */
+    char replacer() default SensitiveConstants.REPLACER;
 }

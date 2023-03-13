@@ -30,11 +30,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class NoSensitiveEntity {
 
-  private String name;
+    private String name;
 
-  private String mobilePhone;
+    private String mobilePhone;
 
-  private String address;
+    private String address;
 
-  private String email;
+    private String email;
 }

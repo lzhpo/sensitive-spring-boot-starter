@@ -30,12 +30,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SensitiveWrapper {
 
-  /** 字段 */
-  private Field field;
+    /** 字段 */
+    private Field field;
 
-  /** 字段值 */
-  private String fieldValue;
+    /** 字段值 */
+    private String fieldValue;
 
-  /** {@link Sensitive}注解信息 */
-  private Sensitive sensitive;
+    /** {@link Sensitive}注解信息 */
+    private Sensitive sensitive;
 }

@@ -33,10 +33,10 @@ import java.lang.annotation.Target;
 @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
 public @interface SensitiveHandler {
 
-  /**
-   * Sensitive customizes handler
-   *
-   * @return {@link CustomizeSensitiveHandler}
-   */
-  Class<? extends CustomizeSensitiveHandler> value();
+    /**
+     * Sensitive customizes handler
+     *
+     * @return {@link CustomizeSensitiveHandler}
+     */
+    Class<? extends CustomizeSensitiveHandler> value();
 }

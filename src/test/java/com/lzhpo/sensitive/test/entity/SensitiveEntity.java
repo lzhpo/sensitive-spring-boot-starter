@@ -36,42 +36,42 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SensitiveEntity {
 
-  @Sensitive(strategy = SensitiveStrategy.CHINESE_NAME)
-  private String name;
+    @Sensitive(strategy = SensitiveStrategy.CHINESE_NAME)
+    private String name;
 
-  @Sensitive(strategy = SensitiveStrategy.ID_CARD)
-  private String idCard;
+    @Sensitive(strategy = SensitiveStrategy.ID_CARD)
+    private String idCard;
 
-  @Sensitive(strategy = SensitiveStrategy.FIXED_PHONE)
-  private String fixedPhone;
+    @Sensitive(strategy = SensitiveStrategy.FIXED_PHONE)
+    private String fixedPhone;
 
-  @Sensitive(strategy = SensitiveStrategy.MOBILE_PHONE)
-  private String mobilePhone;
+    @Sensitive(strategy = SensitiveStrategy.MOBILE_PHONE)
+    private String mobilePhone;
 
-  @Sensitive(strategy = SensitiveStrategy.ADDRESS)
-  private String address;
+    @Sensitive(strategy = SensitiveStrategy.ADDRESS)
+    private String address;
 
-  @Sensitive(strategy = SensitiveStrategy.EMAIL)
-  private String email;
+    @Sensitive(strategy = SensitiveStrategy.EMAIL)
+    private String email;
 
-  @Sensitive(strategy = SensitiveStrategy.PASSWORD)
-  private String password;
+    @Sensitive(strategy = SensitiveStrategy.PASSWORD)
+    private String password;
 
-  @Sensitive(strategy = SensitiveStrategy.CAR_LICENSE)
-  private String carLicense;
+    @Sensitive(strategy = SensitiveStrategy.CAR_LICENSE)
+    private String carLicense;
 
-  @Sensitive(strategy = SensitiveStrategy.BANK_CARD)
-  private String bankCard;
+    @Sensitive(strategy = SensitiveStrategy.BANK_CARD)
+    private String bankCard;
 
-  @Sensitive(strategy = SensitiveStrategy.CUSTOMIZE_KEEP_LENGTH)
-  @SensitiveKeepLength(preKeep = 1, postKeep = 1)
-  private String keepLength1;
+    @Sensitive(strategy = SensitiveStrategy.CUSTOMIZE_KEEP_LENGTH)
+    @SensitiveKeepLength(preKeep = 1, postKeep = 1)
+    private String keepLength1;
 
-  @Sensitive(strategy = SensitiveStrategy.CUSTOMIZE_FILTER_WORDS)
-  @SensitiveFilterWords({"他妈的", "去你大爷", "卧槽", "草泥马", "废物"})
-  private String filterWords1;
+    @Sensitive(strategy = SensitiveStrategy.CUSTOMIZE_FILTER_WORDS)
+    @SensitiveFilterWords({"他妈的", "去你大爷", "卧槽", "草泥马", "废物"})
+    private String filterWords1;
 
-  @Sensitive(strategy = SensitiveStrategy.CUSTOMIZE_HANDLER)
-  @SensitiveHandler(FaceCustomizeSensitiveHandler.class)
-  private String handler1;
+    @Sensitive(strategy = SensitiveStrategy.CUSTOMIZE_HANDLER)
+    @SensitiveHandler(FaceCustomizeSensitiveHandler.class)
+    private String handler1;
 }

@@ -31,23 +31,23 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
 @Slf4j
 public class FastJsonBeanPostProcessor implements BeanPostProcessor {
 
-  @Override
-  public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-    if (bean instanceof FastJsonHttpMessageConverter fastJsonConverter) {
-      FastJsonConfig fastJsonConfig = fastJsonConverter.getFastJsonConfig();
-      SerializeFilter[] oldFilters = fastJsonConfig.getSerializeFilters();
+    @Override
+    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+        if (bean instanceof FastJsonHttpMessageConverter fastJsonConverter) {
+            FastJsonConfig fastJsonConfig = fastJsonConverter.getFastJsonConfig();
+            SerializeFilter[] oldFilters = fastJsonConfig.getSerializeFilters();
 
-      SerializeFilter[] injectFilters = {new FastJsonSensitiveValueFilter()};
-      SerializeFilter[] newFilters = ArrayUtil.addAll(oldFilters, injectFilters);
-      fastJsonConfig.setSerializeFilters(newFilters);
+            SerializeFilter[] injectFilters = {new FastJsonSensitiveValueFilter()};
+            SerializeFilter[] newFilters = ArrayUtil.addAll(oldFilters, injectFilters);
+            fastJsonConfig.setSerializeFilters(newFilters);
 
-      log.info(
-          "Injected [{}] WriterFilter to [{}]",
-          FastJsonSensitiveValueFilter.class.getName(),
-          FastJsonHttpMessageConverter.class.getName());
+            log.info(
+                    "Injected [{}] WriterFilter to [{}]",
+                    FastJsonSensitiveValueFilter.class.getName(),
+                    FastJsonHttpMessageConverter.class.getName());
 
-      return fastJsonConverter;
+            return fastJsonConverter;
+        }
+        return bean;
     }
-    return bean;
-  }
 }

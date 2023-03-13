@@ -33,27 +33,27 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 @RequiredArgsConstructor
 public class RequestMappingResolver implements HandlerMethodResolver {
 
-  private final RequestMappingHandlerMapping requestMappingHandlerMapping;
+    private final RequestMappingHandlerMapping requestMappingHandlerMapping;
 
-  @Override
-  public HandlerMethod resolve() {
-    return Optional.ofNullable(RequestContextHolder.getRequestAttributes())
-        .filter(ServletRequestAttributes.class::isInstance)
-        .map(ServletRequestAttributes.class::cast)
-        .map(ServletRequestAttributes::getRequest)
-        .map(this::getHandler)
-        .map(HandlerExecutionChain::getHandler)
-        .filter(HandlerMethod.class::isInstance)
-        .map(HandlerMethod.class::cast)
-        .orElse(null);
-  }
-
-  public final HandlerExecutionChain getHandler(HttpServletRequest request) {
-    try {
-      return requestMappingHandlerMapping.getHandler(request);
-    } catch (Exception e) {
-      log.error("Cannot get handler from current HttpServletRequest: {}", e.getMessage(), e);
-      return null;
+    @Override
+    public HandlerMethod resolve() {
+        return Optional.ofNullable(RequestContextHolder.getRequestAttributes())
+                .filter(ServletRequestAttributes.class::isInstance)
+                .map(ServletRequestAttributes.class::cast)
+                .map(ServletRequestAttributes::getRequest)
+                .map(this::getHandler)
+                .map(HandlerExecutionChain::getHandler)
+                .filter(HandlerMethod.class::isInstance)
+                .map(HandlerMethod.class::cast)
+                .orElse(null);
     }
-  }
+
+    public final HandlerExecutionChain getHandler(HttpServletRequest request) {
+        try {
+            return requestMappingHandlerMapping.getHandler(request);
+        } catch (Exception e) {
+            log.error("Cannot get handler from current HttpServletRequest: {}", e.getMessage(), e);
+            return null;
+        }
+    }
 }

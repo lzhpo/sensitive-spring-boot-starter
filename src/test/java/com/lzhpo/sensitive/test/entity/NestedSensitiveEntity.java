@@ -34,14 +34,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class NestedSensitiveEntity {
 
-  @Sensitive(strategy = SensitiveStrategy.CHINESE_NAME)
-  private String parentName;
+    @Sensitive(strategy = SensitiveStrategy.CHINESE_NAME)
+    private String parentName;
 
-  private SensitiveEntity sensitiveEntity;
+    private SensitiveEntity sensitiveEntity;
 
-  private List<SensitiveEntity> list;
+    private List<SensitiveEntity> list;
 
-  private Map<Integer, SensitiveEntity> map;
+    private Map<Integer, SensitiveEntity> map;
 
-  private SensitiveEntity[] array;
+    private SensitiveEntity[] array;
 }

@@ -36,24 +36,24 @@ import org.springframework.web.method.HandlerMethod;
  */
 public abstract class AbstractFastJsonSensitiveValueFilter {
 
-  protected Object process(Object object, String name, Object value) {
-    HandlerMethodResolver methodResolver = SpringUtil.getBean(HandlerMethodResolver.class);
-    HandlerMethod handlerMethod = methodResolver.resolve();
-    if (ObjectUtils.isEmpty(value)
-        || !String.class.isAssignableFrom(value.getClass())
-        || Objects.isNull(handlerMethod)
-        || Objects.nonNull(HandlerMethodUtil.getAnnotation(handlerMethod, IgnoreSensitive.class))) {
-      return value;
-    }
+    protected Object process(Object object, String name, Object value) {
+        HandlerMethodResolver methodResolver = SpringUtil.getBean(HandlerMethodResolver.class);
+        HandlerMethod handlerMethod = methodResolver.resolve();
+        if (ObjectUtils.isEmpty(value)
+                || !String.class.isAssignableFrom(value.getClass())
+                || Objects.isNull(handlerMethod)
+                || Objects.nonNull(HandlerMethodUtil.getAnnotation(handlerMethod, IgnoreSensitive.class))) {
+            return value;
+        }
 
-    Class<?> clazz = object.getClass();
-    Field field = ReflectUtil.getField(clazz, name);
-    Sensitive sensitive = field.getAnnotation(Sensitive.class);
-    if (Objects.isNull(sensitive)) {
-      return value;
-    }
+        Class<?> clazz = object.getClass();
+        Field field = ReflectUtil.getField(clazz, name);
+        Sensitive sensitive = field.getAnnotation(Sensitive.class);
+        if (Objects.isNull(sensitive)) {
+            return value;
+        }
 
-    SensitiveStrategy strategy = sensitive.strategy();
-    return strategy.apply(new SensitiveWrapper(field, (String) value, sensitive));
-  }
+        SensitiveStrategy strategy = sensitive.strategy();
+        return strategy.apply(new SensitiveWrapper(field, (String) value, sensitive));
+    }
 }

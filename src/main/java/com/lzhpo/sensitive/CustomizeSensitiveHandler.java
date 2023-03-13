@@ -21,11 +21,11 @@ package com.lzhpo.sensitive;
  */
 public interface CustomizeSensitiveHandler {
 
-  /**
-   * Customize the filed value
-   *
-   * @param sensitiveWrapper sensitive require message
-   * @return after customize field value
-   */
-  String customize(SensitiveWrapper sensitiveWrapper);
+    /**
+     * Customize the filed value
+     *
+     * @param sensitiveWrapper sensitive require message
+     * @return after customize field value
+     */
+    String customize(SensitiveWrapper sensitiveWrapper);
 }

@@ -40,45 +40,43 @@ import org.springframework.web.method.HandlerMethod;
 @Slf4j
 public class JacksonSensitiveSerializer extends JsonSerializer<String> {
 
-  @Override
-  public Class<String> handledType() {
-    return String.class;
-  }
-
-  @Override
-  public void serialize(
-      final String value, final JsonGenerator gen, final SerializerProvider serializerProvider)
-      throws IOException {
-
-    if (Objects.isNull(value)) {
-      gen.writeNull();
-      return;
+    @Override
+    public Class<String> handledType() {
+        return String.class;
     }
 
-    HandlerMethodResolver handlerMethodResolver = SpringUtil.getBean(HandlerMethodResolver.class);
-    HandlerMethod handlerMethod = handlerMethodResolver.resolve();
-    if (ObjectUtils.isEmpty(handlerMethod)) {
-      gen.writeString(value);
-      return;
+    @Override
+    public void serialize(final String value, final JsonGenerator gen, final SerializerProvider serializerProvider)
+            throws IOException {
+
+        if (Objects.isNull(value)) {
+            gen.writeNull();
+            return;
+        }
+
+        HandlerMethodResolver handlerMethodResolver = SpringUtil.getBean(HandlerMethodResolver.class);
+        HandlerMethod handlerMethod = handlerMethodResolver.resolve();
+        if (ObjectUtils.isEmpty(handlerMethod)) {
+            gen.writeString(value);
+            return;
+        }
+
+        IgnoreSensitive ignoreSensitive = HandlerMethodUtil.getAnnotation(handlerMethod, IgnoreSensitive.class);
+        if (Objects.isNull(ignoreSensitive)) {
+            String currentName = gen.getOutputContext().getCurrentName();
+            Object currentValue = gen.getCurrentValue();
+            Class<?> currentValueClass = currentValue.getClass();
+            Field field = ReflectUtil.getField(currentValueClass, currentName);
+            Sensitive sensitive = field.getAnnotation(Sensitive.class);
+
+            if (Objects.nonNull(sensitive)) {
+                SensitiveStrategy strategy = sensitive.strategy();
+                String finalValue = strategy.apply(new SensitiveWrapper(field, value, sensitive));
+                gen.writeString(finalValue);
+                return;
+            }
+        }
+
+        gen.writeString(value);
     }
-
-    IgnoreSensitive ignoreSensitive =
-        HandlerMethodUtil.getAnnotation(handlerMethod, IgnoreSensitive.class);
-    if (Objects.isNull(ignoreSensitive)) {
-      String currentName = gen.getOutputContext().getCurrentName();
-      Object currentValue = gen.getCurrentValue();
-      Class<?> currentValueClass = currentValue.getClass();
-      Field field = ReflectUtil.getField(currentValueClass, currentName);
-      Sensitive sensitive = field.getAnnotation(Sensitive.class);
-
-      if (Objects.nonNull(sensitive)) {
-        SensitiveStrategy strategy = sensitive.strategy();
-        String finalValue = strategy.apply(new SensitiveWrapper(field, value, sensitive));
-        gen.writeString(finalValue);
-        return;
-      }
-    }
-
-    gen.writeString(value);
-  }
 }

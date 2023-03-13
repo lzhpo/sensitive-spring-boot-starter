@@ -27,18 +27,18 @@ import java.lang.reflect.Field;
  */
 public class FaceCustomizeSensitiveHandler implements CustomizeSensitiveHandler {
 
-  @Override
-  public String customize(SensitiveWrapper sensitiveWrapper) {
-    // 字段
-    Field field = sensitiveWrapper.getField();
-    // 字段归属的对象
-    Class<?> objectClass = field.getDeclaringClass();
-    // 字段上的注解
-    Annotation[] annotations = field.getAnnotations();
-    // 字段值
-    String fieldValue = sensitiveWrapper.getFieldValue();
-    // 注解信息
-    Sensitive sensitive = sensitiveWrapper.getSensitive();
-    return "@#@";
-  }
+    @Override
+    public String customize(SensitiveWrapper sensitiveWrapper) {
+        // 字段
+        Field field = sensitiveWrapper.getField();
+        // 字段归属的对象
+        Class<?> objectClass = field.getDeclaringClass();
+        // 字段上的注解
+        Annotation[] annotations = field.getAnnotations();
+        // 字段值
+        String fieldValue = sensitiveWrapper.getFieldValue();
+        // 注解信息
+        Sensitive sensitive = sensitiveWrapper.getSensitive();
+        return "@#@";
+    }
 }

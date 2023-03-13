@@ -25,12 +25,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class SensitiveTestApplication {
 
-  public static void main(String[] args) {
-    SpringApplication.run(SensitiveTestApplication.class, args);
-  }
+    public static void main(String[] args) {
+        SpringApplication.run(SensitiveTestApplication.class, args);
+    }
 
-  //  @Bean
-  //  public FastJsonHttpMessageConverter fastJsonHttpMessageConverter() {
-  //    return new FastJsonHttpMessageConverter();
-  //  }
+    //  @Bean
+    //  public FastJsonHttpMessageConverter fastJsonHttpMessageConverter() {
+    //    return new FastJsonHttpMessageConverter();
+    //  }
 }

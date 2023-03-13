@@ -32,10 +32,10 @@ import java.lang.annotation.Target;
 @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
 public @interface SensitiveFilterWords {
 
-  /**
-   * Definition sensitive words
-   *
-   * @return sensitive words array
-   */
-  String[] value() default {};
+    /**
+     * Definition sensitive words
+     *
+     * @return sensitive words array
+     */
+    String[] value() default {};
 }
