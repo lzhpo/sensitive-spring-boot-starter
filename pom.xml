@@ -42,14 +42,18 @@
 
     <properties>
         <server.id>ossrh</server.id>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <!-- support java8  -->
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <spotless-plugin.version>2.30.0</spotless-plugin.version>
+        <palantirJavaFormat.version>1.1.0</palantirJavaFormat.version>
+
         <maven.gpg.version>3.0.1</maven.gpg.version>
         <maven.source.version>3.2.1</maven.source.version>
         <maven.javadoc.version>3.5.0</maven.javadoc.version>
-        <spotless-plugin.version>2.34.0</spotless-plugin.version>
         <flatten-maven-plugin>1.2.7</flatten-maven-plugin>
         <hutool.version>5.8.14</hutool.version>
         <fastjson.version>2.0.24</fastjson.version>
@@ -133,10 +137,11 @@
                 <version>${spotless-plugin.version}</version>
                 <configuration>
                     <java>
-                        <palantirJavaFormat/>
+                        <palantirJavaFormat>
+                            <version>${palantirJavaFormat.version}</version>
+                        </palantirJavaFormat>
                     </java>
                 </configuration>
-                <!--
                 <executions>
                     <execution>
                         <goals>
@@ -144,7 +149,6 @@
                         </goals>
                     </execution>
                 </executions>
-                -->
             </plugin>
         </plugins>
     </build>

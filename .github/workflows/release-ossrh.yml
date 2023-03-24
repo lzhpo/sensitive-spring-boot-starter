@@ -15,7 +15,7 @@ jobs:
       - name: Set up Apache Maven Central
         uses: actions/setup-java@v3
         with:
-          java-version: '11'
+          java-version: '8'
           distribution: 'adopt'
           # It needs to be the same as the id corresponding to the snapshot Repository in pom.xml
           server-id: ossrh
