@@ -15,7 +15,7 @@ jobs:
       - name: Set up Apache Maven Central
         uses: actions/setup-java@v3
         with:
-          java-version: '8'
+          java-version: '11'
           distribution: 'adopt'
           # It needs to be the same as the id corresponding to the snapshot Repository in pom.xml
           server-id: ossrh
@@ -27,6 +27,9 @@ jobs:
           gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
           # env variable for GPG private key passphrase
           gpg-passphrase: MAVEN_GPG_PASSPHRASE
+
+      - name: Execute style check
+        run: mvn spotless:check
 
       - name: Release to Apache Maven Central
         run: mvn clean deploy -Prelease-ossrh
