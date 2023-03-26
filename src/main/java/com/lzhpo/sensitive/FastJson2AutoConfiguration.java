@@ -30,7 +30,7 @@ import org.springframework.context.annotation.Configuration;
 public class FastJson2AutoConfiguration {
 
     @Bean
-    public FastJson2BeanPostProcessor httpMessageConverterBeanPostProcessor() {
+    public FastJson2BeanPostProcessor fastJson2BeanPostProcessor() {
         return new FastJson2BeanPostProcessor();
     }
 }
