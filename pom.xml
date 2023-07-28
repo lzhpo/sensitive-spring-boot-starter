@@ -8,7 +8,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.0.4</version>
+        <version>3.1.2</version>
         <relativePath/>
     </parent>
 
@@ -46,13 +46,13 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <maven.gpg.version>3.0.1</maven.gpg.version>
-        <maven.source.version>3.2.1</maven.source.version>
+        <maven.gpg.version>3.1.0</maven.gpg.version>
+        <maven.source.version>3.3.0</maven.source.version>
         <maven.javadoc.version>3.5.0</maven.javadoc.version>
-        <spotless-plugin.version>2.34.0</spotless-plugin.version>
-        <flatten-maven-plugin>1.2.7</flatten-maven-plugin>
-        <hutool.version>5.8.14</hutool.version>
-        <fastjson.version>2.0.24</fastjson.version>
+        <spotless-plugin.version>2.38.0</spotless-plugin.version>
+        <flatten-maven-plugin>1.5.0</flatten-maven-plugin>
+        <hutool.version>5.8.20</hutool.version>
+        <fastjson.version>2.0.37</fastjson.version>
     </properties>
 
     <dependencies>
