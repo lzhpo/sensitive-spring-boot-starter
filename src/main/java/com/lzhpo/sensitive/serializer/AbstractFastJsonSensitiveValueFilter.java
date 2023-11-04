@@ -54,6 +54,6 @@ public abstract class AbstractFastJsonSensitiveValueFilter {
         }
 
         SensitiveStrategy strategy = sensitive.strategy();
-        return strategy.apply(new SensitiveWrapper(field, (String) value, sensitive));
+        return strategy.apply(new SensitiveWrapper(object, name, (String) value, sensitive.replacer()));
     }
 }

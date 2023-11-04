@@ -24,8 +24,8 @@ public interface CustomizeSensitiveHandler {
     /**
      * Customize the filed value
      *
-     * @param sensitiveWrapper sensitive require message
+     * @param wrapper {@link SensitiveWrapper}
      * @return after customize field value
      */
-    String customize(SensitiveWrapper sensitiveWrapper);
+    String customize(SensitiveWrapper wrapper);
 }

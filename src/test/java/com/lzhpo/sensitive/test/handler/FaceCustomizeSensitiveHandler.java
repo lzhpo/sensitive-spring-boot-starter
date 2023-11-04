@@ -18,27 +18,17 @@ package com.lzhpo.sensitive.test.handler;
 
 import com.lzhpo.sensitive.CustomizeSensitiveHandler;
 import com.lzhpo.sensitive.SensitiveWrapper;
-import com.lzhpo.sensitive.annocation.Sensitive;
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author lzhpo
  */
+@Slf4j
 public class FaceCustomizeSensitiveHandler implements CustomizeSensitiveHandler {
 
     @Override
-    public String customize(SensitiveWrapper sensitiveWrapper) {
-        // 字段
-        Field field = sensitiveWrapper.getField();
-        // 字段归属的对象
-        Class<?> objectClass = field.getDeclaringClass();
-        // 字段上的注解
-        Annotation[] annotations = field.getAnnotations();
-        // 字段值
-        String fieldValue = sensitiveWrapper.getFieldValue();
-        // 注解信息
-        Sensitive sensitive = sensitiveWrapper.getSensitive();
+    public String customize(SensitiveWrapper wrapper) {
+        log.debug("sensitiveWrapper: {}", wrapper);
         return "@#@";
     }
 }

@@ -46,10 +46,10 @@ public class JacksonSensitiveSerializer extends JsonSerializer<String> {
     }
 
     @Override
-    public void serialize(final String value, final JsonGenerator gen, final SerializerProvider serializerProvider)
+    public void serialize(String fieldValue, JsonGenerator gen, SerializerProvider serializerProvider)
             throws IOException {
 
-        if (Objects.isNull(value)) {
+        if (Objects.isNull(fieldValue)) {
             gen.writeNull();
             return;
         }
@@ -57,26 +57,27 @@ public class JacksonSensitiveSerializer extends JsonSerializer<String> {
         HandlerMethodResolver handlerMethodResolver = SpringUtil.getBean(HandlerMethodResolver.class);
         HandlerMethod handlerMethod = handlerMethodResolver.resolve();
         if (ObjectUtils.isEmpty(handlerMethod)) {
-            gen.writeString(value);
+            gen.writeString(fieldValue);
             return;
         }
 
         IgnoreSensitive ignoreSensitive = HandlerMethodUtil.getAnnotation(handlerMethod, IgnoreSensitive.class);
         if (Objects.isNull(ignoreSensitive)) {
-            String currentName = gen.getOutputContext().getCurrentName();
-            Object currentValue = gen.getCurrentValue();
-            Class<?> currentValueClass = currentValue.getClass();
-            Field field = ReflectUtil.getField(currentValueClass, currentName);
+            String fieldName = gen.getOutputContext().getCurrentName();
+            Object object = gen.getCurrentValue();
+            Class<?> objectClass = object.getClass();
+            Field field = ReflectUtil.getField(objectClass, fieldName);
             Sensitive sensitive = field.getAnnotation(Sensitive.class);
 
             if (Objects.nonNull(sensitive)) {
                 SensitiveStrategy strategy = sensitive.strategy();
-                String finalValue = strategy.apply(new SensitiveWrapper(field, value, sensitive));
+                String finalValue =
+                        strategy.apply(new SensitiveWrapper(object, fieldName, fieldValue, sensitive.replacer()));
                 gen.writeString(finalValue);
                 return;
             }
         }
 
-        gen.writeString(value);
+        gen.writeString(fieldValue);
     }
 }
