@@ -29,7 +29,7 @@ import org.springframework.util.StringUtils;
  * @author lzhpo
  */
 @UtilityClass
-public class SensitiveUtil extends DesensitizedUtil {
+public class SensitiveUtils extends DesensitizedUtil {
 
     /**
      * 中文姓名

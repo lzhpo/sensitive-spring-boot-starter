@@ -21,7 +21,7 @@ import cn.hutool.core.util.ReflectUtil;
 import com.lzhpo.sensitive.annocation.SensitiveFilterWords;
 import com.lzhpo.sensitive.annocation.SensitiveHandler;
 import com.lzhpo.sensitive.annocation.SensitiveKeepLength;
-import com.lzhpo.sensitive.util.SensitiveUtil;
+import com.lzhpo.sensitive.util.SensitiveUtils;
 import java.lang.reflect.Field;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.Assert;
@@ -39,7 +39,7 @@ public enum SensitiveStrategy {
     CHINESE_NAME() {
         @Override
         public String apply(SensitiveWrapper wrapper) {
-            return SensitiveUtil.chineseName(wrapper.getFieldValue(), wrapper.getReplacer());
+            return SensitiveUtils.chineseName(wrapper.getFieldValue(), wrapper.getReplacer());
         }
     },
 
@@ -47,7 +47,7 @@ public enum SensitiveStrategy {
     ID_CARD() {
         @Override
         public String apply(SensitiveWrapper wrapper) {
-            return SensitiveUtil.idCardNum(wrapper.getFieldValue(), 1, 2, wrapper.getReplacer());
+            return SensitiveUtils.idCardNum(wrapper.getFieldValue(), 1, 2, wrapper.getReplacer());
         }
     },
 
@@ -55,7 +55,7 @@ public enum SensitiveStrategy {
     FIXED_PHONE() {
         @Override
         public String apply(SensitiveWrapper wrapper) {
-            return SensitiveUtil.fixedPhone(wrapper.getFieldValue(), wrapper.getReplacer());
+            return SensitiveUtils.fixedPhone(wrapper.getFieldValue(), wrapper.getReplacer());
         }
     },
 
@@ -63,7 +63,7 @@ public enum SensitiveStrategy {
     MOBILE_PHONE() {
         @Override
         public String apply(SensitiveWrapper wrapper) {
-            return SensitiveUtil.mobilePhone(wrapper.getFieldValue(), wrapper.getReplacer());
+            return SensitiveUtils.mobilePhone(wrapper.getFieldValue(), wrapper.getReplacer());
         }
     },
 
@@ -71,7 +71,7 @@ public enum SensitiveStrategy {
     ADDRESS() {
         @Override
         public String apply(SensitiveWrapper wrapper) {
-            return SensitiveUtil.address(wrapper.getFieldValue(), 8, wrapper.getReplacer());
+            return SensitiveUtils.address(wrapper.getFieldValue(), 8, wrapper.getReplacer());
         }
     },
 
@@ -79,7 +79,7 @@ public enum SensitiveStrategy {
     EMAIL() {
         @Override
         public String apply(SensitiveWrapper wrapper) {
-            return SensitiveUtil.email(wrapper.getFieldValue(), wrapper.getReplacer());
+            return SensitiveUtils.email(wrapper.getFieldValue(), wrapper.getReplacer());
         }
     },
 
@@ -87,7 +87,7 @@ public enum SensitiveStrategy {
     PASSWORD() {
         @Override
         public String apply(SensitiveWrapper wrapper) {
-            return SensitiveUtil.password(wrapper.getFieldValue(), wrapper.getReplacer());
+            return SensitiveUtils.password(wrapper.getFieldValue(), wrapper.getReplacer());
         }
     },
 
@@ -95,7 +95,7 @@ public enum SensitiveStrategy {
     CAR_LICENSE() {
         @Override
         public String apply(SensitiveWrapper wrapper) {
-            return SensitiveUtil.carLicense(wrapper.getFieldValue(), wrapper.getReplacer());
+            return SensitiveUtils.carLicense(wrapper.getFieldValue(), wrapper.getReplacer());
         }
     },
 
@@ -103,7 +103,7 @@ public enum SensitiveStrategy {
     BANK_CARD() {
         @Override
         public String apply(SensitiveWrapper wrapper) {
-            return SensitiveUtil.bankCard(wrapper.getFieldValue(), wrapper.getReplacer());
+            return SensitiveUtils.bankCard(wrapper.getFieldValue(), wrapper.getReplacer());
         }
     },
 
