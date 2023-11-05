@@ -21,7 +21,7 @@ import cn.hutool.core.util.ReflectUtil;
 import com.lzhpo.sensitive.annocation.SensitiveFilterWords;
 import com.lzhpo.sensitive.annocation.SensitiveHandler;
 import com.lzhpo.sensitive.annocation.SensitiveKeepLength;
-import com.lzhpo.sensitive.utils.SensitiveUtil;
+import com.lzhpo.sensitive.util.SensitiveUtil;
 import java.lang.reflect.Field;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.Assert;

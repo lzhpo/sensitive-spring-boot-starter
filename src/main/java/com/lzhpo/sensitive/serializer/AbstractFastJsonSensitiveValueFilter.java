@@ -23,7 +23,7 @@ import com.lzhpo.sensitive.SensitiveWrapper;
 import com.lzhpo.sensitive.annocation.IgnoreSensitive;
 import com.lzhpo.sensitive.annocation.Sensitive;
 import com.lzhpo.sensitive.resolve.HandlerMethodResolver;
-import com.lzhpo.sensitive.utils.HandlerMethodUtil;
+import com.lzhpo.sensitive.util.AnnotationUtils;
 import java.lang.reflect.Field;
 import java.util.Objects;
 import org.springframework.util.ObjectUtils;
@@ -42,7 +42,7 @@ public abstract class AbstractFastJsonSensitiveValueFilter {
         if (ObjectUtils.isEmpty(value)
                 || !String.class.isAssignableFrom(value.getClass())
                 || Objects.isNull(handlerMethod)
-                || Objects.nonNull(HandlerMethodUtil.getAnnotation(handlerMethod, IgnoreSensitive.class))) {
+                || Objects.nonNull(AnnotationUtils.getAnnotation(handlerMethod, IgnoreSensitive.class))) {
             return value;
         }
 

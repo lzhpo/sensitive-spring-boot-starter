@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.lzhpo.sensitive.utils;
+package com.lzhpo.sensitive.util;
 
 import cn.hutool.core.text.CharPool;
 import cn.hutool.core.text.CharSequenceUtil;

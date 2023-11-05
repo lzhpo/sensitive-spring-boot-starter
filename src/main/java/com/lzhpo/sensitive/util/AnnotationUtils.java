@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.lzhpo.sensitive.utils;
+package com.lzhpo.sensitive.util;
 
 import cn.hutool.core.annotation.AnnotationUtil;
 import java.lang.annotation.Annotation;
@@ -26,7 +26,7 @@ import org.springframework.web.method.HandlerMethod;
  * @author lzhpo
  */
 @UtilityClass
-public class HandlerMethodUtil {
+public class AnnotationUtils {
 
     /**
      * According to {@code annotationType}, get the annotation from {@code handlerMethod}

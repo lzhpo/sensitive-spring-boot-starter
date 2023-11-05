@@ -26,7 +26,7 @@ import com.lzhpo.sensitive.SensitiveWrapper;
 import com.lzhpo.sensitive.annocation.IgnoreSensitive;
 import com.lzhpo.sensitive.annocation.Sensitive;
 import com.lzhpo.sensitive.resolve.HandlerMethodResolver;
-import com.lzhpo.sensitive.utils.HandlerMethodUtil;
+import com.lzhpo.sensitive.util.AnnotationUtils;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Objects;
@@ -61,7 +61,7 @@ public class JacksonSensitiveSerializer extends JsonSerializer<String> {
             return;
         }
 
-        IgnoreSensitive ignoreSensitive = HandlerMethodUtil.getAnnotation(handlerMethod, IgnoreSensitive.class);
+        IgnoreSensitive ignoreSensitive = AnnotationUtils.getAnnotation(handlerMethod, IgnoreSensitive.class);
         if (Objects.isNull(ignoreSensitive)) {
             String fieldName = gen.getOutputContext().getCurrentName();
             Object object = gen.getCurrentValue();
