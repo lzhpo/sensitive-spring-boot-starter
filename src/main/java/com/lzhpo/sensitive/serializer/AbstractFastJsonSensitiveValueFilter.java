@@ -16,6 +16,7 @@
 
 package com.lzhpo.sensitive.serializer;
 
+import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import com.lzhpo.sensitive.SensitiveStrategy;
@@ -25,7 +26,10 @@ import com.lzhpo.sensitive.annocation.Sensitive;
 import com.lzhpo.sensitive.resolve.HandlerMethodResolver;
 import com.lzhpo.sensitive.utils.HandlerMethodUtil;
 import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.Objects;
+import java.util.Optional;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.method.HandlerMethod;
 
@@ -34,26 +38,40 @@ import org.springframework.web.method.HandlerMethod;
  *
  * @author lzhpo
  */
+@Slf4j
 public abstract class AbstractFastJsonSensitiveValueFilter {
 
-    protected Object process(Object object, String name, Object value) {
+    // spotless:off
+    protected Object process(Object object, String fieldName, Object fieldValue) {
+        if (ObjectUtils.isEmpty(fieldValue) || !String.class.isAssignableFrom(fieldValue.getClass())) {
+            return fieldValue;
+        }
+
         HandlerMethodResolver methodResolver = SpringUtil.getBean(HandlerMethodResolver.class);
         HandlerMethod handlerMethod = methodResolver.resolve();
-        if (ObjectUtils.isEmpty(value)
-                || !String.class.isAssignableFrom(value.getClass())
-                || Objects.isNull(handlerMethod)
-                || Objects.nonNull(HandlerMethodUtil.getAnnotation(handlerMethod, IgnoreSensitive.class))) {
-            return value;
+        if (Objects.isNull(handlerMethod)) {
+            return fieldValue;
+        }
+
+        IgnoreSensitive ignoreSensitive = HandlerMethodUtil.getAnnotation(handlerMethod, IgnoreSensitive.class);
+        Optional<IgnoreSensitive> ignSensitiveOpt = Optional.ofNullable(ignoreSensitive);
+        Optional<String[]> ignFieldNamesOpt = ignSensitiveOpt.map(IgnoreSensitive::value);
+        if ((ignSensitiveOpt.isPresent() && !ignFieldNamesOpt.filter(ArrayUtil::isNotEmpty).isPresent())
+                || ignFieldNamesOpt.filter(names -> Arrays.asList(names).contains(fieldName)).isPresent()) {
+            log.debug("Skip sensitive for {}, because @IgnoreSensitive is null or not contains it.", fieldName);
+            return fieldValue;
         }
 
         Class<?> clazz = object.getClass();
-        Field field = ReflectUtil.getField(clazz, name);
+        Field field = ReflectUtil.getField(clazz, fieldName);
         Sensitive sensitive = field.getAnnotation(Sensitive.class);
         if (Objects.isNull(sensitive)) {
-            return value;
+            return fieldValue;
         }
 
         SensitiveStrategy strategy = sensitive.strategy();
-        return strategy.apply(new SensitiveWrapper(field, (String) value, sensitive));
+        log.debug("Sensitive for {} with {} strategy, replacer={}", fieldName, strategy.name(), sensitive.replacer());
+        return strategy.apply(new SensitiveWrapper(field, (String) fieldValue, sensitive));
     }
+    // spotless:on
 }

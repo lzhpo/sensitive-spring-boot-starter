@@ -23,11 +23,19 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Ignore sensitive for api
+ * Ignore {@link Sensitive}.
  *
  * @author lzhpo
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.METHOD})
-public @interface IgnoreSensitive {}
+public @interface IgnoreSensitive {
+
+    /**
+     * Ignore {@link Sensitive} field names.
+     *
+     * @return field names
+     */
+    String[] value() default {};
+}

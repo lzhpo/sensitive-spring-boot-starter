@@ -16,6 +16,7 @@
 
 package com.lzhpo.sensitive.serializer;
 
+import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.extra.spring.SpringUtil;
 import com.fasterxml.jackson.core.JsonGenerator;
@@ -29,7 +30,9 @@ import com.lzhpo.sensitive.resolve.HandlerMethodResolver;
 import com.lzhpo.sensitive.utils.HandlerMethodUtil;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.Objects;
+import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.method.HandlerMethod;
@@ -43,11 +46,10 @@ public class JacksonSensitiveSerializer extends JsonSerializer<String> {
         return String.class;
     }
 
+    // spotless:off
     @Override
-    public void serialize(final String value, final JsonGenerator gen, final SerializerProvider serializerProvider)
-            throws IOException {
-
-        if (Objects.isNull(value)) {
+    public void serialize(String fieldValue, JsonGenerator gen, SerializerProvider serializerProvider) throws IOException {
+        if (Objects.isNull(fieldValue)) {
             gen.writeNull();
             return;
         }
@@ -55,26 +57,33 @@ public class JacksonSensitiveSerializer extends JsonSerializer<String> {
         HandlerMethodResolver handlerMethodResolver = SpringUtil.getBean(HandlerMethodResolver.class);
         HandlerMethod handlerMethod = handlerMethodResolver.resolve();
         if (ObjectUtils.isEmpty(handlerMethod)) {
-            gen.writeString(value);
+            gen.writeString(fieldValue);
             return;
         }
 
-        IgnoreSensitive ignoreSensitive = HandlerMethodUtil.getAnnotation(handlerMethod, IgnoreSensitive.class);
-        if (Objects.isNull(ignoreSensitive)) {
-            String currentName = gen.getOutputContext().getCurrentName();
-            Object currentValue = gen.getCurrentValue();
-            Class<?> currentValueClass = currentValue.getClass();
-            Field field = ReflectUtil.getField(currentValueClass, currentName);
-            Sensitive sensitive = field.getAnnotation(Sensitive.class);
-
-            if (Objects.nonNull(sensitive)) {
-                SensitiveStrategy strategy = sensitive.strategy();
-                String finalValue = strategy.apply(new SensitiveWrapper(field, value, sensitive));
-                gen.writeString(finalValue);
-                return;
-            }
+        String fieldName = gen.getOutputContext().getCurrentName();
+        IgnoreSensitive ignSensitive = HandlerMethodUtil.getAnnotation(handlerMethod, IgnoreSensitive.class);
+        Optional<IgnoreSensitive> ignSensitiveOpt = Optional.ofNullable(ignSensitive);
+        Optional<String[]> ignFieldNamesOpt = ignSensitiveOpt.map(IgnoreSensitive::value);
+        if ((ignSensitiveOpt.isPresent() && !ignFieldNamesOpt.filter(ArrayUtil::isNotEmpty).isPresent())
+                || ignFieldNamesOpt.filter(names -> Arrays.asList(names).contains(fieldName)).isPresent()) {
+            gen.writeString(fieldValue);
+            log.debug("Skip sensitive for {}, because @IgnoreSensitive is null or not contains it.", fieldName);
+            return;
         }
 
-        gen.writeString(value);
+        Class<?> object = gen.getCurrentValue().getClass();
+        Field field = ReflectUtil.getField(object, fieldName);
+        Sensitive sensitive = field.getAnnotation(Sensitive.class);
+        if (Objects.isNull(sensitive)) {
+            gen.writeString(fieldValue);
+            return;
+        }
+
+        SensitiveStrategy strategy = sensitive.strategy();
+        String finalValue = strategy.apply(new SensitiveWrapper(field, fieldValue, sensitive));
+        log.debug("Sensitive for {} with {} strategy, replacer={}", fieldName, strategy.name(), sensitive.replacer());
+        gen.writeString(finalValue);
     }
+    // spotless:on
 }

@@ -137,6 +137,7 @@
                 <version>${spotless-plugin.version}</version>
                 <configuration>
                     <java>
+                        <toggleOffOn/>
                         <palantirJavaFormat>
                             <version>${palantirJavaFormat.version}</version>
                         </palantirJavaFormat>
