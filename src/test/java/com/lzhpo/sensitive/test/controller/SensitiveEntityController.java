@@ -52,11 +52,13 @@ public class SensitiveEntityController {
     }
 
     @GetMapping("array")
+    @IgnoreSensitive({"name", "email"})
     public ResponseEntity<SensitiveEntity[]> array() {
         return ResponseEntity.ok(new SensitiveEntity[] {MockHelper.sensitive()});
     }
 
     @GetMapping("list")
+    @IgnoreSensitive({"name", "email"})
     public ResponseEntity<List<SensitiveEntity>> list() {
         List<SensitiveEntity> sensitiveEntities = new ArrayList<>();
         sensitiveEntities.add(MockHelper.sensitive());
@@ -64,6 +66,7 @@ public class SensitiveEntityController {
     }
 
     @GetMapping("map")
+    @IgnoreSensitive({"name", "email"})
     public ResponseEntity<Map<Integer, SensitiveEntity>> map() {
         Map<Integer, SensitiveEntity> sensitiveEntities = new HashMap<>();
         sensitiveEntities.put(0, MockHelper.sensitive());
