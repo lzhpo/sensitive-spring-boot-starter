@@ -18,7 +18,6 @@ package com.lzhpo.sensitive;
 
 import cn.hutool.core.text.CharSequenceUtil;
 import cn.hutool.core.util.ReflectUtil;
-import com.lzhpo.sensitive.annocation.Sensitive;
 import com.lzhpo.sensitive.annocation.SensitiveFilterWords;
 import com.lzhpo.sensitive.annocation.SensitiveHandler;
 import com.lzhpo.sensitive.annocation.SensitiveKeepLength;
@@ -39,91 +38,82 @@ public enum SensitiveStrategy {
     /** Chinese name */
     CHINESE_NAME() {
         @Override
-        public String apply(SensitiveWrapper sensitiveWrapper) {
-            Sensitive sensitive = sensitiveWrapper.getSensitive();
-            return SensitiveUtil.chineseName(sensitiveWrapper.getFieldValue(), sensitive.replacer());
+        public String apply(SensitiveWrapper wrapper) {
+            return SensitiveUtil.chineseName(wrapper.getFieldValue(), wrapper.getReplacer());
         }
     },
 
     /** ID card */
     ID_CARD() {
         @Override
-        public String apply(SensitiveWrapper sensitiveWrapper) {
-            Sensitive sensitive = sensitiveWrapper.getSensitive();
-            return SensitiveUtil.idCardNum(sensitiveWrapper.getFieldValue(), 1, 2, sensitive.replacer());
+        public String apply(SensitiveWrapper wrapper) {
+            return SensitiveUtil.idCardNum(wrapper.getFieldValue(), 1, 2, wrapper.getReplacer());
         }
     },
 
     /** Fixed phone */
     FIXED_PHONE() {
         @Override
-        public String apply(SensitiveWrapper sensitiveWrapper) {
-            Sensitive sensitive = sensitiveWrapper.getSensitive();
-            return SensitiveUtil.fixedPhone(sensitiveWrapper.getFieldValue(), sensitive.replacer());
+        public String apply(SensitiveWrapper wrapper) {
+            return SensitiveUtil.fixedPhone(wrapper.getFieldValue(), wrapper.getReplacer());
         }
     },
 
     /** Mobile phone */
     MOBILE_PHONE() {
         @Override
-        public String apply(SensitiveWrapper sensitiveWrapper) {
-            Sensitive sensitive = sensitiveWrapper.getSensitive();
-            return SensitiveUtil.mobilePhone(sensitiveWrapper.getFieldValue(), sensitive.replacer());
+        public String apply(SensitiveWrapper wrapper) {
+            return SensitiveUtil.mobilePhone(wrapper.getFieldValue(), wrapper.getReplacer());
         }
     },
 
     /** Address */
     ADDRESS() {
         @Override
-        public String apply(SensitiveWrapper sensitiveWrapper) {
-            Sensitive sensitive = sensitiveWrapper.getSensitive();
-            return SensitiveUtil.address(sensitiveWrapper.getFieldValue(), 8, sensitive.replacer());
+        public String apply(SensitiveWrapper wrapper) {
+            return SensitiveUtil.address(wrapper.getFieldValue(), 8, wrapper.getReplacer());
         }
     },
 
     /** Email */
     EMAIL() {
         @Override
-        public String apply(SensitiveWrapper sensitiveWrapper) {
-            Sensitive sensitive = sensitiveWrapper.getSensitive();
-            return SensitiveUtil.email(sensitiveWrapper.getFieldValue(), sensitive.replacer());
+        public String apply(SensitiveWrapper wrapper) {
+            return SensitiveUtil.email(wrapper.getFieldValue(), wrapper.getReplacer());
         }
     },
 
     /** Password */
     PASSWORD() {
         @Override
-        public String apply(SensitiveWrapper sensitiveWrapper) {
-            Sensitive sensitive = sensitiveWrapper.getSensitive();
-            return SensitiveUtil.password(sensitiveWrapper.getFieldValue(), sensitive.replacer());
+        public String apply(SensitiveWrapper wrapper) {
+            return SensitiveUtil.password(wrapper.getFieldValue(), wrapper.getReplacer());
         }
     },
 
     /** Chinese mainland license plates, including ordinary vehicles, new energy vehicles */
     CAR_LICENSE() {
         @Override
-        public String apply(SensitiveWrapper sensitiveWrapper) {
-            Sensitive sensitive = sensitiveWrapper.getSensitive();
-            return SensitiveUtil.carLicense(sensitiveWrapper.getFieldValue(), sensitive.replacer());
+        public String apply(SensitiveWrapper wrapper) {
+            return SensitiveUtil.carLicense(wrapper.getFieldValue(), wrapper.getReplacer());
         }
     },
 
     /** Bank card */
     BANK_CARD() {
         @Override
-        public String apply(SensitiveWrapper sensitiveWrapper) {
-            Sensitive sensitive = sensitiveWrapper.getSensitive();
-            return SensitiveUtil.bankCard(sensitiveWrapper.getFieldValue(), sensitive.replacer());
+        public String apply(SensitiveWrapper wrapper) {
+            return SensitiveUtil.bankCard(wrapper.getFieldValue(), wrapper.getReplacer());
         }
     },
 
     /** Customize sensitive keep length */
     CUSTOMIZE_FILTER_WORDS() {
         @Override
-        public String apply(SensitiveWrapper sensitiveWrapper) {
-            String fieldValue = sensitiveWrapper.getFieldValue();
-            Field field = sensitiveWrapper.getField();
-            Sensitive sensitive = sensitiveWrapper.getSensitive();
+        public String apply(SensitiveWrapper wrapper) {
+            Object object = wrapper.getObject();
+            String fieldValue = wrapper.getFieldValue();
+            Field field = ReflectUtil.getField(object.getClass(), wrapper.getFieldName());
             SensitiveFilterWords filterWords = field.getAnnotation(SensitiveFilterWords.class);
             if (ObjectUtils.isEmpty(filterWords)) {
                 log.warn(
@@ -133,7 +123,7 @@ public enum SensitiveStrategy {
                 return fieldValue;
             }
 
-            char replacer = sensitive.replacer();
+            char replacer = wrapper.getReplacer();
             String[] words = filterWords.value();
             if (!ObjectUtils.isEmpty(words)) {
                 for (String filterWord : words) {
@@ -151,10 +141,10 @@ public enum SensitiveStrategy {
     /** Customize sensitive keep length */
     CUSTOMIZE_KEEP_LENGTH() {
         @Override
-        public String apply(SensitiveWrapper sensitiveWrapper) {
-            Field field = sensitiveWrapper.getField();
-            String fieldValue = sensitiveWrapper.getFieldValue();
-            Sensitive sensitive = sensitiveWrapper.getSensitive();
+        public String apply(SensitiveWrapper wrapper) {
+            Object object = wrapper.getObject();
+            String fieldValue = wrapper.getFieldValue();
+            Field field = ReflectUtil.getField(object.getClass(), wrapper.getFieldName());
             SensitiveKeepLength sensitiveKeepLength = field.getAnnotation(SensitiveKeepLength.class);
             int preKeep = sensitiveKeepLength.preKeep();
             int postKeep = sensitiveKeepLength.postKeep();
@@ -167,7 +157,7 @@ public enum SensitiveStrategy {
                 return fieldValue;
             }
 
-            char replacer = sensitive.replacer();
+            char replacer = wrapper.getReplacer();
             return CharSequenceUtil.replace(fieldValue, preKeep, fieldValue.length() - postKeep, replacer);
         }
     },
@@ -175,20 +165,21 @@ public enum SensitiveStrategy {
     /** Customize sensitive handler */
     CUSTOMIZE_HANDLER() {
         @Override
-        public String apply(SensitiveWrapper sensitiveWrapper) {
-            Field field = sensitiveWrapper.getField();
+        public String apply(SensitiveWrapper wrapper) {
+            Object object = wrapper.getObject();
+            Field field = ReflectUtil.getField(object.getClass(), wrapper.getFieldName());
             SensitiveHandler customizeHandler = field.getAnnotation(SensitiveHandler.class);
             Class<? extends CustomizeSensitiveHandler> handlerClass = customizeHandler.value();
             CustomizeSensitiveHandler handler = ReflectUtil.newInstance(handlerClass);
-            return handler.customize(sensitiveWrapper);
+            return handler.customize(wrapper);
         }
     };
 
     /**
      * Field sensitive strategy method
      *
-     * @param sensitiveWrapper sensitive require message
+     * @param wrapper {@link SensitiveWrapper}
      * @return after sensitive value
      */
-    public abstract String apply(SensitiveWrapper sensitiveWrapper);
+    public abstract String apply(SensitiveWrapper wrapper);
 }
