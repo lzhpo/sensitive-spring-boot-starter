@@ -50,8 +50,7 @@ public class JacksonSensitiveSerializer extends JsonSerializer<String> {
 
     // spotless:off
     @Override
-    public void serialize(String fieldValue, JsonGenerator gen, SerializerProvider serializerProvider)
-            throws IOException {
+    public void serialize(String fieldValue, JsonGenerator gen, SerializerProvider serializerProvider) throws IOException {
         if (Objects.isNull(fieldValue)) {
             gen.writeNull();
             return;
@@ -68,11 +67,8 @@ public class JacksonSensitiveSerializer extends JsonSerializer<String> {
         IgnoreSensitive ignSensitive = AnnotationUtils.getAnnotation(handlerMethod, IgnoreSensitive.class);
         Optional<IgnoreSensitive> ignSensitiveOpt = Optional.ofNullable(ignSensitive);
         Optional<String[]> ignFieldNamesOpt = ignSensitiveOpt.map(IgnoreSensitive::value);
-        if ((ignSensitiveOpt.isPresent()
-                        && ignFieldNamesOpt.filter(ArrayUtil::isNotEmpty).isEmpty())
-                || ignFieldNamesOpt
-                        .filter(names -> Arrays.asList(names).contains(fieldName))
-                        .isPresent()) {
+        if ((ignSensitiveOpt.isPresent() && ignFieldNamesOpt.filter(ArrayUtil::isNotEmpty).isEmpty())
+                || ignFieldNamesOpt.filter(names -> Arrays.asList(names).contains(fieldName)).isPresent()) {
             gen.writeString(fieldValue);
             log.debug("Skip sensitive for {}, because @IgnoreSensitive is null or not contains it.", fieldName);
             return;

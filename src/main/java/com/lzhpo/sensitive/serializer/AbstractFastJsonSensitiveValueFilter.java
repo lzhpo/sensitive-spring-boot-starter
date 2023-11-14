@@ -56,11 +56,8 @@ public abstract class AbstractFastJsonSensitiveValueFilter {
         IgnoreSensitive ignoreSensitive = AnnotationUtils.getAnnotation(handlerMethod, IgnoreSensitive.class);
         Optional<IgnoreSensitive> ignSensitiveOpt = Optional.ofNullable(ignoreSensitive);
         Optional<String[]> ignFieldNamesOpt = ignSensitiveOpt.map(IgnoreSensitive::value);
-        if ((ignSensitiveOpt.isPresent()
-                        && ignFieldNamesOpt.filter(ArrayUtil::isNotEmpty).isEmpty())
-                || ignFieldNamesOpt
-                        .filter(names -> Arrays.asList(names).contains(fieldName))
-                        .isPresent()) {
+        if ((ignSensitiveOpt.isPresent() && ignFieldNamesOpt.filter(ArrayUtil::isNotEmpty).isEmpty())
+                || ignFieldNamesOpt.filter(names -> Arrays.asList(names).contains(fieldName)).isPresent()) {
             log.debug("Skip sensitive for {}, because @IgnoreSensitive is null or not contains it.", fieldName);
             return fieldValue;
         }
