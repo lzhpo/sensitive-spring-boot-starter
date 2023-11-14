@@ -24,7 +24,7 @@ import com.lzhpo.sensitive.SensitiveWrapper;
 import com.lzhpo.sensitive.annocation.IgnoreSensitive;
 import com.lzhpo.sensitive.annocation.Sensitive;
 import com.lzhpo.sensitive.resolve.HandlerMethodResolver;
-import com.lzhpo.sensitive.utils.HandlerMethodUtil;
+import com.lzhpo.sensitive.util.AnnotationUtils;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Objects;
@@ -53,7 +53,7 @@ public abstract class AbstractFastJsonSensitiveValueFilter {
             return fieldValue;
         }
 
-        IgnoreSensitive ignoreSensitive = HandlerMethodUtil.getAnnotation(handlerMethod, IgnoreSensitive.class);
+        IgnoreSensitive ignoreSensitive = AnnotationUtils.getAnnotation(handlerMethod, IgnoreSensitive.class);
         Optional<IgnoreSensitive> ignSensitiveOpt = Optional.ofNullable(ignoreSensitive);
         Optional<String[]> ignFieldNamesOpt = ignSensitiveOpt.map(IgnoreSensitive::value);
         if ((ignSensitiveOpt.isPresent() && !ignFieldNamesOpt.filter(ArrayUtil::isNotEmpty).isPresent())

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.lzhpo.sensitive.utils;
+package com.lzhpo.sensitive.util;
 
 import cn.hutool.core.text.CharPool;
 import cn.hutool.core.text.CharSequenceUtil;
@@ -29,7 +29,7 @@ import org.springframework.util.StringUtils;
  * @author lzhpo
  */
 @UtilityClass
-public class SensitiveUtil extends DesensitizedUtil {
+public class SensitiveUtils extends DesensitizedUtil {
 
     /**
      * 中文姓名
