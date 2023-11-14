@@ -219,6 +219,8 @@ public class FaceCustomizeSensitiveHandler implements CustomizeSensitiveHandler 
 
 ### 3.使用`@IgnoreSensitive`注解标注在controller上可忽略脱敏
 
+如果实体类标注了`@Sensitive`脱敏，被多个接口共用的，接口A要脱敏，但是接口B不需要脱敏，就可以使用`@IgnoreSensitive`注解忽略脱敏，同时也支持忽略指定字段脱敏。
+
 #### 1.在Controller类上使用`@IgnoreSensitive`表示此类下所有接口都忽略脱敏
 
 此controller下的所有接口都将忽略脱敏。
@@ -262,6 +264,22 @@ public class SensitiveController {
 ```
 
 sample2将忽略`SampleJavaBean`对象的字段脱敏，sample1不影响。
+
+#### 3.在Controller的类或方法中使用`@IgnoreSensitive`忽略指定字段脱敏
+
+示例：忽略脱敏`SampleJavaBean`中的`name`和`email`字段的脱敏。
+```java
+@RestController
+@RequestMapping("/")
+public class SensitiveController {
+
+  @IgnoreSensitive({"name", "email"})
+  @GetMapping("ignore/sample")
+  public ResponseEntity<SampleJavaBean> sample() {
+    return ResponseEntity.ok(SampleJavaBeanMock.sampleJavaBean());
+  }
+}
+```
 
 ## 注意事项
 
