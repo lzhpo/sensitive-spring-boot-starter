@@ -62,8 +62,7 @@ public abstract class AbstractFastJsonSensitiveValueFilter {
             return fieldValue;
         }
 
-        Class<?> clazz = object.getClass();
-        Field field = ReflectUtil.getField(clazz, fieldName);
+        Field field = ReflectUtil.getField(object.getClass(), fieldName);
         Sensitive sensitive = field.getAnnotation(Sensitive.class);
         if (Objects.isNull(sensitive)) {
             return fieldValue;

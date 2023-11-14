@@ -74,8 +74,8 @@ public class JacksonSensitiveSerializer extends JsonSerializer<String> {
             return;
         }
 
-        Class<?> object = gen.getCurrentValue().getClass();
-        Field field = ReflectUtil.getField(object, fieldName);
+        Object object = gen.getCurrentValue();
+        Field field = ReflectUtil.getField(object.getClass(), fieldName);
         Sensitive sensitive = field.getAnnotation(Sensitive.class);
         if (Objects.isNull(sensitive)) {
             gen.writeString(fieldValue);

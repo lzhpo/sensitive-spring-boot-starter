@@ -41,6 +41,7 @@ public class SensitiveEntityController {
         return "hello";
     }
 
+    @IgnoreSensitive({"name", "email"})
     @GetMapping("sensitive")
     public ResponseEntity<SensitiveEntity> sensitive() {
         return ResponseEntity.ok(MockHelper.sensitive());
