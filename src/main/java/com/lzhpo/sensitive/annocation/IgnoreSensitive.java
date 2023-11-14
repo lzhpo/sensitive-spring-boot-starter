@@ -30,4 +30,12 @@ import java.lang.annotation.Target;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.METHOD})
-public @interface IgnoreSensitive {}
+public @interface IgnoreSensitive {
+
+    /**
+     * Ignore {@link Sensitive} field names.
+     *
+     * @return field names
+     */
+    String[] value() default {};
+}
