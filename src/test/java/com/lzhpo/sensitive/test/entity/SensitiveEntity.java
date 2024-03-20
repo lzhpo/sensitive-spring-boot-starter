@@ -60,6 +60,21 @@ public class SensitiveEntity {
     @Sensitive(strategy = SensitiveStrategy.BANK_CARD)
     private String bankCard;
 
+    @Sensitive(strategy = SensitiveStrategy.IPV4)
+    private String ipv4;
+
+    @Sensitive(strategy = SensitiveStrategy.IPV6)
+    private String ipv6;
+
+    @Sensitive(strategy = SensitiveStrategy.FIRST_MASK)
+    private String firstMask;
+
+    @Sensitive(strategy = SensitiveStrategy.CLEAR_TO_NULL)
+    private String clearToNull;
+
+    @Sensitive(strategy = SensitiveStrategy.CLEAR_TO_EMPTY)
+    private String clearToEmpty;
+
     @Sensitive(strategy = SensitiveStrategy.CUSTOMIZE_KEEP_LENGTH)
     @SensitiveKeepLength(preKeep = 1, postKeep = 1)
     private String keepLength1;
