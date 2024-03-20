@@ -106,6 +106,46 @@ public enum SensitiveStrategy {
         }
     },
 
+    /** IPV4 */
+    IPV4() {
+        @Override
+        public String apply(SensitiveWrapper wrapper) {
+            return SensitiveUtils.ipv4(wrapper.getFieldValue(), wrapper.getReplacer());
+        }
+    },
+
+    /** IPV6 */
+    IPV6() {
+        @Override
+        public String apply(SensitiveWrapper wrapper) {
+            return SensitiveUtils.ipv6(wrapper.getFieldValue(), wrapper.getReplacer());
+        }
+    },
+
+    /** Only show the first one */
+    FIRST_MASK() {
+        @Override
+        public String apply(SensitiveWrapper wrapper) {
+            return SensitiveUtils.firstMask(wrapper.getFieldValue(), wrapper.getReplacer());
+        }
+    },
+
+    /** Clear to null */
+    CLEAR_TO_NULL() {
+        @Override
+        public String apply(SensitiveWrapper wrapper) {
+            return null;
+        }
+    },
+
+    /** Clear to empty */
+    CLEAR_TO_EMPTY() {
+        @Override
+        public String apply(SensitiveWrapper wrapper) {
+            return CharSequenceUtil.EMPTY;
+        }
+    },
+
     /** Customize sensitive keep length */
     CUSTOMIZE_FILTER_WORDS() {
         @Override

@@ -277,4 +277,48 @@ public class SensitiveUtils extends DesensitizedUtil {
         buf.append(CharPool.SPACE).append(trimBankCardNo, length - 4, length);
         return buf.toString();
     }
+
+    /**
+     * IPv4脱敏，如：脱敏前：192.0.2.1；脱敏后：192.*.*.*。
+     *
+     * @param ipv4 IPv4地址
+     * @return 脱敏后的地址
+     */
+    public static String ipv4(String ipv4, char replacer) {
+        final StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < 3; i++) {
+            builder.append(SensitiveConstants.SEPARATOR_IPV4);
+            builder.append(replacer);
+        }
+        return CharSequenceUtil.subBefore(ipv4, SensitiveConstants.SEPARATOR_IPV4, false) + builder;
+    }
+
+    /**
+     * IPv4脱敏，如：脱敏前：2001:0db8:86a3:08d3:1319:8a2e:0370:7344；脱敏后：2001:*:*:*:*:*:*:*
+     *
+     * @param ipv6 IPv4地址
+     * @return 脱敏后的地址
+     */
+    public static String ipv6(String ipv6, char replacer) {
+        final StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < 7; i++) {
+            builder.append(SensitiveConstants.SEPARATOR_IPV6);
+            builder.append(replacer);
+        }
+        return CharSequenceUtil.subBefore(ipv6, SensitiveConstants.SEPARATOR_IPV6, false) + builder;
+    }
+
+    /**
+     * 定义了一个first_mask的规则，只显示第一个字符。<br>
+     * 脱敏前：123456789；脱敏后：1********。
+     *
+     * @param str 字符串
+     * @return 脱敏后的字符串
+     */
+    public static String firstMask(String str, char replacer) {
+        if (CharSequenceUtil.isBlank(str)) {
+            return CharSequenceUtil.EMPTY;
+        }
+        return CharSequenceUtil.replace(str, 1, str.length(), replacer);
+    }
 }
