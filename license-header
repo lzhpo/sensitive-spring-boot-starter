@@ -13,19 +13,3 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.lzhpo.sensitive.test.handler;
-
-import com.lzhpo.sensitive.CustomizeSensitiveHandler;
-import com.lzhpo.sensitive.SensitiveWrapper;
-import lombok.extern.slf4j.Slf4j;
-
-/** @author lzhpo */
-@Slf4j
-public class FaceCustomizeSensitiveHandler implements CustomizeSensitiveHandler {
-
-    @Override
-    public String customize(SensitiveWrapper wrapper) {
-        log.debug("sensitiveWrapper: {}", wrapper);
-        return "@#@";
-    }
-}
