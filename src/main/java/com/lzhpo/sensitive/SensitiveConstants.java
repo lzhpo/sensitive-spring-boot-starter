@@ -25,6 +25,12 @@ public final class SensitiveConstants {
     /** 默认脱敏替换符 */
     public static final char REPLACER = '*';
 
+    /** IPV4分隔符 */
+    public static final char SEPARATOR_IPV4 = '.';
+
+    /** IPV6分隔符 */
+    public static final char SEPARATOR_IPV6 = ':';
+
     /** 不处理脱敏保留的标志 */
     public static final int NOP_KEEP = -1;
 
