@@ -13,23 +13,3 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.lzhpo.sensitive.test;
-
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-/**
- * @author lzhpo
- */
-@SpringBootApplication
-public class SensitiveTestApplication {
-
-    public static void main(String[] args) {
-        SpringApplication.run(SensitiveTestApplication.class, args);
-    }
-
-    //  @Bean
-    //  public FastJsonHttpMessageConverter fastJsonHttpMessageConverter() {
-    //    return new FastJsonHttpMessageConverter();
-    //  }
-}
