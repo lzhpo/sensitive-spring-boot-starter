@@ -138,7 +138,116 @@ private String bankCard;
 ```
 例如：`9988002866797031`脱敏之后为`9988 **** **** 7031`。
 
-##### 2.2.1 自定义脱敏策略
+##### 2.2.0 IPV4
+
+IPV4地址脱敏。
+
+```java
+@Sensitive(strategy = SensitiveStrategy.IPV4)
+private String ipv4;
+```
+
+例如：`192.0.2.1`脱敏之后为`192.*.*.*`。
+
+##### 2.2.1 IPV6
+
+IPV6地址脱敏。
+
+```java
+@Sensitive(strategy = SensitiveStrategy.IPV6)
+private String ipv6;
+```
+
+例如：`2001:0db8:86a3:08d3:1319:8a2e:0370:7344`脱敏之后为`2001:*:*:*:*:*:*:*`。
+
+##### 2.2.2 Base64加密
+
+```java
+@Sensitive(strategy = SensitiveStrategy.BASE64)
+private String base64;
+```
+
+##### 2.2.3 AES加密
+
+```java
+@Sensitive(strategy = SensitiveStrategy.AES)
+private String aes;
+```
+
+需要配置 AES 加密的 key，例如：
+```yaml
+sensitive:
+  encrypt:
+    aes:
+      key: "1234567890123456"
+```
+
+##### 2.2.4 DES加密
+
+```java
+@Sensitive(strategy = SensitiveStrategy.DES)
+private String des;
+```
+
+需要配置 DES 加密的 key，例如：
+```yaml
+sensitive:
+  encrypt:
+    des:
+      key: "12345678"
+```
+
+##### 2.2.5 RSA加密
+
+```java
+@Sensitive(strategy = SensitiveStrategy.RSA)
+private String rsa;
+```
+
+需要配置 RSA 加密的 private key 和 public key，例如：
+```yaml
+sensitive:
+  encrypt:
+    rsa:
+      private-key: "MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBANyhI/9e5evQyzRLVsUmbQesdRl7fXu9ZAl6lZqVyL+ypf6FmQouH89OTEv/JjmybuAha9zsYwNAKSobSRATaqYSCvdwoPRgUFRFfq6ed61kpO5+D+T/X3v85JmXIngkieCe9n5b5KT3XNtHFBXVsZ3/onWEYZRhFMTsMsKkvijBAgMBAAECgYAKV2fEbC5vAp0JvRfKuym8ZLgi6wPHWWnfW154jdmIab9n2huBq4aMbSU8oS+pn+xcR1jC1NYxxG/BhGCk9yIGIzE/57tggjibNpiqC/uS12SiaJPz9oqOVJPI+l5uf9xqdytzvNJe6AGMViZdS+nnQRZfdDrs5cgghv7lx+kjiQJBAOQWmEJukHaIUXvW8ZWNekIgb8/Frq7gNvRaeqjqpZMqUIXXDj80eODGsNjIUwwEdlFX4//C7udmLfWfhyOq1bkCQQD3oOGP8rjIkouhbJldaILeuaN3ee3v3dtsmLM8epC9HH3EcFBD2O+l60wCa67uM/ArPn3XjL/lidqnVAJHPG9JAkEAumz1WicAkMFuyGew4enXKcFVYl9THcBJaoOhifrwBk8prZtPG74Jpr7/wNBLgKENDANoaZ2soxnTKtWPIUn6kQJAAmcxSTBV0rx5VmuzYVCuVHMAvxwTzwwcIQWqV5/o36zzG4Drhn0Idle+ORfKbs1aO1Ez72+SPSwFTzJlg0N24QJATQu2dlhbm87uGh0fUHpV6Nw6lf/mBMek1stC8PQXB0MtNPeYd+Ul45zfc+k5mIWUHwt47To5uAo2ywsCSdWBCw=="
+      public-key: "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDcoSP/XuXr0Ms0S1bFJm0HrHUZe317vWQJepWalci/sqX+hZkKLh/PTkxL/yY5sm7gIWvc7GMDQCkqG0kQE2qmEgr3cKD0YFBURX6unnetZKTufg/k/197/OSZlyJ4JIngnvZ+W+Sk91zbRxQV1bGd/6J1hGGUYRTE7DLCpL4owQIDAQAB"
+```
+
+关于 private key 和 public key 的生成方式：
+```java
+KeyPair keyPair = SecureUtil.generateKeyPair("RSA");
+
+String privateKey = Base64.encode(keyPair.getPrivate().getEncoded());
+System.out.println("privateKey: " + privateKey);
+
+String publicKey = Base64.encode(keyPair.getPublic().getEncoded());
+System.out.println("publicKey: " + publicKey);
+```
+
+##### 2.2.6 只保留首字符
+
+```java
+@Sensitive(strategy = SensitiveStrategy.FIRST_MASK)
+private String firstMask;
+```
+
+例如：`123456789`脱敏之后为`1********`。
+
+##### 2.2.7 清空为null
+
+```java
+@Sensitive(strategy = SensitiveStrategy.CLEAR_TO_NULL)
+private String clearToNull;
+```
+
+##### 2.2.8 清空为空字符串
+
+```java
+@Sensitive(strategy = SensitiveStrategy.CLEAR_TO_NULL)
+private String clearToNull;
+```
+
+##### 2.2.9 自定义脱敏策略
 
 当前支持三种风格的自定义脱敏策略：
 1. 保留前后缀脱敏策略。
