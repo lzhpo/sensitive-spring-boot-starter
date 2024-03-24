@@ -25,7 +25,6 @@ import cn.hutool.extra.spring.SpringUtil;
 import com.lzhpo.sensitive.annocation.SensitiveFilterWords;
 import com.lzhpo.sensitive.annocation.SensitiveHandler;
 import com.lzhpo.sensitive.annocation.SensitiveKeepLength;
-import jdk.nashorn.internal.runtime.regexp.joni.exception.InternalException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
@@ -225,10 +224,10 @@ public enum SensitiveStrategy {
                     .map(SensitiveProperties.Encrypt::getRsa);
             String privateKey = rsaOptional
                     .map(SensitiveProperties.Rsa::getPrivateKey)
-                    .orElseThrow(() -> new InternalException("Not configure rsa encrypt privateKey."));
+                    .orElseThrow(() -> new IllegalArgumentException("Not configure rsa encrypt privateKey."));
             String publicKey = rsaOptional
                     .map(SensitiveProperties.Rsa::getPublicKey)
-                    .orElseThrow(() -> new InternalException("Not configure rsa encrypt privateKey."));
+                    .orElseThrow(() -> new IllegalArgumentException("Not configure rsa encrypt privateKey."));
             return SecureUtil.rsa(privateKey, publicKey).encryptHex(wrapper.getFieldValue(), KeyType.PublicKey);
         }
     },
