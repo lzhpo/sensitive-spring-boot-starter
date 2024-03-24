@@ -25,12 +25,11 @@ import cn.hutool.extra.spring.SpringUtil;
 import com.lzhpo.sensitive.annocation.SensitiveFilterWords;
 import com.lzhpo.sensitive.annocation.SensitiveHandler;
 import com.lzhpo.sensitive.annocation.SensitiveKeepLength;
+import java.lang.reflect.Field;
+import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
-
-import java.lang.reflect.Field;
-import java.util.Optional;
 
 /**
  * Sensitive strategy
