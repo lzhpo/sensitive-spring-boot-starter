@@ -37,12 +37,6 @@
 
 `@Sensitive`注解说明：
 - `strategy`：脱敏策略，支持21种脱敏策略。
-- `replacer`：脱敏策略的替换符，默认脱敏替换符为星号`*`，可以配置为任意字符。 
-  比如：配置为`#`
-  ```java
-  @Sensitive(strategy = SensitiveStrategy.CHINESE_NAME, replacer = '#')
-  private String name;
-  ```
 
 #### 2.1.支持的脱敏策略
 
