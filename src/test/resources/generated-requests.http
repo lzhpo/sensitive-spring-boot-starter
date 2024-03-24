@@ -1,0 +1,32 @@
+######### IgnoreSensitiveController #########
+### @IgnoreSensitive in controller class
+GET http://localhost:8080/ignore
+
+
+######### NoSensitiveController #########
+### not senstive annotation
+GET http://localhost:8080/not
+
+
+######### SensitiveEntityController #########
+### hello
+GET http://localhost:8080/hello
+
+### @IgnoreSensitive({"name", "email"})
+GET http://localhost:8080/sensitive
+
+### @IgnoreSensitive
+GET http://localhost:8080/none
+
+### @IgnoreSensitive({"name", "email"})
+GET http://localhost:8080/array
+
+### @IgnoreSensitive({"name", "email"})
+GET http://localhost:8080/list
+
+### @IgnoreSensitive({"name", "email"})
+GET http://localhost:8080/map
+
+### nested sensitive
+GET http://localhost:8080/nested
+#############################################

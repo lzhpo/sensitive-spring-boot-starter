@@ -82,8 +82,8 @@ public class JacksonSensitiveSerializer extends JsonSerializer<String> {
         }
 
         SensitiveStrategy strategy = sensitive.strategy();
-        String finalValue = strategy.apply(new SensitiveWrapper(object, fieldName, fieldValue, sensitive.replacer()));
-        log.debug("Sensitive for {} with {} strategy, replacer={}", fieldName, strategy.name(), sensitive.replacer());
+        String finalValue = strategy.apply(new SensitiveWrapper(object, fieldName, fieldValue));
+        log.debug("Sensitive for {} with {} strategy.", fieldName, strategy.name());
         gen.writeString(finalValue);
     }
     // spotless:on

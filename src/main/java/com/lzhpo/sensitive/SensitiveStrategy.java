@@ -15,16 +15,22 @@
  */
 package com.lzhpo.sensitive;
 
+import cn.hutool.core.codec.Base64;
 import cn.hutool.core.text.CharSequenceUtil;
+import cn.hutool.core.util.DesensitizedUtil;
 import cn.hutool.core.util.ReflectUtil;
+import cn.hutool.crypto.SecureUtil;
+import cn.hutool.crypto.asymmetric.KeyType;
+import cn.hutool.extra.spring.SpringUtil;
 import com.lzhpo.sensitive.annocation.SensitiveFilterWords;
 import com.lzhpo.sensitive.annocation.SensitiveHandler;
 import com.lzhpo.sensitive.annocation.SensitiveKeepLength;
-import com.lzhpo.sensitive.util.SensitiveUtils;
+import com.sun.jdi.InternalException;
 import java.lang.reflect.Field;
+import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.Assert;
-import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 
 /**
  * Sensitive strategy
@@ -34,103 +40,129 @@ import org.springframework.util.ObjectUtils;
 @Slf4j
 public enum SensitiveStrategy {
 
-    /** Chinese name */
+    /**
+     * Chinese name
+     */
     CHINESE_NAME() {
         @Override
         public String apply(SensitiveWrapper wrapper) {
-            return SensitiveUtils.chineseName(wrapper.getFieldValue(), wrapper.getReplacer());
+            return DesensitizedUtil.chineseName(wrapper.getFieldValue());
         }
     },
 
-    /** ID card */
+    /**
+     * ID card
+     */
     ID_CARD() {
         @Override
         public String apply(SensitiveWrapper wrapper) {
-            return SensitiveUtils.idCardNum(wrapper.getFieldValue(), 1, 2, wrapper.getReplacer());
+            return DesensitizedUtil.idCardNum(wrapper.getFieldValue(), 1, 2);
         }
     },
 
-    /** Fixed phone */
+    /**
+     * Fixed phone
+     */
     FIXED_PHONE() {
         @Override
         public String apply(SensitiveWrapper wrapper) {
-            return SensitiveUtils.fixedPhone(wrapper.getFieldValue(), wrapper.getReplacer());
+            return DesensitizedUtil.fixedPhone(wrapper.getFieldValue());
         }
     },
 
-    /** Mobile phone */
+    /**
+     * Mobile phone
+     */
     MOBILE_PHONE() {
         @Override
         public String apply(SensitiveWrapper wrapper) {
-            return SensitiveUtils.mobilePhone(wrapper.getFieldValue(), wrapper.getReplacer());
+            return DesensitizedUtil.mobilePhone(wrapper.getFieldValue());
         }
     },
 
-    /** Address */
+    /**
+     * Address
+     */
     ADDRESS() {
         @Override
         public String apply(SensitiveWrapper wrapper) {
-            return SensitiveUtils.address(wrapper.getFieldValue(), 8, wrapper.getReplacer());
+            return DesensitizedUtil.address(wrapper.getFieldValue(), 8);
         }
     },
 
-    /** Email */
+    /**
+     * Email
+     */
     EMAIL() {
         @Override
         public String apply(SensitiveWrapper wrapper) {
-            return SensitiveUtils.email(wrapper.getFieldValue(), wrapper.getReplacer());
+            return DesensitizedUtil.email(wrapper.getFieldValue());
         }
     },
 
-    /** Password */
+    /**
+     * Password
+     */
     PASSWORD() {
         @Override
         public String apply(SensitiveWrapper wrapper) {
-            return SensitiveUtils.password(wrapper.getFieldValue(), wrapper.getReplacer());
+            return DesensitizedUtil.password(wrapper.getFieldValue());
         }
     },
 
-    /** Chinese mainland license plates, including ordinary vehicles, new energy vehicles */
+    /**
+     * Chinese mainland license plates, including ordinary vehicles, new energy vehicles
+     */
     CAR_LICENSE() {
         @Override
         public String apply(SensitiveWrapper wrapper) {
-            return SensitiveUtils.carLicense(wrapper.getFieldValue(), wrapper.getReplacer());
+            return DesensitizedUtil.carLicense(wrapper.getFieldValue());
         }
     },
 
-    /** Bank card */
+    /**
+     * Bank card
+     */
     BANK_CARD() {
         @Override
         public String apply(SensitiveWrapper wrapper) {
-            return SensitiveUtils.bankCard(wrapper.getFieldValue(), wrapper.getReplacer());
+            return DesensitizedUtil.bankCard(wrapper.getFieldValue());
         }
     },
 
-    /** IPV4 */
+    /**
+     * IPV4
+     */
     IPV4() {
         @Override
         public String apply(SensitiveWrapper wrapper) {
-            return SensitiveUtils.ipv4(wrapper.getFieldValue(), wrapper.getReplacer());
+            return DesensitizedUtil.ipv4(wrapper.getFieldValue());
         }
     },
 
-    /** IPV6 */
+    /**
+     * IPV6
+     */
     IPV6() {
         @Override
         public String apply(SensitiveWrapper wrapper) {
-            return SensitiveUtils.ipv6(wrapper.getFieldValue(), wrapper.getReplacer());
+            return DesensitizedUtil.ipv6(wrapper.getFieldValue());
         }
     },
 
-    /** Only show the first one */
+    /**
+     * Only show the first one
+     */
     FIRST_MASK() {
         @Override
         public String apply(SensitiveWrapper wrapper) {
-            return SensitiveUtils.firstMask(wrapper.getFieldValue(), wrapper.getReplacer());
+            return DesensitizedUtil.firstMask(wrapper.getFieldValue());
         }
     },
 
-    /** Clear to null */
+    /**
+     * Clear to null
+     */
     CLEAR_TO_NULL() {
         @Override
         public String apply(SensitiveWrapper wrapper) {
@@ -138,7 +170,9 @@ public enum SensitiveStrategy {
         }
     },
 
-    /** Clear to empty */
+    /**
+     * Clear to empty
+     */
     CLEAR_TO_EMPTY() {
         @Override
         public String apply(SensitiveWrapper wrapper) {
@@ -146,7 +180,71 @@ public enum SensitiveStrategy {
         }
     },
 
-    /** Customize sensitive keep length */
+    /**
+     * AES.
+     */
+    AES() {
+        @Override
+        public String apply(SensitiveWrapper wrapper) {
+            SensitiveProperties sensitiveProperties = SpringUtil.getBean(SensitiveProperties.class);
+            String key = Optional.ofNullable(sensitiveProperties.getEncrypt())
+                    .map(SensitiveProperties.Encrypt::getAes)
+                    .map(SensitiveProperties.Aes::getKey)
+                    .filter(StringUtils::hasText)
+                    .orElseThrow(() -> new InternalException("Not configure aes encrypt key."));
+            return SecureUtil.aes(key.getBytes()).encryptHex(wrapper.getFieldValue());
+        }
+    },
+
+    /**
+     * DES.
+     */
+    DES() {
+        @Override
+        public String apply(SensitiveWrapper wrapper) {
+            SensitiveProperties sensitiveProperties = SpringUtil.getBean(SensitiveProperties.class);
+            String key = Optional.ofNullable(sensitiveProperties.getEncrypt())
+                    .map(SensitiveProperties.Encrypt::getDes)
+                    .map(SensitiveProperties.Des::getKey)
+                    .filter(StringUtils::hasText)
+                    .orElseThrow(() -> new InternalException("Not configure des encrypt key."));
+            return SecureUtil.des(key.getBytes()).encryptHex(wrapper.getFieldValue());
+        }
+    },
+
+    /**
+     * RSA.
+     */
+    RSA() {
+        @Override
+        public String apply(SensitiveWrapper wrapper) {
+            Optional<SensitiveProperties.Rsa> rsaOptional = Optional.ofNullable(
+                            SpringUtil.getBean(SensitiveProperties.class))
+                    .map(SensitiveProperties::getEncrypt)
+                    .map(SensitiveProperties.Encrypt::getRsa);
+            String privateKey = rsaOptional
+                    .map(SensitiveProperties.Rsa::getPrivateKey)
+                    .orElseThrow(() -> new InternalException("Not configure rsa encrypt privateKey."));
+            String publicKey = rsaOptional
+                    .map(SensitiveProperties.Rsa::getPublicKey)
+                    .orElseThrow(() -> new InternalException("Not configure rsa encrypt privateKey."));
+            return SecureUtil.rsa(privateKey, publicKey).encryptHex(wrapper.getFieldValue(), KeyType.PublicKey);
+        }
+    },
+
+    /**
+     * BASE64.
+     */
+    BASE64() {
+        @Override
+        public String apply(SensitiveWrapper wrapper) {
+            return Base64.encode(wrapper.getFieldValue());
+        }
+    },
+
+    /**
+     * Customize sensitive keep length
+     */
     CUSTOMIZE_FILTER_WORDS() {
         @Override
         public String apply(SensitiveWrapper wrapper) {
@@ -155,22 +253,14 @@ public enum SensitiveStrategy {
             Object object = wrapper.getObject();
             Field field = ReflectUtil.getField(object.getClass(), fieldName);
             SensitiveFilterWords filterWords = field.getAnnotation(SensitiveFilterWords.class);
-            if (ObjectUtils.isEmpty(filterWords)) {
-                log.warn(
-                        "{} is marked CUSTOMIZE_FILTER_WORDS strategy, "
-                                + "but not has @SensitiveFilterWords, will ignore sensitive it.",
-                        field.getName());
-                return fieldValue;
-            }
+            Assert.notNull(filterWords, CharSequenceUtil.format("{} missing @SensitiveFilterWords.", fieldName));
 
-            char replacer = wrapper.getReplacer();
             String[] words = filterWords.value();
-            if (!ObjectUtils.isEmpty(words)) {
-                for (String filterWord : words) {
-                    if (fieldValue.contains(filterWord)) {
-                        String replacers = CharSequenceUtil.repeat(replacer, filterWord.length());
-                        fieldValue = fieldValue.replace(filterWord, replacers);
-                    }
+            Assert.notNull(words, CharSequenceUtil.format("{} missing filter words.", fieldName));
+            for (String filterWord : words) {
+                if (fieldValue.contains(filterWord)) {
+                    String replacers = CharSequenceUtil.repeat(SensitiveConstants.REPLACER, filterWord.length());
+                    fieldValue = fieldValue.replace(filterWord, replacers);
                 }
             }
 
@@ -178,7 +268,9 @@ public enum SensitiveStrategy {
         }
     },
 
-    /** Customize sensitive keep length */
+    /**
+     * Customize sensitive keep length
+     */
     CUSTOMIZE_KEEP_LENGTH() {
         @Override
         public String apply(SensitiveWrapper wrapper) {
@@ -198,12 +290,14 @@ public enum SensitiveStrategy {
                 return fieldValue;
             }
 
-            char replacer = wrapper.getReplacer();
+            char replacer = SensitiveConstants.REPLACER;
             return CharSequenceUtil.replace(fieldValue, preKeep, fieldValue.length() - postKeep, replacer);
         }
     },
 
-    /** Customize sensitive handler */
+    /**
+     * Customize sensitive handler
+     */
     CUSTOMIZE_HANDLER() {
         @Override
         public String apply(SensitiveWrapper wrapper) {

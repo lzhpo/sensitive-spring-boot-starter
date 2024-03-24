@@ -137,7 +137,6 @@
                         <importOrder/>
                         <formatAnnotations/>
                         <palantirJavaFormat/>
-                        <removeUnusedImports/>
                     </java>
                     <licenseHeader>
                         <file>${project.basedir}/license-header</file>

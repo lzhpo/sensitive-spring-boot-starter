@@ -68,8 +68,8 @@ public abstract class AbstractFastJsonSensitiveValueFilter {
         }
 
         SensitiveStrategy strategy = sensitive.strategy();
-        log.debug("Sensitive for {} with {} strategy, replacer={}", fieldName, strategy.name(), sensitive.replacer());
-        return strategy.apply(new SensitiveWrapper(object, fieldName, (String) fieldValue, sensitive.replacer()));
+        log.debug("Sensitive for {} with {} strategy.", fieldName, strategy.name());
+        return strategy.apply(new SensitiveWrapper(object, fieldName, (String) fieldValue));
     }
     // spotless:on
 }
