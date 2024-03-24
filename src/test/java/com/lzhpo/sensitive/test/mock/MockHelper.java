@@ -46,6 +46,10 @@ public class MockHelper {
                 .keepLength1("1234")
                 .handler1("12345")
                 .filterWords1("卧槽，他妈的，我去你大爷的，草泥马")
+                .aes("123456")
+                .des("123456")
+                .base64("123456")
+                .rsa("123456")
                 .build();
     }
 

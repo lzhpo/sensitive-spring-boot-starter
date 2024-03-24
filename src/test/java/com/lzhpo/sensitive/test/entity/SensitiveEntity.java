@@ -86,4 +86,16 @@ public class SensitiveEntity {
     @Sensitive(strategy = SensitiveStrategy.CUSTOMIZE_HANDLER)
     @SensitiveHandler(FaceCustomizeSensitiveHandler.class)
     private String handler1;
+
+    @Sensitive(strategy = SensitiveStrategy.AES)
+    private String aes;
+
+    @Sensitive(strategy = SensitiveStrategy.DES)
+    private String des;
+
+    @Sensitive(strategy = SensitiveStrategy.BASE64)
+    private String base64;
+
+    @Sensitive(strategy = SensitiveStrategy.RSA)
+    private String rsa;
 }

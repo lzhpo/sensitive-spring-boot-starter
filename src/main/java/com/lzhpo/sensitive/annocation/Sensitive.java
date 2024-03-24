@@ -17,7 +17,6 @@ package com.lzhpo.sensitive.annocation;
 
 import com.fasterxml.jackson.annotation.JacksonAnnotationsInside;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.lzhpo.sensitive.SensitiveConstants;
 import com.lzhpo.sensitive.SensitiveStrategy;
 import com.lzhpo.sensitive.serializer.JacksonSensitiveSerializer;
 import java.lang.annotation.*;
@@ -41,11 +40,4 @@ public @interface Sensitive {
      * @return strategy
      */
     SensitiveStrategy strategy();
-
-    /**
-     * Sensitive replacer
-     *
-     * @return replacer
-     */
-    char replacer() default SensitiveConstants.REPLACER;
 }

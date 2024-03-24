@@ -15,7 +15,6 @@
  */
 package com.lzhpo.sensitive;
 
-import com.lzhpo.sensitive.annocation.Sensitive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -40,9 +39,4 @@ public class SensitiveWrapper {
      * Current field value.
      */
     private String fieldValue;
-
-    /**
-     * {@link Sensitive#replacer()}
-     */
-    private char replacer;
 }
