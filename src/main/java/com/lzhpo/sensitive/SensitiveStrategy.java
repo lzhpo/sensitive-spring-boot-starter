@@ -25,12 +25,13 @@ import cn.hutool.extra.spring.SpringUtil;
 import com.lzhpo.sensitive.annocation.SensitiveFilterWords;
 import com.lzhpo.sensitive.annocation.SensitiveHandler;
 import com.lzhpo.sensitive.annocation.SensitiveKeepLength;
-import com.sun.jdi.InternalException;
-import java.lang.reflect.Field;
-import java.util.Optional;
+import jdk.nashorn.internal.runtime.regexp.joni.exception.InternalException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
+
+import java.lang.reflect.Field;
+import java.util.Optional;
 
 /**
  * Sensitive strategy
@@ -191,7 +192,7 @@ public enum SensitiveStrategy {
                     .map(SensitiveProperties.Encrypt::getAes)
                     .map(SensitiveProperties.Aes::getKey)
                     .filter(StringUtils::hasText)
-                    .orElseThrow(() -> new InternalException("Not configure aes encrypt key."));
+                    .orElseThrow(() -> new IllegalArgumentException("Not configure aes encrypt key."));
             return SecureUtil.aes(key.getBytes()).encryptHex(wrapper.getFieldValue());
         }
     },
@@ -207,7 +208,7 @@ public enum SensitiveStrategy {
                     .map(SensitiveProperties.Encrypt::getDes)
                     .map(SensitiveProperties.Des::getKey)
                     .filter(StringUtils::hasText)
-                    .orElseThrow(() -> new InternalException("Not configure des encrypt key."));
+                    .orElseThrow(() -> new IllegalArgumentException("Not configure des encrypt key."));
             return SecureUtil.des(key.getBytes()).encryptHex(wrapper.getFieldValue());
         }
     },
