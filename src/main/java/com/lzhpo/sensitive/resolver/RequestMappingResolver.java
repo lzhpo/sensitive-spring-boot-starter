@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.lzhpo.sensitive.resolve;
+package com.lzhpo.sensitive.resolver;
 
 import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
