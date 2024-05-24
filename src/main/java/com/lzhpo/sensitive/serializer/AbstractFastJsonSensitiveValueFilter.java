@@ -63,7 +63,8 @@ public abstract class AbstractFastJsonSensitiveValueFilter {
             return fieldValue;
         }
 
-        Field field = ReflectUtil.getField(object.getClass(), fieldName);
+        Class<?> objectClass = object.getClass();
+        Field field = ReflectUtil.getField(objectClass, fieldName);
         Sensitive sensitive = field.getAnnotation(Sensitive.class);
         if (Objects.isNull(sensitive)) {
             log.debug("Skip sensitive for {}, because @Sensitive is null.", fieldName);
@@ -72,7 +73,8 @@ public abstract class AbstractFastJsonSensitiveValueFilter {
 
         SensitiveStrategy strategy = sensitive.strategy();
         String finalValue = strategy.apply(new SensitiveWrapper(object, fieldName, (String) fieldValue));
-        log.debug("Sensitive for [{}={}] with {} strategy.", fieldName, finalValue, strategy.name());
+        log.debug("Sensitive for [{}={}] with {} strategy in {}.",
+                fieldName, finalValue, strategy.name(), objectClass.getSimpleName());
         return finalValue;
     }
     // spotless:on
