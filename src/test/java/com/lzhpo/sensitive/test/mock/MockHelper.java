@@ -65,13 +65,12 @@ public class MockHelper {
     }
 
     public static NestedSensitiveEntity nestedSensitive() {
-        SensitiveEntity entity = sensitive();
         return NestedSensitiveEntity.builder()
                 .parentName("123456")
-                .sensitiveEntity(entity)
-                .array(new SensitiveEntity[] {entity})
-                .map(MapUtil.of(0, entity))
-                .list(ListUtil.of(entity))
+                .sensitiveEntity(sensitive())
+                .array(new SensitiveEntity[] {sensitive()})
+                .map(MapUtil.of(0, sensitive()))
+                .list(ListUtil.list(false, sensitive()))
                 .build();
     }
 }
