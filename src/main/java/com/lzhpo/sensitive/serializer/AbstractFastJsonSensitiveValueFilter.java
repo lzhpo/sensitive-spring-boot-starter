@@ -22,7 +22,7 @@ import com.lzhpo.sensitive.SensitiveStrategy;
 import com.lzhpo.sensitive.SensitiveWrapper;
 import com.lzhpo.sensitive.annocation.IgnoreSensitive;
 import com.lzhpo.sensitive.annocation.Sensitive;
-import com.lzhpo.sensitive.resolve.HandlerMethodResolver;
+import com.lzhpo.sensitive.resolver.HandlerMethodResolver;
 import com.lzhpo.sensitive.util.AnnotationUtils;
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -43,12 +43,14 @@ public abstract class AbstractFastJsonSensitiveValueFilter {
     // spotless:off
     protected Object process(Object object, String fieldName, Object fieldValue) {
         if (ObjectUtils.isEmpty(fieldValue) || !String.class.isAssignableFrom(fieldValue.getClass())) {
+            log.debug("Skip sensitive, because value is empty or not String type.");
             return fieldValue;
         }
 
         HandlerMethodResolver methodResolver = SpringUtil.getBean(HandlerMethodResolver.class);
         HandlerMethod handlerMethod = methodResolver.resolve();
         if (Objects.isNull(handlerMethod)) {
+            log.debug("Skip sensitive, because HandlerMethod is null.");
             return fieldValue;
         }
 
@@ -64,12 +66,14 @@ public abstract class AbstractFastJsonSensitiveValueFilter {
         Field field = ReflectUtil.getField(object.getClass(), fieldName);
         Sensitive sensitive = field.getAnnotation(Sensitive.class);
         if (Objects.isNull(sensitive)) {
+            log.debug("Skip sensitive for {}, because @Sensitive is null.", fieldName);
             return fieldValue;
         }
 
         SensitiveStrategy strategy = sensitive.strategy();
-        log.debug("Sensitive for {} with {} strategy.", fieldName, strategy.name());
-        return strategy.apply(new SensitiveWrapper(object, fieldName, (String) fieldValue));
+        String finalValue = strategy.apply(new SensitiveWrapper(object, fieldName, (String) fieldValue));
+        log.debug("Sensitive for [{}={}] with {} strategy.", fieldName, finalValue, strategy.name());
+        return finalValue;
     }
     // spotless:on
 }

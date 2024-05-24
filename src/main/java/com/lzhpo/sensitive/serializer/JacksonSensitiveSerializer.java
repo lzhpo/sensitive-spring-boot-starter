@@ -25,7 +25,7 @@ import com.lzhpo.sensitive.SensitiveStrategy;
 import com.lzhpo.sensitive.SensitiveWrapper;
 import com.lzhpo.sensitive.annocation.IgnoreSensitive;
 import com.lzhpo.sensitive.annocation.Sensitive;
-import com.lzhpo.sensitive.resolve.HandlerMethodResolver;
+import com.lzhpo.sensitive.resolver.HandlerMethodResolver;
 import com.lzhpo.sensitive.util.AnnotationUtils;
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -51,6 +51,7 @@ public class JacksonSensitiveSerializer extends JsonSerializer<String> {
     @Override
     public void serialize(String fieldValue, JsonGenerator gen, SerializerProvider serializerProvider) throws IOException {
         if (Objects.isNull(fieldValue)) {
+            log.debug("Skip sensitive, because value is null.");
             gen.writeNull();
             return;
         }
@@ -58,6 +59,7 @@ public class JacksonSensitiveSerializer extends JsonSerializer<String> {
         HandlerMethodResolver handlerMethodResolver = SpringUtil.getBean(HandlerMethodResolver.class);
         HandlerMethod handlerMethod = handlerMethodResolver.resolve();
         if (ObjectUtils.isEmpty(handlerMethod)) {
+            log.debug("Skip sensitive, because HandlerMethod is null.");
             gen.writeString(fieldValue);
             return;
         }
@@ -68,8 +70,8 @@ public class JacksonSensitiveSerializer extends JsonSerializer<String> {
         Optional<String[]> ignFieldNamesOpt = ignSensitiveOpt.map(IgnoreSensitive::value);
         if ((ignSensitiveOpt.isPresent() && ignFieldNamesOpt.filter(ArrayUtil::isNotEmpty).isEmpty())
                 || ignFieldNamesOpt.filter(names -> Arrays.asList(names).contains(fieldName)).isPresent()) {
-            gen.writeString(fieldValue);
             log.debug("Skip sensitive for {}, because @IgnoreSensitive is null or not contains it.", fieldName);
+            gen.writeString(fieldValue);
             return;
         }
 
@@ -77,13 +79,14 @@ public class JacksonSensitiveSerializer extends JsonSerializer<String> {
         Field field = ReflectUtil.getField(object.getClass(), fieldName);
         Sensitive sensitive = field.getAnnotation(Sensitive.class);
         if (Objects.isNull(sensitive)) {
+            log.debug("Skip sensitive for {}, because @Sensitive is null.", fieldName);
             gen.writeString(fieldValue);
             return;
         }
 
         SensitiveStrategy strategy = sensitive.strategy();
         String finalValue = strategy.apply(new SensitiveWrapper(object, fieldName, fieldValue));
-        log.debug("Sensitive for {} with {} strategy.", fieldName, strategy.name());
+        log.debug("Sensitive for [{}={}] with {} strategy.", fieldName, finalValue, strategy.name());
         gen.writeString(finalValue);
     }
     // spotless:on

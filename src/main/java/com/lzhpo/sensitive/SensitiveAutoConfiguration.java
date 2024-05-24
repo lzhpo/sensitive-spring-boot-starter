@@ -15,7 +15,7 @@
  */
 package com.lzhpo.sensitive;
 
-import com.lzhpo.sensitive.resolve.RequestMappingResolver;
+import com.lzhpo.sensitive.resolver.RequestMappingResolver;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
