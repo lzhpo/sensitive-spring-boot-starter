@@ -436,6 +436,4 @@ public class SensitiveController {
 
 ## 公众号
 
-|         微信          |            公众号             |
-|:-------------------:|:--------------------------:|
-| ![](./docs/images/微信.jpg) | ![](./docs/images/公众号.jpg) |
+![](./docs/images/微信公众号.jpg)
